@@ -1,0 +1,4 @@
+Sublime
+--------
+edit multiple occurences
+place cursor on word, alt + f3
