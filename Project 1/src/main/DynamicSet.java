@@ -1,10 +1,7 @@
 package main;
 
 public interface DynamicSet<Type> {
-	  // ADT that stores and retrieves Objects according to keys
-	 
-    public Object newDynamicSet(); 
-    // Creates an instance of ADT DynamicSet and initializes it to the empty set.   
+	  // ADT that stores and retrieves Objects according to keys  
 
     public int size();
     // Returns the number of elements currently in the set.

@@ -48,10 +48,6 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		return LESSER;
 	}
 	@Override
-	public Object newDynamicSet() {
-		return new DLinkedList<>();
-	}
-	@Override
 	public int size() {
 		return size;
 	}
