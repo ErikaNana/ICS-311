@@ -9,14 +9,14 @@ public class TestProg2
    {
 
       Random r = new Random();
-      SkipList S = new SkipList();
+      SkipList<String> S = new SkipList<String>();
 
       int i;
 
 
       for ( i = 0; i < 40; i++ )
       {
-         S.insert("" + r.nextInt(100),  r.nextInt(100) );
+         S.insert("" + r.nextInt(100),  "" + r.nextInt(100) );
       }
 
 //    S.printHorizontal();

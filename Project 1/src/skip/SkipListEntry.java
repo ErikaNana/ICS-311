@@ -1,59 +1,52 @@
 package skip;
 
-public class SkipListEntry 
+public class SkipListEntry<Type>
 {
   public String key;
-  public Integer value;
+  public Type value;
 
   public int pos;      // I added this to print the skiplist "nicely"
 
-  public SkipListEntry up, down, left, right;
+  public SkipListEntry<Type> up, down, left, right;
 
   public static String negInf = new String("-oo");  // -inf key value
   public static String posInf = new String("+oo");  // +inf key value
 
-  public SkipListEntry(String k, Integer v) 
-  { 
+  public SkipListEntry(String k, Type v){ 
      key = k;
      value = v;
 
      up = down = left = right = null;
   }
 
-  public Integer getValue() 
-  { 
+  public Type getValue(){ 
     return value; 
   }
 
-  public String getKey() 
-  { return key; 
+  public String getKey(){ 
+	  return key; 
   }
 
-  public Integer setValue(Integer val) 
-  {
-    Integer oldValue = value;
+  public Type setValue(Type val){
+    Type oldValue = value;
     value = val;
     return oldValue;
   }
 
-  public boolean equals(Object o) 
-  {
-    SkipListEntry ent;
-
-    try 
-    { 
-      ent = (SkipListEntry) o;    // Test if o is a SkipListEntry...
+  @SuppressWarnings("unchecked")
+public boolean equals(Object o) {
+    SkipListEntry<Type> ent;
+    try { 
+      ent = (SkipListEntry<Type>) o;    // Test if o is a SkipListEntry...
     }
     catch (ClassCastException ex) 
     { 
 	return false; 
     }
-
     return (ent.getKey() == key) && (ent.getValue() == value);
   }
 
-  public String toString() 
-  {
+  public String toString() {
     return "(" + key + "," + value + ")";
   }
 }

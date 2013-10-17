@@ -4,12 +4,14 @@ package skip;
 //value is what the value is
 import java.util.*;
 
+import main.DynamicSet;
 
-public class SkipList{	
-  public SkipListEntry head;    // First element of the top level
-  public SkipListEntry tail;    // Last element of the top level
+
+public class SkipList<Type> implements DynamicSet<Type> {	
+  public SkipListEntry<Type> head;    // First element of the top level
+  public SkipListEntry<Type> tail;    // Last element of the top level
   public int n; 		// number of entries in the Skip list
-  public int h;       // Height
+  public int height;       // Height
   public Random r;    // Coin toss
 
   /* ----------------------------------------------
@@ -24,10 +26,10 @@ public class SkipList{
                           null        null
      ---------------------------------------------- */
   public SkipList(){ //default constructor 
-     SkipListEntry p1, p2;
+     SkipListEntry<Type> p1, p2;
 
-     p1 = new SkipListEntry(SkipListEntry.negInf, null);
-     p2 = new SkipListEntry(SkipListEntry.posInf, null);
+     p1 = new SkipListEntry<Type>(SkipListEntry.negInf, null);
+     p2 = new SkipListEntry<Type>(SkipListEntry.posInf, null);
 
      head = p1;
      tail = p2;
@@ -36,7 +38,7 @@ public class SkipList{
      p2.left = p1;
 
      n = 0;
-     h = 0;
+     height = 0;
 
      r = new Random();
   }
@@ -56,8 +58,8 @@ public class SkipList{
      findEntry(k): find the largest key x <= k
 		   on the LOWEST level of the Skip List
      ------------------------------------------------------ */
-  public SkipListEntry findEntry(String k){
-     SkipListEntry p;
+  public SkipListEntry<Type> findEntry(String k){
+     SkipListEntry<Type> p;
 
      /* -----------------
 	Start at "head"
@@ -98,13 +100,13 @@ public class SkipList{
 
 
   /** Returns the value associated with a key. */
-  public Integer getValue (String k) {
-     SkipListEntry p;
+  public String getValue (String k) {
+     SkipListEntry<Type> p;
 
      p = findEntry(k);
 
      if ( k.equals( p.getKey() ) )
-        return(p.value);
+        return (String) (p.value);
      else
         return(null);
   }
@@ -124,12 +126,12 @@ public class SkipList{
 
       Returns the reference of the newly created (k,v) entry
      ------------------------------------------------------------------ */
-  public SkipListEntry insertAfterAbove(SkipListEntry p, SkipListEntry q, 
+  public SkipListEntry<Type> insertAfterAbove(SkipListEntry<Type> p, SkipListEntry<Type> q, 
                                          String k)
   {
-     SkipListEntry e;
+     SkipListEntry<Type> e;
 
-     e = new SkipListEntry(k, null);
+     e = new SkipListEntry<Type>(k, null);
 
      /* ---------------------------------------
 	Use the links before they are changed !
@@ -149,9 +151,9 @@ public class SkipList{
   }
 
   /** Put a key-value pair in the map, replacing previous one if it exists. */
-  public Integer insert (String k, Integer v) {
-     SkipListEntry p, q;
-     int       i;
+  public String insert (String k, Type v) {
+     SkipListEntry<Type> p, q;
+     int i;
 
      p = findEntry(k);
 
@@ -160,10 +162,8 @@ public class SkipList{
 	Check if key is found
 	------------------------ */
      if ( k.equals( p.getKey() ) ){
-        Integer old = p.value;
-
-	p.value = v;
-
+    	 String old = (String) p.value;
+    	 p.value = v;
     	return(old);
      }
 
@@ -175,7 +175,7 @@ public class SkipList{
         **** BUG: He forgot to insert in the lowest level !!!
 	Link at the lowest level
 	------------------------------------------------------ */
-     q = new SkipListEntry(k, v);
+     q = new SkipListEntry<Type>(k, v);
      q.left = p;
      q.right = p.right;
      p.right.left = q;
@@ -192,12 +192,12 @@ public class SkipList{
 	   Check if height exceed current height.
  	   If so, make a new EMPTY level
 	   --------------------------------------------- */
-        if ( i >= h ){
-           SkipListEntry p1, p2;
+        if ( i >= height ){
+           SkipListEntry<Type> p1, p2;
 
-           h = h + 1;
-           p1 = new SkipListEntry(SkipListEntry.negInf,null);
-           p2 = new SkipListEntry(SkipListEntry.posInf,null);
+           height = height + 1;
+           p1 = new SkipListEntry<Type>(SkipListEntry.negInf,null);
+           p2 = new SkipListEntry<Type>(SkipListEntry.posInf,null);
 	   
 		   p1.right = p2;
 		   p1.down  = head;
@@ -229,9 +229,9 @@ public class SkipList{
 	/* ---------------------------------------------
            Add one more (k,v) to the column
 	   --------------------------------------------- */
-   	SkipListEntry e;
+   	SkipListEntry<Type> e;
    		 
-   	e = new SkipListEntry(k, null);  // Don't need the value...
+   	e = new SkipListEntry<Type>(k, null);  // Don't need the value...
    		 
    	/* ---------------------------------------
    	   Initialize links of e
@@ -265,7 +265,7 @@ public class SkipList{
      String s = "";
      int i;
 
-     SkipListEntry p;
+     SkipListEntry<Type> p;
 
      /* ----------------------------------
 	Record the position of each entry
@@ -295,7 +295,7 @@ public class SkipList{
      }
   }
 
-  public String getOneRow( SkipListEntry p ){
+  public String getOneRow( SkipListEntry<Type> p ){
      String s;
      int a, b, i;
 
@@ -305,7 +305,7 @@ public class SkipList{
      p = p.right;
 
      while ( p != null ){
-    	 SkipListEntry q;
+    	 SkipListEntry<Type> q;
     	 q = p;
     	 while (q.down != null)
     	q = q.down;
@@ -326,7 +326,7 @@ public class SkipList{
 
   public void printVertical(){
      String s = "";
-     SkipListEntry p;
+     SkipListEntry<Type> p;
 
      p = head;
 
@@ -342,7 +342,7 @@ public class SkipList{
   }
 
 
-  public String getOneColumn( SkipListEntry p ){
+  public String getOneColumn( SkipListEntry<Type> p ){
      String s = "";
 
      while ( p != null ){
@@ -351,5 +351,53 @@ public class SkipList{
      }
      return(s);
   }
+
+
+@Override
+public void insert(Type key, Object e) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public void delete(Type key) {
+	// TODO Auto-generated method stub
+}
+
+
+@Override
+public Object search(Type key) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+@Override
+public Object minimum() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+@Override
+public Object maximum() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+@Override
+public Object successor(Type key) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+@Override
+public Object predecessor(Type key) {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 } 
