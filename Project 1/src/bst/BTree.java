@@ -2,6 +2,8 @@ package bst;
 
 import main.DynamicSet;
 
+/** Operations based on psuedocode found in the book*/
+
 public class BTree<Type> implements DynamicSet<Type>{
 	private int size = 0;
 	private BNode<Type> root = null;
@@ -24,7 +26,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 	public void inorderTreeWalk(BNode<Type> node) {
 		if (node != null) {
 			inorderTreeWalk(node.getLeftChild());
-			System.out.println(node.getKey() + " ");
+			System.out.print(node.getKey() + " ");
 			inorderTreeWalk(node.getRightChild());
 		}
 	}
@@ -32,113 +34,222 @@ public class BTree<Type> implements DynamicSet<Type>{
 	public int size() {
 		return size;
 	}
-
+	
 	@Override
 	public void insert(Type key, Object e) {
-		
 		@SuppressWarnings("unchecked")
 		BNode<Type> node = (BNode<Type>) e;
 		node.setKey(key);
 		
 		if (root == null) {
 			root = node;
-			System.out.println("root is null");
+			size++;
+			//System.out.println("root is null");
 		}
 		else {
 			BNode<Type> current = root;
 			BNode<Type> parent;
 			
 			while (true) {
+				//System.out.println("next iteration");
+				//System.out.println("insert:  " + key);
 				parent = current;
-				System.out.println("next iteration");
-				System.out.println("Parent is current:  " + current.getKey());
-				System.out.println("key is:  " + key);
+				//System.out.println("current:  " + current.getKey());
 				int compare = compareValue(key, current);
 				if (compare == LESSER) {
-					System.out.println("compare is lesser");
 					current = current.getLeftChild();
 					if (current == null) {
-						System.out.println("left current is null");
 						parent.setLeftChild(node);
+						//set the parent pointers
+						parent.getLeftChild().setParent(parent);
+						size++;
 						return;
 					}
-					System.out.println("new current is:  " + current.getKey());
 				}
 				else {
 					current = current.getRightChild();
-					System.out.println("key is greater than current");
 					if (current == null) {
 						parent.setRightChild(node);
-						System.out.println("right current is null!");
+						//set parent pointer
+						parent.getRightChild().setParent(parent);
+						size++;
 						return;
 					}
 				}
 			}
 		}
-/*		if (node == null) {
-			node = new BNode<Type>(key);
-			return;
-		}
-		//assume that keys and values are strings
-		int compare = ((String) key).compareTo((String) node.getKey());
-		switch(compare) {
-			case EQUAL: return;
-			case LESSER: insert(key,node.getLeftChild());
-			case GREATER:
-		}*/
 	}
 
 	@Override
 	public void delete(Type key) {
-		// TODO Auto-generated method stub
+		//search for the key to delete
+		@SuppressWarnings("unchecked")
+		BNode<Type> node = (BNode<Type>) this.search(key);
 		
+		if (node.getLeftChild() == null) {
+			//System.out.println("left child is null");
+			transplant(node, node.getRightChild());
+		}
+		else if (node.getRightChild() == null) {
+			transplant(node, node.getLeftChild());
+			//System.out.println("right child is null");
+		}
+		else  {
+			System.out.println("in else");
+			BNode<Type>y = minimum(node.getRightChild());
+			if (y.getParent() != node) {
+				transplant(y,y.getRightChild());
+				y.setRightChild(node.getRightChild());
+				y.getRightChild().setParent(y);
+			}
+			transplant(node,y);
+			y.setLeftChild(node.getLeftChild());
+			y.getLeftChild().setParent(y);
+		}
+		size--;
 	}
 
 	@Override
 	public Object search(Type key) {
-		// TODO Auto-generated method stub
-		return null;
+		//matches at the root
+			BNode<Type> current = root;
+			
+			while (true) {
+				int compare = compareValue(key, current);
+				if (compare == LESSER) {
+					current = current.getLeftChild();
+					if (current == null) {
+						System.out.println("Not in the tree");
+						return null;
+					}
+				}
+				else if (compare == GREATER) {
+					current = current.getRightChild();
+					if (current == null) {
+						System.out.println("Not in the tree");
+						return null;
+					}
+				}
+				else {
+					return current;
+				}
+			}
 	}
-
+	/*Gets the minimum of the whole tree*/
 	@Override
 	public Object minimum() {
-		// TODO Auto-generated method stub
-		return null;
+		BNode<Type> temp = root;
+		if (root == null) {
+			return null;
+		}
+		else {
+			while (temp.getLeftChild() != null) {
+				temp = temp.getLeftChild();
+			}
+			return temp;
+		}
 	}
-
+	/*Gets the maximum of the whole tree*/
 	@Override
 	public Object maximum() {
-		// TODO Auto-generated method stub
-		return null;
+		BNode<Type> temp = root;
+		if (root == null) {
+			return null;
+		}
+		else {
+			while(temp.getRightChild() != null) {
+				temp = temp.getRightChild();
+			}
+			return temp;
+		}
 	}
-
+	/*Returns null if can't be found*/
 	@Override
 	public Object successor(Type key) {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("unchecked")
+		//search the tree for this node
+		BNode<Type> node = (BNode<Type>) this.search(key);
+		BNode<Type> successor = null;
+		
+		if (node.getRightChild() != null) {
+			return minimum(node.getRightChild());
+		}
+		else {
+			successor = node.getParent();
+			while (successor != null && node == successor.getRightChild()) {
+				node = successor;
+				successor = successor.getParent();
+			}
+		}
+		return successor;
 	}
-
+	/*Returns null if can't be found*/
 	@Override
 	public Object predecessor(Type key) {
-		// TODO Auto-generated method stub
-		return null;
+		@SuppressWarnings("unchecked")
+		BNode<Type> node = (BNode<Type>) this.search(key);
+		BNode<Type> predecessor = null;
+		
+		if (node.getLeftChild() != null) {
+			return maximum(node.getLeftChild());
+		}
+		else {
+			predecessor = node.getParent();
+			while(predecessor != null && node == predecessor.getLeftChild()) {
+				node = predecessor;
+				predecessor = predecessor.getParent();
+			}
+			return predecessor;
+		}
 	}
 	
-	/* Helper method that compares strings*/
+	/* Helper method that compares strings.  Assumes that keys are strings*/
 	public int compareValue(Type value, BNode<Type> node) {
-		System.out.println("COMPARE VALUE");
+		//System.out.println("COMPARE VALUE");
 		//assume that list is of String type
+		//System.out.println("comparing " + value + " and " + node.getKey());
 		int compare = ((String) value).compareTo((String) node.getKey());
+		//System.out.println("compare is:  " + compare);
 		if (compare > 0) {
-			System.out.println("GREATER");
+			//System.out.println("GREATER");
 			return GREATER;
 		}
 		else if (compare == 0) {
-			System.out.println("EQUAL");
+			//System.out.println("EQUAL");
 			return EQUAL;
 		}
-		System.out.println("LESSER");
+		//System.out.println("LESSER");
 		return LESSER;
 	}
-
+	
+	/* Helper method that gets the minimum of a subtree */
+	public BNode<Type> minimum(BNode<Type> node){
+		while (node.getLeftChild() != null) {
+			node = node.getLeftChild();
+		}
+		return node;
+	}
+	
+	/* Helper method that gets the maximum of a subtree */
+	public BNode<Type> maximum(BNode<Type> node){
+		while (node.getRightChild() != null) {
+			node = node.getRightChild();
+		}
+		return node;
+	}
+	
+	/*Helper method for delete*/
+	public void transplant(BNode<Type> u, BNode<Type> v) {
+		if (u.getParent() == null) //u is the root of its subtree
+				setRoot(v);
+		else if (u == u.getParent().getLeftChild())
+			u.getParent().setLeftChild(v);
+		else u.getParent().setRightChild(v);
+		if (v != null)
+			v.setParent(u.getParent());
+	}
+	/*Sets the value of the root*/
+	public void setRoot(BNode<Type> node) {
+		root = node;
+	}
 }

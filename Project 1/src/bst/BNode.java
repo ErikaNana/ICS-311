@@ -10,7 +10,6 @@ public class BNode<Type>{
 		this.key = key;
 	}
 	/*********************** GETTERS ********************************************/
-	@SuppressWarnings("unchecked")
 	public Type getKey() {
 		return key;
 	}
