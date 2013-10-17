@@ -13,7 +13,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 	private static final int EQUAL = 3;
 	
 	public BTree() {
-		
 	}
 	
 	public boolean isEmpty() {
@@ -44,17 +43,13 @@ public class BTree<Type> implements DynamicSet<Type>{
 		if (root == null) {
 			root = node;
 			size++;
-			//System.out.println("root is null");
 		}
 		else {
 			BNode<Type> current = root;
 			BNode<Type> parent;
 			
 			while (true) {
-				//System.out.println("next iteration");
-				//System.out.println("insert:  " + key);
 				parent = current;
-				//System.out.println("current:  " + current.getKey());
 				int compare = compareValue(key, current);
 				if (compare == LESSER) {
 					current = current.getLeftChild();
@@ -87,12 +82,10 @@ public class BTree<Type> implements DynamicSet<Type>{
 		BNode<Type> node = (BNode<Type>) this.search(key);
 		
 		if (node.getLeftChild() == null) {
-			//System.out.println("left child is null");
 			transplant(node, node.getRightChild());
 		}
 		else if (node.getRightChild() == null) {
 			transplant(node, node.getLeftChild());
-			//System.out.println("right child is null");
 		}
 		else  {
 			System.out.println("in else");
@@ -112,28 +105,28 @@ public class BTree<Type> implements DynamicSet<Type>{
 	@Override
 	public Object search(Type key) {
 		//matches at the root
-			BNode<Type> current = root;
-			
-			while (true) {
-				int compare = compareValue(key, current);
-				if (compare == LESSER) {
-					current = current.getLeftChild();
-					if (current == null) {
-						System.out.println("Not in the tree");
-						return null;
-					}
-				}
-				else if (compare == GREATER) {
-					current = current.getRightChild();
-					if (current == null) {
-						System.out.println("Not in the tree");
-						return null;
-					}
-				}
-				else {
-					return current;
+		BNode<Type> current = root;
+		
+		while (true) {
+			int compare = compareValue(key, current);
+			if (compare == LESSER) {
+				current = current.getLeftChild();
+				if (current == null) {
+					System.out.println("Not in the tree");
+					return null;
 				}
 			}
+			else if (compare == GREATER) {
+				current = current.getRightChild();
+				if (current == null) {
+					System.out.println("Not in the tree");
+					return null;
+				}
+			}
+			else {
+				return current;
+			}
+		}
 	}
 	/*Gets the minimum of the whole tree*/
 	@Override
@@ -205,20 +198,15 @@ public class BTree<Type> implements DynamicSet<Type>{
 	
 	/* Helper method that compares strings.  Assumes that keys are strings*/
 	public int compareValue(Type value, BNode<Type> node) {
-		//System.out.println("COMPARE VALUE");
-		//assume that list is of String type
-		//System.out.println("comparing " + value + " and " + node.getKey());
+		
 		int compare = ((String) value).compareTo((String) node.getKey());
-		//System.out.println("compare is:  " + compare);
+
 		if (compare > 0) {
-			//System.out.println("GREATER");
 			return GREATER;
 		}
 		else if (compare == 0) {
-			//System.out.println("EQUAL");
 			return EQUAL;
 		}
-		//System.out.println("LESSER");
 		return LESSER;
 	}
 	

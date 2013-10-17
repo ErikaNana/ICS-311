@@ -12,12 +12,12 @@ public class TestBST {
 		
 		BTree<String> tree = new BTree<String>();
 		ArrayList<String> list = new ArrayList<String>();
-		list.add("f");
-		list.add("d");
 		list.add("a");
-		list.add("e");
-		list.add("c");
 		list.add("b");
+		list.add("c");
+		list.add("d");
+		list.add("e");
+		list.add("f");
 		
 		for (int i = 0; i < list.size(); i++) {
 			String key = list.get(i);
