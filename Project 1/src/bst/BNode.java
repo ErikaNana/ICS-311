@@ -5,7 +5,7 @@ public class BNode<Type>{
 	private BNode<Type> leftChild = null;
 	private BNode<Type> rightChild = null;
 	private BNode<Type> parent = null;
-			
+	
 	public BNode(Type key) {
 		this.key = key;
 	}

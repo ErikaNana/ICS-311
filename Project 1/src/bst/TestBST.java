@@ -35,8 +35,8 @@ public class TestBST {
 		System.out.println("--------------------------------");
 		System.out.println("minimum:  " +((BNode<String>) tree.minimum()).getKey());
 		System.out.println("maximum:  " + ((BNode<String>) tree.maximum()).getKey());
-		System.out.println("sucessor: " + ((BNode<String>) tree.successor("c")).getKey());
-		System.out.println("predecessor:  " + ((BNode<String>) tree.predecessor("c")).getKey());
+		System.out.println("sucessor: " + ((BNode<String>) tree.successor("f")).getKey());
+		System.out.println("predecessor:  " + ((BNode<String>) tree.predecessor("a")).getKey());
 		
 		//delete 
 		System.out.println("deleting f");

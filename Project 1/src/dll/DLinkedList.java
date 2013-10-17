@@ -1,6 +1,7 @@
 package dll;
 
 import main.DynamicSet;
+//fix null pointer exceptions (with predecessor), use maybe sentinels
 
 /* Constructs a sorted doubly-linked list. 
  * @author Erika Nana
@@ -9,12 +10,16 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 	
 	private DNode<Type> head = null;
 	private int size = 0;
+	
 	private static final int GREATER = 1;
 	private static final int LESSER = 2;
 	private static final int EQUAL = 3;
 	
+	private DNode<Type> empty = null; //for null pointer
+	
 	/* Constructor */
 	public DLinkedList(){
+		empty = new DNode<Type>(); //for null pointer
 	}
 	/* Checks to see if the list is empty*/
 	public boolean isEmpty() {
@@ -129,9 +134,9 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		while (temp != null) {
 			if (temp.getValue().equals(key)) {
 				//adjust the pointers
-				if (temp == head) {
-					size = 0;
+				if (temp == head) {//deleting the head
 					head = null;
+					size--;
 					break;
 				}
 				temp.getPrev().connectNext(temp.getNext());
@@ -168,13 +173,23 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 	public Object successor(Type key) {
 		@SuppressWarnings("unchecked")
 		DNode<Type>temp = (DNode<Type>) search(key);
+		//handle null pointer exceptions
+		if (temp.getNext() == null) {
+			return empty;
+		}
 		return temp.getNext();
 	}
 	@Override
 	public Object predecessor(Type key) {
 		@SuppressWarnings("unchecked")
 		DNode<Type>temp = (DNode<Type>) search(key);
-		return temp.getPrev();
+		//handle null pointer exceptions
+		if (temp.getPrev() == null) {
+			return empty;
+		}
+		else {
+			return temp.getPrev();
+		}
 	}
 	
 }

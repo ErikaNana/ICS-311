@@ -12,7 +12,11 @@ public class BTree<Type> implements DynamicSet<Type>{
 	private static final int LESSER = 2;
 	private static final int EQUAL = 3;
 	
+	//empty node to return to handle null pointer exceptions
+	private BNode<Type> empty = null;
+	
 	public BTree() {
+		empty = new BNode<Type>(null); //for null pointer
 	}
 	
 	public boolean isEmpty() {
@@ -156,7 +160,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 			return temp;
 		}
 	}
-	/*Returns null if can't be found*/
+	/*Returns an empty node if can't be found*/
 	@Override
 	public Object successor(Type key) {
 		@SuppressWarnings("unchecked")
@@ -165,7 +169,8 @@ public class BTree<Type> implements DynamicSet<Type>{
 		BNode<Type> successor = null;
 		
 		if (node.getRightChild() != null) {
-			return minimum(node.getRightChild());
+			BNode<Type> minimum = minimum(node.getRightChild());
+			return minimum;
 		}
 		else {
 			successor = node.getParent();
@@ -173,10 +178,13 @@ public class BTree<Type> implements DynamicSet<Type>{
 				node = successor;
 				successor = successor.getParent();
 			}
+			if (successor == null) {
+				return empty;
+			}
 		}
 		return successor;
 	}
-	/*Returns null if can't be found*/
+	/*Returns an empty node if can't be found*/
 	@Override
 	public Object predecessor(Type key) {
 		@SuppressWarnings("unchecked")
@@ -184,13 +192,21 @@ public class BTree<Type> implements DynamicSet<Type>{
 		BNode<Type> predecessor = null;
 		
 		if (node.getLeftChild() != null) {
-			return maximum(node.getLeftChild());
+			BNode<Type> maximum = maximum(node.getLeftChild());
+			if (maximum == null) {
+				return empty;
+			}
+			return maximum;
 		}
 		else {
 			predecessor = node.getParent();
 			while(predecessor != null && node == predecessor.getLeftChild()) {
 				node = predecessor;
 				predecessor = predecessor.getParent();
+			}
+			//handle null pointer
+			if (predecessor == null) {
+				return empty;
 			}
 			return predecessor;
 		}

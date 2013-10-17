@@ -16,20 +16,22 @@ public class TestDLL {
 			list.insert(listValues[i], node);
 			System.out.println("inserting:  " + listValues[i]);
 			System.out.println("list now:  " + list);
-			System.out.println("");
 		}
-		
+		//Test search
 		System.out.println(((DNode<String>) list.search("bob")).getValue());
 		System.out.println(((DNode<String>) list.search("apple")).getValue());
 		System.out.println(((DNode<String>) list.search("cat")).getValue());
 		System.out.println(((DNode<String>) list.search("dog")).getValue());
-	
+		
+		//Test minimum and maximum
 		System.out.println("maximum:  " + ((DNode<String>) list.maximum()).getValue());
 		System.out.println("minimum:  " + ((DNode<String>) list.minimum()).getValue());
 		
 		//Test predecessor and successor
-		System.out.println("predecessor of bob:  " + ((DNode<String>) list.predecessor("bob")).getValue());
-		System.out.println("sucessor of bob:  " + ((DNode<String>) list.successor("bob")).getValue());
+		System.out.println("predecessor of apple:  " + ((DNode<String>) list.predecessor("apple")).getValue());
+		System.out.println("sucessor of dog:  " + ((DNode<String>) list.successor("dog")).getValue());
+		System.out.println("predecessor of cat:  " + ((DNode<String>) list.predecessor("cat")).getValue());
+		System.out.println("sucessor of cat:  " + ((DNode<String>) list.successor("cat")).getValue());
 		
 		//Test delete
 		list.delete("dog");
