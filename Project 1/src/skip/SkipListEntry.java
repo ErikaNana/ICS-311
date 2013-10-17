@@ -1,7 +1,9 @@
 package skip;
 
-public class SkipListEntry<Type>
-{
+//need the v for the sentinels!!!
+//otherwise if not the sentinel just assume that the key value is the value
+
+public class SkipListEntry<Type>{
   public String key;
   public Type value;
 

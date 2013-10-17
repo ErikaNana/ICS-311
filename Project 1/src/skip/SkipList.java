@@ -54,56 +54,12 @@ public class SkipList<Type> implements DynamicSet<Type> {
     return (n == 0); 
   }
 
-  /* ------------------------------------------------------
-     findEntry(k): find the largest key x <= k
-		   on the LOWEST level of the Skip List
-     ------------------------------------------------------ */
-  public SkipListEntry<Type> findEntry(String k){
-     SkipListEntry<Type> p;
-
-     /* -----------------
-	Start at "head"
-	----------------- */
-     p = head;
-
-     while ( true ){
-        /* --------------------------------------------
-	   Search RIGHT until you find a LARGER entry
-
-           E.g.: k = 34
-
-                     10 ---> 20 ---> 30 ---> 40
-                                      ^
-                                      |
-                                      p stops here
-		p.right.key = 40
-	   -------------------------------------------- */
-        while ( p.right.key != SkipListEntry.posInf && 
-		p.right.key.compareTo(k) <= 0 ){
-           p = p.right;
-//         System.out.println(">>>> " + p.key);
-	}
-
-	/* ---------------------------------
-	   Go down one level if you can...
-	   --------------------------------- */
-	if ( p.down != null ){  
-           p = p.down;
-//         System.out.println("vvvv " + p.key);
-        }
-        else
-	   break;	// We reached the LOWEST level... Exit...
-     }
-
-     return(p);         // p.key <= k
-  }
-
-
   /** Returns the value associated with a key. */
-  public String getValue (String k) {
+  @SuppressWarnings("unchecked")
+public String getValueOfNode (String k) {
      SkipListEntry<Type> p;
 
-     p = findEntry(k);
+     p = (SkipListEntry<Type>) search((Type) k);
 
      if ( k.equals( p.getKey() ) )
         return (String) (p.value);
@@ -148,117 +104,6 @@ public class SkipList<Type> implements DynamicSet<Type> {
      q.up = e;
 
      return(e);
-  }
-
-  /** Put a key-value pair in the map, replacing previous one if it exists. */
-  public String insert (String k, Type v) {
-     SkipListEntry<Type> p, q;
-     int i;
-
-     p = findEntry(k);
-
-//   System.out.println("findEntry(" + k + ") returns: " + p.key);
-     /* ------------------------
-	Check if key is found
-	------------------------ */
-     if ( k.equals( p.getKey() ) ){
-    	 String old = (String) p.value;
-    	 p.value = v;
-    	return(old);
-     }
-
-     /* ------------------------
-	Insert new entry (k,v)
-	------------------------ */
-
-     /* ------------------------------------------------------
-        **** BUG: He forgot to insert in the lowest level !!!
-	Link at the lowest level
-	------------------------------------------------------ */
-     q = new SkipListEntry<Type>(k, v);
-     q.left = p;
-     q.right = p.right;
-     p.right.left = q;
-     p.right = q;
-
-     i = 0;                   // Current level = 0
-
-     while ( r.nextDouble() < 0.5 ){
-	// Coin flip success: make one more level....
-
-//	System.out.println("i = " + i + ", h = " + h );
-
-	/* ---------------------------------------------
-	   Check if height exceed current height.
- 	   If so, make a new EMPTY level
-	   --------------------------------------------- */
-        if ( i >= height ){
-           SkipListEntry<Type> p1, p2;
-
-           height = height + 1;
-           p1 = new SkipListEntry<Type>(SkipListEntry.negInf,null);
-           p2 = new SkipListEntry<Type>(SkipListEntry.posInf,null);
-	   
-		   p1.right = p2;
-		   p1.down  = head;
-	
-		   p2.left = p1;
-		   p2.down = tail;
-	
-		   head.up = p1;
-		   tail.up = p2;
-	
-		   head = p1;
-		   tail = p2;
-	}
-
-
-	/* -------------------------
-	   Scan backwards...
-	   ------------------------- */
-	while ( p.up == null ){
-//	   System.out.print(".");
-	   p = p.left;
-	}
-
-//	System.out.print("1 ");
-
-	p = p.up;
-
-
-	/* ---------------------------------------------
-           Add one more (k,v) to the column
-	   --------------------------------------------- */
-   	SkipListEntry<Type> e;
-   		 
-   	e = new SkipListEntry<Type>(k, null);  // Don't need the value...
-   		 
-   	/* ---------------------------------------
-   	   Initialize links of e
-   	   --------------------------------------- */
-   	e.left = p;
-   	e.right = p.right;
-   	e.down = q;
-   		 
-   	/* ---------------------------------------
-   	   Change the neighboring links..
-   	   --------------------------------------- */
-   	p.right.left = e;
-   	p.right = e;
-   	q.up = e;
-   	q = e;		// Set q up for the next iteration
-   	i = i + 1;	// Current level increased by 1
-
-     }
-
-     n = n + 1;
-
-     return(null);   // No old value
-  }
-
-  /** Removes the key-value pair with a specified key. */
-  public Integer delete (String key) {
-     return(null);
   }
 
   public void printHorizontal(){
@@ -353,10 +198,98 @@ public class SkipList<Type> implements DynamicSet<Type> {
   }
 
 
+@SuppressWarnings("unchecked")
 @Override
-public void insert(Type key, Object e) {
-	// TODO Auto-generated method stub
+public void insert(Type key, Object value) {
+    SkipListEntry<Type> p, q;
+    int i;
+
+    p = (SkipListEntry<Type>) search(key);
+
+    /* ------------------------
+	Check if key is found
+	------------------------ */
+    if ( key.equals( p.getKey() ) ){
+    	p.value = (Type) value;
+    }
+
+    /* ------------------------
+	Insert new entry (k,v)
+	------------------------ */
+
+    /* ------------------------------------------------------
+       **** BUG: He forgot to insert in the lowest level !!!
+	Link at the lowest level
+	------------------------------------------------------ */
+    q = new SkipListEntry<Type>((String)key, (Type) value);
+    q.left = p;
+    q.right = p.right;
+    p.right.left = q;
+    p.right = q;
+
+    i = 0;                   // Current level = 0
+
+    while ( r.nextDouble() < 0.5 ){
+	// Coin flip success: make one more level....
+    	
+	/* ---------------------------------------------
+	   Check if height exceed current height.
+	   If so, make a new EMPTY level
+	   --------------------------------------------- */
+       if ( i >= height ){
+          SkipListEntry<Type> p1, p2;
+
+          height = height + 1;
+          p1 = new SkipListEntry<Type>(SkipListEntry.negInf,null);
+          p2 = new SkipListEntry<Type>(SkipListEntry.posInf,null);
+	   
+		   p1.right = p2;
+		   p1.down  = head;
 	
+		   p2.left = p1;
+		   p2.down = tail;
+	
+		   head.up = p1;
+		   tail.up = p2;
+	
+		   head = p1;
+		   tail = p2;
+	}
+
+
+		/* -------------------------
+		   Scan backwards...
+		   ------------------------- */
+		while ( p.up == null ){
+		   p = p.left;
+		}
+		p = p.up;
+
+
+		/* ---------------------------------------------
+	          Add one more (k,v) to the column
+		   --------------------------------------------- */
+	  	SkipListEntry<Type> e;
+	  		 
+	  	e = new SkipListEntry<Type>((String) key, null);  // Don't need the value...
+	  		 
+	  	/* ---------------------------------------
+	  	   Initialize links of e
+	  	   --------------------------------------- */
+	  	e.left = p;
+	  	e.right = p.right;
+	  	e.down = q;
+	  		 
+	  	/* ---------------------------------------
+	  	   Change the neighboring links..
+	  	   --------------------------------------- */
+	  	p.right.left = e;
+	  	p.right = e;
+	  	q.up = e;
+	  	q = e;		// Set q up for the next iteration
+	  	i = i + 1;	// Current level increased by 1
+    }
+    n = n + 1;
 }
 
 
@@ -368,36 +301,102 @@ public void delete(Type key) {
 
 @Override
 public Object search(Type key) {
-	// TODO Auto-generated method stub
-	return null;
+    SkipListEntry<Type> p;
+
+    /* -----------------
+	Start at "head"
+	----------------- */
+    p = head;
+
+    while (true){
+       /* --------------------------------------------
+	   Search RIGHT until you find a LARGER entry
+
+          E.g.: k = 34
+
+                    10 ---> 20 ---> 30 ---> 40
+                                     ^
+                                     |
+                                     p stops here
+		p.right.key = 40
+	   -------------------------------------------- */
+    	while ( p.right.key != SkipListEntry.posInf && 
+			p.right.key.compareTo((String) key) <= 0 ){
+	        p = p.right;
+    	}
+
+		/* ---------------------------------
+		   Go down one level if you can...
+		   --------------------------------- */
+		if ( p.down != null ){
+			p = p.down;
+		}
+       else
+	   break;	// We reached the LOWEST level... Exit...
+    }
+
+    return p;	// p.key <= k
 }
 
-
+//go all the way down to the bottom level
 @Override
 public Object minimum() {
-	// TODO Auto-generated method stub
-	return null;
+	//System.out.println("head:  " + head.getKey());
+	//System.out.println(head.right.getKey());
+
+    SkipListEntry<Type> p;
+    p = head.right;
+
+    while (true){
+       while ( p.left.key != SkipListEntry.negInf){
+    	   p = p.left;
+       	}
+		if ( p.down != null ){ //go down one level if can
+			//System.out.println("go down");
+			p = p.down;
+		}
+	    else
+		   break;	//reached the lowest level so exit
+    }
+
+    return p;	
 }
 
 
 @Override
 public Object maximum() {
-	// TODO Auto-generated method stub
-	return null;
+    SkipListEntry<Type> p;
+    p = head;
+
+    while (true){
+       while ( p.right.key != SkipListEntry.posInf){
+    	   p = p.right;
+       	}
+       
+		if ( p.down != null ){ //go down one level if can
+			p = p.down;
+		}
+	    else
+		   break;	//reached the lowest level so exit
+    }
+
+    return p;	
 }
 
 
 @Override
 public Object successor(Type key) {
-	// TODO Auto-generated method stub
-	return null;
+	@SuppressWarnings("unchecked")
+	SkipListEntry<Type> node = (SkipListEntry<Type>) search(key);
+	return node.right;	
 }
 
 
 @Override
 public Object predecessor(Type key) {
-	// TODO Auto-generated method stub
-	return null;
+	@SuppressWarnings("unchecked")
+	SkipListEntry<Type> node = (SkipListEntry<Type>) search(key);
+	return node.left;
 }
 
 } 
