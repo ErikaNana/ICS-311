@@ -8,7 +8,7 @@ import main.DynamicSet;
  * http://www.mathcs.emory.edu/~cheung/Courses/323/Syllabus/Map/skip-list-impl.html 
  * */
 
-public class SkipList<Type> implements DynamicSet<Type> {	
+public class SkipList2<Type> implements DynamicSet<Type> {	
   public SkipListEntry<Type> head;    // First element of the top level
   public SkipListEntry<Type> tail;    // Last element of the top level
   public int n; 		// number of entries in the Skip list
@@ -26,7 +26,7 @@ public class SkipList<Type> implements DynamicSet<Type> {
                            v           v
                           null        null
      ---------------------------------------------- */
-  public SkipList(){ //default constructor 
+  public SkipList2(){ //default constructor 
      SkipListEntry<Type> p1, p2;
 
      p1 = new SkipListEntry<Type>(SkipListEntry.negInf);

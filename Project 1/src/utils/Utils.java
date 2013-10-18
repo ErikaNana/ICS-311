@@ -9,18 +9,18 @@ public class Utils<Type> {
 	
 	/* Helper method that compares strings*/
 	public static int compareValue(String value, String nodeValue) {
-		System.out.println("COMPARE VALUE");
+/*		System.out.println("COMPARE VALUE");*/
 		//assume that list is of String type
 		int compare = (value.compareToIgnoreCase(nodeValue));
 		if (compare > 0) {
-			System.out.println("GREATER");
+/*			System.out.println("GREATER");*/
 			return GREATER;
 		}
 		else if (compare == 0) {
-			System.out.println("EQUAL");
+/*			System.out.println("EQUAL");*/
 			return EQUAL;
 		}
-		System.out.println("LESSER");
+/*		System.out.println("LESSER");*/
 		return LESSER;
 	}
 }
