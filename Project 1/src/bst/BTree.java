@@ -1,5 +1,6 @@
 package bst;
 
+import utils.Utils;
 import main.DynamicSet;
 
 /** Operations based on psuedocode found in the book*/
@@ -7,11 +8,6 @@ import main.DynamicSet;
 public class BTree<Type> implements DynamicSet<Type>{
 	private int size = 0;
 	private BNode<Type> root = null;
-	
-	private static final int GREATER = 1;
-	private static final int LESSER = 2;
-	private static final int EQUAL = 3;
-	
 	//empty node to return to handle null pointer exceptions
 	private BNode<Type> empty = null;
 	
@@ -54,8 +50,8 @@ public class BTree<Type> implements DynamicSet<Type>{
 			
 			while (true) {
 				parent = current;
-				int compare = compareValue(key, current);
-				if (compare == LESSER) {
+				int compare = Utils.compareValue((String)key, (String)current.getKey());
+				if (compare == Utils.LESSER) {
 					current = current.getLeftChild();
 					if (current == null) {
 						parent.setLeftChild(node);
@@ -112,15 +108,15 @@ public class BTree<Type> implements DynamicSet<Type>{
 		BNode<Type> current = root;
 		
 		while (true) {
-			int compare = compareValue(key, current);
-			if (compare == LESSER) {
+			int compare = Utils.compareValue((String)key, (String)current.getKey());
+			if (compare == Utils.LESSER) {
 				current = current.getLeftChild();
 				if (current == null) {
 					System.out.println("Not in the tree");
 					return null;
 				}
 			}
-			else if (compare == GREATER) {
+			else if (compare == Utils.GREATER) {
 				current = current.getRightChild();
 				if (current == null) {
 					System.out.println("Not in the tree");
@@ -210,20 +206,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 			}
 			return predecessor;
 		}
-	}
-	
-	/* Helper method that compares strings.  Assumes that keys are strings*/
-	public int compareValue(Type value, BNode<Type> node) {
-		
-		int compare = ((String) value).compareTo((String) node.getKey());
-
-		if (compare > 0) {
-			return GREATER;
-		}
-		else if (compare == 0) {
-			return EQUAL;
-		}
-		return LESSER;
 	}
 	
 	/* Helper method that gets the minimum of a subtree */
