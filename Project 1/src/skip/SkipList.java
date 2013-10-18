@@ -1,6 +1,5 @@
 package skip;
 
-//value is what the value is
 import java.util.*;
 
 import main.DynamicSet;
@@ -207,13 +206,6 @@ public void insert(Type key, Object value) {
     int i;
 
     p = (SkipListEntry<Type>) search(key);
-
-    /* ------------------------
-	Check if key is found
-	------------------------ */
-/*    if ( key.equals( p.getKey() ) ){
-    	p.value = (Type) value;
-    }*/
 
     /* ------------------------
 	Insert new entry (k,v)
