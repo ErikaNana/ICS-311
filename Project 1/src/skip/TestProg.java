@@ -16,7 +16,6 @@ public class TestProg
 		//    System.out.println("======");
 
 		S.insert("ABC", "123");
-		System.out.println(((SkipListEntry<String>) S.search("ABC")));
 		S.printHorizontal();
 		System.out.println("------");
 		//    S.printVertical();
@@ -60,7 +59,11 @@ public class TestProg
 		System.out.println("maximum of list:  " + ((SkipListEntry<String>) S.maximum()));
 		System.out.println("minimum of list:  " + ((SkipListEntry<String>) S.minimum()));
 		
+		//Test search
+		System.out.print("Searching for ABC:  ");
+		System.out.println(((SkipListEntry<String>) S.search("ABC")));;
 		//Test delete
+		System.out.println("deleting DEF");
 		S.delete("DEF");
 		S.printHorizontal();
 		System.out.println("------");
