@@ -295,14 +295,21 @@ public void insert(Type key, Object value) {
 
 @Override
 public void delete(Type key) {
-	// TODO Auto-generated method stub
+	@SuppressWarnings("unchecked")
+	SkipListEntry<Type> p = (SkipListEntry<Type>) search(key);
+	while (p != null) {
+		p.left.right = p.right;
+		p.right.left = p.left;
+		//travel up the tower if can
+		p = p.up;
+	}
 }
 
 
 @Override
 public Object search(Type key) {
     SkipListEntry<Type> p;
-
+    
     /* -----------------
 	Start at "head"
 	----------------- */

@@ -48,9 +48,16 @@ public class TestProg
 		//    System.out.println("======");
 		
 		//Test successor and predecessor
-		System.out.println("predecessor:  " + ((SkipListEntry<String>) S.predecessor("AAA")).getValue());
-		System.out.println("successor:  " + ((SkipListEntry<String>) S.successor("AAA")).getValue());
+		System.out.println("predecessor of AAA:  " + ((SkipListEntry<String>) S.predecessor("AAA")).getValue());
+		System.out.println("predecessor of KLM:  " + ((SkipListEntry<String>) S.predecessor("KLM")).getValue());
+		System.out.println("successor of KLM:  " + ((SkipListEntry<String>) S.successor("KLM")).getValue());
+		System.out.println("successor of AAA:  " + ((SkipListEntry<String>) S.successor("AAA")).getValue());
 		System.out.println("maximum of list:  " + ((SkipListEntry<String>) S.maximum()).getValue());
 		System.out.println("minimum of list:  " + ((SkipListEntry<String>) S.minimum()).getValue());
+		
+		//Test delete
+		S.delete("KLM");
+		S.printHorizontal();
+		System.out.println("------");
 	}
 }
