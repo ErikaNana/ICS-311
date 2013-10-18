@@ -11,7 +11,7 @@ import main.DynamicSet;
 public class SkipList<Type> implements DynamicSet<Type> {	
   public SkipListEntry<Type> head;    // First element of the top level
   public SkipListEntry<Type> tail;    // Last element of the top level
-  public int n; 		// number of entries in the Skip list
+  public int size; 		// number of entries in the Skip list
   public int height;       // Height
   public Random r;    // Coin toss
 
@@ -38,7 +38,7 @@ public class SkipList<Type> implements DynamicSet<Type> {
      p1.right = p2;
      p2.left = p1;
 
-     n = 0;
+     size = 0;
      height = 0;
 
      r = new Random();
@@ -47,12 +47,12 @@ public class SkipList<Type> implements DynamicSet<Type> {
 
   /** Returns the number of entries in the hash table. */
   public int size(){ 
-    return n; 
+    return size; 
   }
 
   /** Returns whether or not the table is empty. */
   public boolean isEmpty() { 
-    return (n == 0); 
+    return (size == 0); 
   }
 
   /** Returns the value associated with a key. */
@@ -281,9 +281,9 @@ public void insert(Type key, Object value) {
 	  	p.right = e;
 	  	q.up = e;
 	  	q = e;		// Set q up for the next iteration
-	  	i = i + 1;	// Current level increased by 1
+	  	i++;	// Current level increased by 1
     }
-    n = n + 1;
+    size++;
 }
 
 
@@ -297,6 +297,7 @@ public void delete(Type key) {
 		//travel up the tower if can
 		p = p.up;
 	}
+	size--;
 }
 
 
@@ -322,7 +323,7 @@ public Object search(Type key) {
 		p.right.key = 40
 	   -------------------------------------------- */
     	while ( p.right.key != SkipListEntry.posInf && 
-			p.right.key.compareTo((String) key) <= 0 ){
+			p.right.key.compareToIgnoreCase((String) key) <= 0 ){
 	        p = p.right;
     	}
 
