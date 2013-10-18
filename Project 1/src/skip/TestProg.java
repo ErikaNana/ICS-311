@@ -1,4 +1,9 @@
 package skip;
+
+/** Code is adapted from
+ * http://www.mathcs.emory.edu/~cheung/Courses/323/Syllabus/Map/skip-list-impl.html 
+ * */
+
 public class TestProg
 {
 //inserts 4 entries
@@ -11,7 +16,7 @@ public class TestProg
 		//    System.out.println("======");
 
 		S.insert("ABC", "123");
-		System.out.println(((SkipListEntry<String>) S.search("ABC")).getValue());
+		System.out.println(((SkipListEntry<String>) S.search("ABC")));
 		S.printHorizontal();
 		System.out.println("------");
 		//    S.printVertical();
@@ -48,15 +53,15 @@ public class TestProg
 		//    System.out.println("======");
 		
 		//Test successor and predecessor
-		System.out.println("predecessor of AAA:  " + ((SkipListEntry<String>) S.predecessor("AAA")).getValue());
-		System.out.println("predecessor of KLM:  " + ((SkipListEntry<String>) S.predecessor("KLM")).getValue());
-		System.out.println("successor of KLM:  " + ((SkipListEntry<String>) S.successor("KLM")).getValue());
-		System.out.println("successor of AAA:  " + ((SkipListEntry<String>) S.successor("AAA")).getValue());
-		System.out.println("maximum of list:  " + ((SkipListEntry<String>) S.maximum()).getValue());
-		System.out.println("minimum of list:  " + ((SkipListEntry<String>) S.minimum()).getValue());
+		System.out.println("predecessor of AAA:  " + ((SkipListEntry<String>) S.predecessor("AAA")));
+		System.out.println("predecessor of KLM:  " + ((SkipListEntry<String>) S.predecessor("KLM")));
+		System.out.println("successor of KLM:  " + ((SkipListEntry<String>) S.successor("KLM")));
+		System.out.println("successor of AAA:  " + ((SkipListEntry<String>) S.successor("AAA")));
+		System.out.println("maximum of list:  " + ((SkipListEntry<String>) S.maximum()));
+		System.out.println("minimum of list:  " + ((SkipListEntry<String>) S.minimum()));
 		
 		//Test delete
-		S.delete("KLM");
+		S.delete("DEF");
 		S.printHorizontal();
 		System.out.println("------");
 	}

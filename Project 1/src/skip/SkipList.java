@@ -1,11 +1,13 @@
 package skip;
 
-//key is where it is 
 //value is what the value is
 import java.util.*;
 
 import main.DynamicSet;
 
+/** Code is adapted from the skip list from 
+ * http://www.mathcs.emory.edu/~cheung/Courses/323/Syllabus/Map/skip-list-impl.html 
+ * */
 
 public class SkipList<Type> implements DynamicSet<Type> {	
   public SkipListEntry<Type> head;    // First element of the top level
@@ -28,8 +30,8 @@ public class SkipList<Type> implements DynamicSet<Type> {
   public SkipList(){ //default constructor 
      SkipListEntry<Type> p1, p2;
 
-     p1 = new SkipListEntry<Type>(SkipListEntry.negInf, null);
-     p2 = new SkipListEntry<Type>(SkipListEntry.posInf, null);
+     p1 = new SkipListEntry<Type>(SkipListEntry.negInf);
+     p2 = new SkipListEntry<Type>(SkipListEntry.posInf);
 
      head = p1;
      tail = p2;
@@ -62,7 +64,7 @@ public String getValueOfNode (String k) {
      p = (SkipListEntry<Type>) search((Type) k);
 
      if ( k.equals( p.getKey() ) )
-        return (String) (p.value);
+        return p.getKey();
      else
         return(null);
   }
@@ -87,7 +89,7 @@ public String getValueOfNode (String k) {
   {
      SkipListEntry<Type> e;
 
-     e = new SkipListEntry<Type>(k, null);
+     e = new SkipListEntry<Type>(k);
 
      /* ---------------------------------------
 	Use the links before they are changed !
@@ -209,9 +211,9 @@ public void insert(Type key, Object value) {
     /* ------------------------
 	Check if key is found
 	------------------------ */
-    if ( key.equals( p.getKey() ) ){
+/*    if ( key.equals( p.getKey() ) ){
     	p.value = (Type) value;
-    }
+    }*/
 
     /* ------------------------
 	Insert new entry (k,v)
@@ -221,7 +223,7 @@ public void insert(Type key, Object value) {
        **** BUG: He forgot to insert in the lowest level !!!
 	Link at the lowest level
 	------------------------------------------------------ */
-    q = new SkipListEntry<Type>((String)key, (Type) value);
+    q = new SkipListEntry<Type>((String)key);
     q.left = p;
     q.right = p.right;
     p.right.left = q;
@@ -240,8 +242,8 @@ public void insert(Type key, Object value) {
           SkipListEntry<Type> p1, p2;
 
           height = height + 1;
-          p1 = new SkipListEntry<Type>(SkipListEntry.negInf,null);
-          p2 = new SkipListEntry<Type>(SkipListEntry.posInf,null);
+          p1 = new SkipListEntry<Type>(SkipListEntry.negInf);
+          p2 = new SkipListEntry<Type>(SkipListEntry.posInf);
 	   
 		   p1.right = p2;
 		   p1.down  = head;
@@ -271,7 +273,7 @@ public void insert(Type key, Object value) {
 		   --------------------------------------------- */
 	  	SkipListEntry<Type> e;
 	  		 
-	  	e = new SkipListEntry<Type>((String) key, null);  // Don't need the value...
+	  	e = new SkipListEntry<Type>((String) key);  // Don't need the value...
 	  		 
 	  	/* ---------------------------------------
 	  	   Initialize links of e
