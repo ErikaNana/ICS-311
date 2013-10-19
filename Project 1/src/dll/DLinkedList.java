@@ -46,7 +46,6 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 			head = newNode;
 		}
 		if (size == 1) {
-			System.out.println("Head:  " + head.getValue());
 			int compare = Utils.compareValue((String)value, (String) head.getValue());
 			if (compare == Utils.GREATER || compare == Utils.EQUAL) {
 				//add the thing after
@@ -100,10 +99,6 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 	@Override
 	public void delete(Type key) {
 		DNode<Type> temp = head;
-		if (temp == null) {
-			System.out.println("Can't delete from an empty list!");
-			return;
-		}
 		while (temp != null) {
 			if (temp.getValue().equals(key)) {
 				//adjust the pointers
