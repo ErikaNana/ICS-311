@@ -19,13 +19,13 @@ public class BTree<Type> implements DynamicSet<Type>{
 		return root == null;
 	}
 	
-	BNode<Type> getRoot(){
+	public BNode<Type> getRoot(){
 		return root;
 	}
 	public void inorderTreeWalk(BNode<Type> node) {
 		if (node != null) {
 			inorderTreeWalk(node.getLeftChild());
-			System.out.print(node.getKey() + " ");
+			System.out.println(node.getKey());
 			inorderTreeWalk(node.getRightChild());
 		}
 	}
@@ -36,8 +36,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 	
 	@Override
 	public void insert(Type key, Object e) {
-		@SuppressWarnings("unchecked")
-		BNode<Type> node = (BNode<Type>) e;
+		BNode<Type> node = new BNode<Type>(key);
 		node.setKey(key);
 		
 		if (root == null) {

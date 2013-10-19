@@ -7,6 +7,10 @@ import java.io.FileReader;
 
 import java.util.Scanner;
 
+import dll.DLinkedList;
+
+import bst.BTree;
+
 public class UserDriver {
 
 	/**
@@ -28,27 +32,23 @@ public class UserDriver {
 			String [] array = null;
 			if (fileName.matches(".*100\\.txt")) {
 				array = new String[100];
-				System.out.println("100");
 			}
 			else if(fileName.matches(".*1000\\.txt")) {
 				array = new String[1000];
-				System.out.println("1000");
 			}
 			else if(fileName.matches(".*10000\\.txt")) {
 				array = new String[10000];
-				System.out.println("10000");
 			}
 			else if(fileName.matches(".*100000\\.txt")) {
 				array = new String[100000];
-				System.out.println("100000");
 			}
 			else if(fileName.matches(".*1000000\\.txt")) {
 				array = new String[1000000];
-				System.out.println("1000000");
 			}
 			
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			System.out.println("The file exists!");
+			
 			//read file in line by line
 			inputReader = new Scanner(br);
 			inputReader.useDelimiter("(\n)");
@@ -57,18 +57,25 @@ public class UserDriver {
 				array[index] = inputReader.next();
 				index++;
 			}
+			//test 1000000
+			BTree<String> bst = new BTree<String>();
+			DLinkedList<String> dll = new DLinkedList<String>();
 			
-			System.out.println("for loop");
-			System.out.println("array length:  " + array.length);
+			System.out.println("length:  " + array.length);
 			for (int i = 0; i < array.length; i++) {
-				System.out.println(array[i]);
+				bst.insert(array[i], null);
+				dll.insert(array[i], null);
 				System.out.println("i:  " + i);
 			}
-			System.out.println("out of for loop");
+			//clear the array?
+			array = null;
+	/*		bst.inorderTreeWalk(bst.getRoot());*/
+			System.out.println("");
+			System.out.println(dll);
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found.  Please try again.");
 		}
-		
 		inputReader.close();
 	}
 

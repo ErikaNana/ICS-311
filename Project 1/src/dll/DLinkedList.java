@@ -26,7 +26,7 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		DNode<Type> temp = head;
 		String answer = "";
 		while(temp != null) {
-			answer = answer + temp.getValue().toString()+ " ";
+			answer = answer + temp.getValue() + "\n";
 			temp = temp.getNext();
 		}
 		return answer;
@@ -39,24 +39,23 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 	@Override
 	public void insert(Type value, Object e) {
 		DNode<Type> temp = head;
-		@SuppressWarnings("unchecked")
-		DNode<Type> newNode = (DNode<Type>) e;
+		DNode<Type> newNode = new DNode<Type>(value);
 		newNode.setValue(value);
 		boolean insert = false; //check to see if inserted
 		
 		if (size == 0) {
-			System.out.println("size 0");
+/*			System.out.println("size 0");*/
 			head = newNode;
 		}
 		if (size == 1) {
-			System.out.println("size 1");
+/*			System.out.println("size 1");*/
 			int compare = Utils.compareValue((String)value, (String) head.getValue());
 			if (compare == Utils.GREATER || compare == Utils.EQUAL) {
 				//add the thing after
 				head.connectNext(newNode);
 			}
 			else { //add the thing before
-				System.out.println("less than in size 1");
+/*				System.out.println("less than in size 1");*/
 				head = newNode;
 				head.connectNext(temp);
 			}
@@ -64,15 +63,15 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		else {
 			//compare the values
 			if (size  > 1) {
-				System.out.println("bigger than 1");
+/*				System.out.println("bigger than 1");*/
 				while (temp.getNext()!= null) {
-					System.out.println("size:  " + size);
-					System.out.println("temp is:  " + temp.getValue());
+/*					System.out.println("size:  " + size);
+					System.out.println("temp is:  " + temp.getValue());*/
 					int compare = Utils.compareValue((String)value, (String) temp.getValue());
 					if (compare == Utils.LESSER) {
 						//special case if the head
 						if (temp == head) {
-							System.out.println("temp is the head");
+	/*						System.out.println("temp is the head");*/
 							head = newNode;
 							head.connectNext(temp);
 							temp.connectPrev(head);
@@ -83,15 +82,15 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 							newNode.connectNext(temp);
 						}
 						insert = true;
-						System.out.println("inserting before the lesser");
-						System.out.println("temp:  "+ temp.getValue());
+/*						System.out.println("inserting before the lesser");
+						System.out.println("temp:  "+ temp.getValue());*/
 						break;	
 					}
 					temp = temp.getNext();
 				}
 				//reached the end of the list
 				if (!insert) {
-					System.out.println("end of the list");
+/*					System.out.println("end of the list");*/
 					//check the last node
 					if (Utils.compareValue((String) value, (String) temp.getValue()) == Utils.LESSER) {
 						temp.getPrev().connectNext(newNode);
@@ -101,7 +100,7 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 					else {
 						temp.connectNext(newNode);
 					}
-					System.out.println("temp:  " + temp.getValue());	
+/*					System.out.println("temp:  " + temp.getValue());*/	
 				}
 			}
 		}
