@@ -2,7 +2,6 @@ package dll;
 
 import utils.Utils;
 import main.DynamicSet;
-//fix null pointer exceptions (with predecessor), use maybe sentinels
 
 /* Constructs a sorted doubly-linked list. 
  * @author Erika Nana

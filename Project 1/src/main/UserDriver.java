@@ -57,26 +57,53 @@ public class UserDriver {
 				array[index] = inputReader.next();
 				index++;
 			}
-			//test 1000000
-			BTree<String> bst = new BTree<String>();
+			//test 1000 declared as native types so can test printing
+			DynamicSet<String> bst = new BTree<String>();
 			DLinkedList<String> dll = new DLinkedList<String>();
 			
-			System.out.println("length:  " + array.length);
+			testInsert(bst,array);
+/*			System.out.println("length:  " + array.length);
 			for (int i = 0; i < array.length; i++) {
 				bst.insert(array[i], null);
 				dll.insert(array[i], null);
 				System.out.println("i:  " + i);
-			}
+			}*/
 			//clear the array?
 			array = null;
 	/*		bst.inorderTreeWalk(bst.getRoot());*/
-			System.out.println("");
-			System.out.println(dll);
 			
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found.  Please try again.");
 		}
 		inputReader.close();
 	}
-
+	public static double[] testInsert(DynamicSet<String> set, String[] input) {
+		double [] outputArray = new double [3];
+		double sum = 0;
+		double min = 1000000000000000000000000000.0;
+		double max = 0;
+		
+		for (int i = 0; i < input.length; i++) {
+			double start = System.nanoTime();
+			set.insert(input[i], null);
+			double end = System.nanoTime();
+			double time = end - start;
+			System.out.println("time:  " + time);
+			if (time < min) {
+				min = time;
+				System.out.println("time in thing:  " + time);
+				System.out.println("new min:  " + min);
+			}
+			if (time > max) {
+				max = time;
+				System.out.println("time in thing:  " + time);
+				System.out.println("new max:  " + max);
+			}
+			sum = sum + time;
+		}
+		outputArray[0] = min;
+		outputArray[1] = max;
+		outputArray[2] = sum/input.length;
+		return outputArray;
+	}
 }
