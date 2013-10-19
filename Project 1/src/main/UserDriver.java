@@ -156,7 +156,6 @@ public class UserDriver {
 							break;
 						}
 					default:
-						System.out.println("That command is not recognized");
 						break;
 				}
 			}}
