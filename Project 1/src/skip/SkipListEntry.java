@@ -23,6 +23,6 @@ public class SkipListEntry<Type>{
   }
 
   public String toString() {
-    return "(" + key + ")";
+    return key;
   }
 }

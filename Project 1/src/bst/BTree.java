@@ -39,39 +39,29 @@ public class BTree<Type> implements DynamicSet<Type>{
 		BNode<Type> node = new BNode<Type>(key);
 		node.setKey(key);
 		
-		if (root == null) {
-			root = node;
-			size++;
-		}
-		else {
-			BNode<Type> current = root;
-			BNode<Type> parent;
-			
-			while (true) {
-				parent = current;
-				int compare = Utils.compareValue((String)key, (String)current.getKey());
-				if (compare == Utils.LESSER) {
-					current = current.getLeftChild();
-					if (current == null) {
-						parent.setLeftChild(node);
-						//set the parent pointers
-						parent.getLeftChild().setParent(parent);
-						size++;
-						return;
-					}
-				}
-				else {
-					current = current.getRightChild();
-					if (current == null) {
-						parent.setRightChild(node);
-						//set parent pointer
-						parent.getRightChild().setParent(parent);
-						size++;
-						return;
-					}
-				}
+		BNode<Type> y = null;
+		BNode<Type> x = this.root;
+		
+		while (x != null) {
+			y = x;
+			if (Utils.compareValue((String)key, (String) x.getKey()) == Utils.LESSER) {
+				x = x.getLeftChild();
+			}
+			else {
+				x = x.getRightChild();
 			}
 		}
+		node.setParent(y);
+		if (y == null) {
+			this.root = node; //tree is empty to begin with
+		}
+		else if (Utils.compareValue((String) node.getKey(), (String) y.getKey()) == Utils.LESSER) {
+			y.setLeftChild(node);
+		}
+		else {
+			y.setRightChild(node);
+		}
+		size++;
 	}
 
 	@Override
@@ -80,6 +70,10 @@ public class BTree<Type> implements DynamicSet<Type>{
 		@SuppressWarnings("unchecked")
 		BNode<Type> node = (BNode<Type>) this.search(key);
 		
+		if (node == null) {
+			System.out.println("Can't delete from an empty tree!");
+			return;
+		}
 		if (node.getLeftChild() == null) {
 			transplant(node, node.getRightChild());
 		}
@@ -87,7 +81,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 			transplant(node, node.getLeftChild());
 		}
 		else  {
-			System.out.println("in else");
+/*			System.out.println("in else");*/
 			BNode<Type>y = minimum(node.getRightChild());
 			if (y.getParent() != node) {
 				transplant(y,y.getRightChild());
@@ -111,14 +105,14 @@ public class BTree<Type> implements DynamicSet<Type>{
 			if (compare == Utils.LESSER) {
 				current = current.getLeftChild();
 				if (current == null) {
-					System.out.println("Not in the tree");
+					//System.out.println("Not in the tree");
 					return null;
 				}
 			}
 			else if (compare == Utils.GREATER) {
 				current = current.getRightChild();
 				if (current == null) {
-					System.out.println("Not in the tree");
+					//System.out.println("Not in the tree");
 					return null;
 				}
 			}

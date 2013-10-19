@@ -291,6 +291,10 @@ public void insert(Type key, Object value) {
 public void delete(Type key) {
 	@SuppressWarnings("unchecked")
 	SkipListEntry<Type> p = (SkipListEntry<Type>) search(key);
+	if (p == null) {
+		System.out.println("Can't delete from an empty list!");
+		return;
+	}
 	while (p != null) {
 		p.left.right = p.right;
 		p.right.left = p.left;
