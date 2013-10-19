@@ -7,7 +7,7 @@ public class Utils<Type> {
 	
 	//used to emulate a switch on the inputs
 	public enum Command{
-		runtest, insert, search, delete, pred, succ, min, max, quit;
+		runtest, insert, search, delete, pred, succ, min, max, loadNew, quit;
 	}
 	
 	//used for the compareValue method

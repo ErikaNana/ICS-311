@@ -94,7 +94,6 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 			}
 		}
 		size++;
-		
 	}
 	@Override
 	public void delete(Type key) {
