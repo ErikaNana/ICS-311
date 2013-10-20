@@ -52,8 +52,8 @@ public class UserDriver {
 			else {
 				while (true) {
 				System.out.println(PURPLE + "\nWhat would you like to do?");
-				System.out.println(PURPLE + "Options available:");
-				System.out.println(PURPLE + "runtest, insert, search, delete, pred, succ, min, max, loadNew, quit" + RESET);
+				System.out.println(PURPLE + "Options available:  runtest, insert, search, delete, pred, " +
+								  "succ, min, max, loadNew, quit" + RESET);
 				
 				String choice = inputReader.nextLine();
 				if (!Utils.isEnum(choice)) {
@@ -178,22 +178,22 @@ public class UserDriver {
 		DynamicSet<String> set = new DLinkedList<String>();
 		System.out.printf("size:  %-7d\n", size);
 		Utils.printDivider();
-		System.out.println("               |Insert                     " +
-				"|Search                      " +
-				"|Predecessor                 " +
-				"|Successor                   " +
-				"|Minimum   " +
-				"|Maximum   |");
+		System.out.println("               | Insert                     " +
+				"| Search                     " +
+				"| Predecessor                " +
+				"| Successor                  " +
+				"| Minimum  " +
+				"| Maximum  |");
 		Utils.printDivider();
-		System.out.print("LinkedList     |");
+		System.out.print("Linked List    | ");
 		Utils.printRow(set, array, randomValues);
 		
 		set = new SkipList<String>();
-		System.out.print("Skip List      |");
+		System.out.print("Skip List      | ");
 		Utils.printRow(set, array, randomValues);
 		
 		set = new BTree<String>();
-		System.out.print("Binary Tree    |");
+		System.out.print("Binary Tree    | ");
 		Utils.printRow(set, array, randomValues);
 	}
 	public static String loadFile() {

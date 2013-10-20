@@ -93,7 +93,7 @@ public class Utils<Type> {
 	}
 	
 	public static void printDivider() {
-		for(int i = 0; i < 153; i++) {
+		for(int i = 0; i < 154; i++) {
 			System.out.print("-");
 		}
 		System.out.println("");
