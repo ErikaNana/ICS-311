@@ -22,6 +22,7 @@ public class UserDriver {
 	static String[] randomValues = new String[10]; 
 	static String[] array;
 	static Scanner inputReader = new Scanner(System.in);
+	static int size;
 	
 	//Colors for output in the console
 	public static final String RESET = "\u001B[0m";
@@ -119,7 +120,7 @@ public class UserDriver {
 						}
 						break;
 					case runtest:
-						runTest(array,randomValues);
+						runTest();
 						break;
 					case search:
 						System.out.println(BLUE + "Please type in the key:  " + RESET);
@@ -172,57 +173,28 @@ public class UserDriver {
 		}
 	}
 	
-	public static void runTest(String[] array, String[] randomValues) {
+	public static void runTest() {
 		
-		DynamicSet<String> set = new BTree<String>();
-		
-		System.out.println("");
-		System.out.println("Testing bst \n----------");
-		System.out.println("insert");
-		Utils.testSet(set, array, Utils.INSERT);
-		System.out.println("search");
-		Utils.testSet(set,randomValues,Utils.SEARCH);
-		System.out.println("successor");
-		Utils.testSet(set,randomValues,Utils.SUCCESSOR);
-		System.out.println("predecessor");
-		Utils.testSet(set,randomValues,Utils.PREDECESSOR);
-		System.out.println("minimum");
-		Utils.testMinMax(set, Utils.MINIMUM);
-		System.out.println("maximum");
-		Utils.testMinMax(set, Utils.MAXIMUM);		
-		System.out.println("");
-		
-		set = new DLinkedList<String>();
-		System.out.println("Testing dll \n------------");
-		System.out.println("insert");
-		Utils.testSet(set, array, Utils.INSERT);
-		System.out.println("search");
-		Utils.testSet(set,randomValues,Utils.SEARCH);
-		System.out.println("successor");
-		Utils.testSet(set,randomValues,Utils.SUCCESSOR);
-		System.out.println("predecessor");
-		Utils.testSet(set,randomValues,Utils.PREDECESSOR);
-		System.out.println("minimum");
-		Utils.testMinMax(set, Utils.MINIMUM);
-		System.out.println("maximum");
-		Utils.testMinMax(set, Utils.MAXIMUM);
-		System.out.println("");
+		DynamicSet<String> set = new DLinkedList<String>();
+		System.out.printf("size:  %-7d\n", size);
+		Utils.printDivider();
+		System.out.println("               |Insert                     " +
+				"|Search                      " +
+				"|Predecessor                 " +
+				"|Successor                   " +
+				"|Minimum                     " +
+				"|Maximum                     |");
+		Utils.printDivider();
+		System.out.print("LinkedList     |");
+		Utils.printRow(set, array, randomValues);
 		
 		set = new SkipList<String>();
-		System.out.println("Testing skip \n------------");
-		System.out.println("insert");
-		Utils.testSet(set, array, Utils.INSERT);
-		System.out.println("search");
-		Utils.testSet(set,randomValues,Utils.SEARCH);
-		System.out.println("successor");
-		Utils.testSet(set,randomValues,Utils.SUCCESSOR);
-		System.out.println("predecessor");
-		Utils.testSet(set,randomValues,Utils.PREDECESSOR);
-		System.out.println("minimum");
-		Utils.testMinMax(set, Utils.MINIMUM);
-		System.out.println("maximum");
-		Utils.testMinMax(set, Utils.MAXIMUM);
-		System.out.println("");
+		System.out.print("Skip List      |");
+		Utils.printRow(set, array, randomValues);
+		
+		set = new BTree<String>();
+		System.out.print("Binary Tree    |");
+		Utils.printRow(set, array, randomValues);
 	}
 	public static String loadFile() {
 		String fileName;			
@@ -239,18 +211,23 @@ public class UserDriver {
 		try {
 			//create an array based on the file name
 			if (fileName.matches(".*100\\.txt")) {
+				size = 100;
 				array = new String[100];
 			}
 			else if(fileName.matches(".*1000\\.txt")) {
+				size = 1000;
 				array = new String[1000];
 			}
 			else if(fileName.matches(".*10000\\.txt")) {
+				size = 10000;
 				array = new String[10000];
 			}
 			else if(fileName.matches(".*100000\\.txt")) {
+				size = 100000;
 				array = new String[100000];
 			}
 			else if(fileName.matches(".*1000000\\.txt")) {
+				size = 1000000;
 				array = new String[1000000];
 			}
 			

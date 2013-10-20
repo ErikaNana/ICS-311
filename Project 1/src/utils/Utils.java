@@ -60,10 +60,10 @@ public class Utils<Type> {
 			}
 			sum = sum + time;
 		}
-		System.out.println("min:  " + min);
+/*		System.out.println("min:  " + min);
 		System.out.println("max:  " + max);
 		System.out.println("average:  " + sum/input.length);
-		System.out.println("");
+		System.out.println("");*/
 		outputArray[0] = min;
 		outputArray[1] = max;
 		outputArray[2] = sum/input.length;
@@ -91,5 +91,39 @@ public class Utils<Type> {
 	        }
 	    }
 	    return false;
+	}
+	
+	public static void printDivider() {
+		for(int i = 0; i < 189; i++) {
+			System.out.print("-");
+		}
+		System.out.println("");
+	}
+	
+	public static void printCell(double[] input) {
+		System.out.printf("%-4.2e/%-4.2e/%-4.2e", input[0], input[1], input[2]);
+	}
+	
+	public static void printRow(DynamicSet<String> set, String[] array, String[] randomValues) {
+		double[] insert = testSet(set, array, Utils.INSERT);
+		double[] search = testSet(set, randomValues, Utils.SEARCH);
+		double[] pred = testSet(set, randomValues, Utils.PREDECESSOR);
+		double[] succ = testSet(set, randomValues, Utils.SUCCESSOR);
+		double[] min = testSet(set, array, Utils.MINIMUM);
+		double[] max = testSet(set, array, Utils.MAXIMUM);
+		
+		printCell(insert);
+		System.out.print(" | ");
+		printCell(search);
+		System.out.print(" | ");
+		printCell(pred);
+		System.out.print(" | ");
+		printCell(succ);
+		System.out.print(" | ");
+		printCell(min);
+		System.out.print(" | ");
+		printCell(max);
+		System.out.print(" | \n");
+		printDivider();
 	}
 }
