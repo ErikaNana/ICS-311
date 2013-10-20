@@ -15,25 +15,55 @@ import bst.BTree;
 import dll.DLinkedList;
 import dll.DNode;
 
+/**
+ * The Class UserDriver. 
+ * Allows the user to run tests on the three data structures at one time.
+ * Also supports individual operations on the data structures.
+ * 
+ * @author Erika Nana
+ */
 public class UserDriver {
-	/**
-	 * Driver to run the program
-	 */
+	
+	/** Driver to run the program. */
 	static String[] randomValues = new String[10]; 
+	
+	/** The array. */
 	static String[] array;
+	
+	/** The input reader. */
 	static Scanner inputReader = new Scanner(System.in);
+	
+	/** The size. */
 	static int size;
 	
-	//Colors for output in the console
+	/** Colors for output in the console*/
+	/** The Constant RESET. */
 	public static final String RESET = "\u001B[0m";
+	
+	/** The Constant BLACK. */
 	public static final String BLACK = "\u001B[30m";
+	
+	/** The Constant RED. */
 	public static final String RED = "\u001B[31m";
+	
+	/** The Constant GREEN. */
 	public static final String GREEN = "\u001B[32m";
+	
+	/** The Constant BLUE. */
 	public static final String BLUE = "\u001B[34m";
+	
+	/** The Constant PURPLE. */
 	public static final String PURPLE = "\u001B[35m";
+	
+	/** The Constant CYAN. */
 	public static final String CYAN = "\u001B[36m";
 
 	
+	/**
+	 * The user interface.
+	 *
+	 * @param args Not used
+	 */
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		String key;
@@ -173,6 +203,9 @@ public class UserDriver {
 		}
 	}
 	
+	/**
+	 * Prints out the table of results
+	 */
 	public static void runTest() {
 		
 		DynamicSet<String> set = new DLinkedList<String>();
@@ -196,6 +229,13 @@ public class UserDriver {
 		System.out.print("Binary Tree    | ");
 		Utils.printRow(set, array, randomValues);
 	}
+	
+	/**
+	 * Reads in the file and generates the input array and the array of
+	 * random values.
+	 *
+	 * @return The status of the driver
+	 */
 	public static String loadFile() {
 		String fileName;			
 		System.out.println(PURPLE + "\nPlease type in file name to read, or quit to exit:" + RESET);

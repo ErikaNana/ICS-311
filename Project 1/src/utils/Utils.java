@@ -2,15 +2,23 @@ package utils;
 
 import main.DynamicSet;
 
-/**Includes static methods*/
+/**
+ * Includes static helper methods.
+ *
+ * @author Erika Nana
+ * @param <Type> the generic type
+ */
 public class Utils<Type> {
 	
-	//used to emulate a switch on the inputs
+	/**
+	 * The Enum Command: used to emulate a switch on the inputs.
+	 */
 	public enum Command{
 		runtest, insert, search, delete, pred, succ, min, max, loadNew, quit;
 	}
 	
-	//used for the compareValue method
+	/*used for the compareValue method*/
+	
 	public static final int GREATER = 1;
 	public static final int LESSER = 2;
 	public static final int EQUAL = 3;
@@ -23,7 +31,13 @@ public class Utils<Type> {
 	public static final int MINIMUM = 8;
 	public static final int MAXIMUM = 9;
 	
-	/* Helper method that compares strings*/
+	/**
+	 * Helper method that compares strings
+	 *
+	 * @param value The string
+	 * @param nodeValue The node value to be compared
+	 * @return The result of the comparison
+	 */
 	public static int compareValue(String value, String nodeValue) {
 		int compare = (value.compareToIgnoreCase(nodeValue));
 		if (compare > 0) {
@@ -34,6 +48,15 @@ public class Utils<Type> {
 		}
 		return LESSER;
 	}
+	
+	/**
+	 * Outputs the minimum, maximum and average times of the operations on a set.
+	 *
+	 * @param set The set that is operated on
+	 * @param input The array to be used as input
+	 * @param operation The operation to be performed
+	 * @return An array of times
+	 */
 	public static double[] testSet(DynamicSet<String> set, String[] input, int operation) {
 		double [] outputArray = new double [3];
 		double sum = 0;
@@ -60,16 +83,19 @@ public class Utils<Type> {
 			}
 			sum = sum + time;
 		}
-/*		System.out.println("min:  " + min);
-		System.out.println("max:  " + max);
-		System.out.println("average:  " + sum/input.length);
-		System.out.println("");*/
 		outputArray[0] = min;
 		outputArray[1] = max;
 		outputArray[2] = sum/input.length;
 		return outputArray;
 	}
 	
+	/**
+	 * Tests the the time it takes to get the minimum or the maximum value of a set
+	 *
+	 * @param set The set to be operated on
+	 * @param operation The operation to be performed
+	 * @return The time it takes for the operation to be completed
+	 */
 	public static double testMinMax(DynamicSet<String> set, int operation) {
 		double start = System.nanoTime();
 		if (operation == MINIMUM) {
@@ -81,7 +107,13 @@ public class Utils<Type> {
 		double end = System.nanoTime();
 		return end - start;
 	}
-	/**Checks to see if command is valid*/
+	
+	/**
+	 * Checks to see if a command is valid.
+	 *
+	 * @param test The input to be tested
+	 * @return true, if is a Command
+	 */
 	public static boolean isEnum(String test) {
 
 	    for (Command c : Command.values()) {
@@ -92,6 +124,9 @@ public class Utils<Type> {
 	    return false;
 	}
 	
+	/**
+	 * Prints the divider for the runtest table.
+	 */
 	public static void printDivider() {
 		for(int i = 0; i < 154; i++) {
 			System.out.print("-");
@@ -99,10 +134,22 @@ public class Utils<Type> {
 		System.out.println("");
 	}
 	
+	/**
+	 * Prints a cell of the runtest table.
+	 *
+	 * @param input The array of values to be printed.
+	 */
 	public static void printCell(double[] input) {
 		System.out.printf("%-4.2e/%-4.2e/%-4.2e", input[0], input[1], input[2]);
 	}
 	
+	/**
+	 * Prints the row of the runtest table.
+	 *
+	 * @param set the set
+	 * @param array the array
+	 * @param randomValues the random values
+	 */
 	public static void printRow(DynamicSet<String> set, String[] array, String[] randomValues) {
 		double[] insert = testSet(set, array, Utils.INSERT);
 		double[] search = testSet(set, randomValues, Utils.SEARCH);

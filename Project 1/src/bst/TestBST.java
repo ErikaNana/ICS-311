@@ -2,10 +2,16 @@ package bst;
 
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TestBST.
+ */
 public class TestBST {
 
 	/**
-	 * @param args
+	 * The main method.
+	 *
+	 * @param args the arguments
 	 */
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {

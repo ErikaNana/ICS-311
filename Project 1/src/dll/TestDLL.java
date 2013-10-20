@@ -1,6 +1,16 @@
 package dll;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TestDLL.
+ */
 public class TestDLL {
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	@SuppressWarnings("unchecked")
 	public static void main (String [] args) {
 		DLinkedList<String> list = new DLinkedList<String>();

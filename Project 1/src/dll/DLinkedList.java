@@ -6,17 +6,35 @@ import main.DynamicSet;
 /* Constructs a sorted doubly-linked list. 
  * @author Erika Nana
  */
+/**
+ * The Class DLinkedList.
+ *
+ * @author Erika Nana
+ * @param <Type> the generic type
+ */
 public class DLinkedList<Type> implements DynamicSet<Type> {
 	
+	/** The head. */
 	private DNode<Type> head = null;
-	private int size = 0;
-	private DNode<Type> empty = null; //for null pointer
 	
-	/* Constructor */
+	/** The size. */
+	private int size = 0;
+	
+	/** The empty node, used to handle null pointer exceptions. */
+	private DNode<Type> empty = null; 
+	
+	/**
+	 * Instantiates a new doubly linked list.
+	 */
 	public DLinkedList(){
 		empty = new DNode<Type>(); //for null pointer
 	}
-	/* Checks to see if the list is empty*/
+
+	/**
+	 * Checks if is empty.
+	 *
+	 * @return True, if is empty
+	 */
 	public boolean isEmpty() {
 		return head == null;
 	}
@@ -31,10 +49,17 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		return answer;
 	}
 	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#size()
+	 */
 	@Override
 	public int size() {
 		return size;
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#insert(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	public void insert(Type value, Object e) {
 		DNode<Type> temp = head;
@@ -95,6 +120,10 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		}
 		size++;
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#delete(java.lang.Object)
+	 */
 	@Override
 	public void delete(Type key) {
 		DNode<Type> temp = head;
@@ -112,6 +141,10 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 			temp = temp.getNext();
 		}
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#search(java.lang.Object)
+	 */
 	@Override
 	public Object search(Type key) {
 		DNode<Type> temp = head;
@@ -124,10 +157,18 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		}
 		return null;
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#minimum()
+	 */
 	@Override
 	public Object minimum() {
 		return head;
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#maximum()
+	 */
 	@Override
 	public Object maximum() {
 		DNode<Type> temp = head;
@@ -136,6 +177,10 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		}
 		return temp;
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#successor(java.lang.Object)
+	 */
 	@Override
 	public Object successor(Type key) {
 		@SuppressWarnings("unchecked")
@@ -146,6 +191,10 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		}
 		return temp.getNext();
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#predecessor(java.lang.Object)
+	 */
 	@Override
 	public Object predecessor(Type key) {
 		@SuppressWarnings("unchecked")

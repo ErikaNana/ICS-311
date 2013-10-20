@@ -3,25 +3,56 @@ package bst;
 import utils.Utils;
 import main.DynamicSet;
 
-/** Operations based on psuedocode found in the book*/
+/**
+ * Operations for manipulating a binary search tree.
+ * Based on the psuedocode found in Introduction to Algorithms Third Edition
+ * by Cormen et al.
+ *
+ * @author Erika Nana
+ * @param <Type> the generic type
+ */
 
 public class BTree<Type> implements DynamicSet<Type>{
+	
+	/** The size. */
 	private int size = 0;
+	
+	/** The root. */
 	private BNode<Type> root = null;
-	//empty node to return to handle null pointer exceptions
+	
+	/** The empty node to return; handles null pointer exceptions. */
 	private BNode<Type> empty = null;
 	
+	/**
+	 * Instantiates a new b tree.
+	 */
 	public BTree() {
 		empty = new BNode<Type>(null); //for null pointer
 	}
 	
+	/**
+	 * Checks if is empty.
+	 *
+	 * @return True, if is empty
+	 */
 	public boolean isEmpty() {
 		return root == null;
 	}
 	
+	/**
+	 * Gets the root.
+	 *
+	 * @return The root
+	 */
 	public BNode<Type> getRoot(){
 		return root;
 	}
+	
+	/**
+	 * Inorder tree walk.
+	 *
+	 * @param node The node to start the walk from
+	 */
 	public void inorderTreeWalk(BNode<Type> node) {
 		if (node != null) {
 			inorderTreeWalk(node.getLeftChild());
@@ -29,11 +60,18 @@ public class BTree<Type> implements DynamicSet<Type>{
 			inorderTreeWalk(node.getRightChild());
 		}
 	}
+	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#size()
+	 */
 	@Override
 	public int size() {
 		return size;
 	}
 	
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#insert(java.lang.Object, java.lang.Object)
+	 */
 	@Override
 	public void insert(Type key, Object e) {
 		BNode<Type> node = new BNode<Type>(key);
@@ -64,6 +102,9 @@ public class BTree<Type> implements DynamicSet<Type>{
 		size++;
 	}
 
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#delete(java.lang.Object)
+	 */
 	@Override
 	public void delete(Type key) {
 		//search for the key to delete
@@ -95,6 +136,9 @@ public class BTree<Type> implements DynamicSet<Type>{
 		size--;
 	}
 
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#search(java.lang.Object)
+	 */
 	@Override
 	public Object search(Type key) {
 		//matches at the root
@@ -122,6 +166,9 @@ public class BTree<Type> implements DynamicSet<Type>{
 		}
 	}
 	/*Gets the minimum of the whole tree*/
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#minimum()
+	 */
 	@Override
 	public Object minimum() {
 		BNode<Type> temp = root;
@@ -135,7 +182,10 @@ public class BTree<Type> implements DynamicSet<Type>{
 			return temp;
 		}
 	}
-	/*Gets the maximum of the whole tree*/
+
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#maximum()
+	 */
 	@Override
 	public Object maximum() {
 		BNode<Type> temp = root;
@@ -149,7 +199,10 @@ public class BTree<Type> implements DynamicSet<Type>{
 			return temp;
 		}
 	}
-	/*Returns an empty node if can't be found*/
+
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#successor(java.lang.Object)
+	 */
 	@Override
 	public Object successor(Type key) {
 		@SuppressWarnings("unchecked")
@@ -173,7 +226,10 @@ public class BTree<Type> implements DynamicSet<Type>{
 		}
 		return successor;
 	}
-	/*Returns an empty node if can't be found*/
+
+	/* (non-Javadoc)
+	 * @see main.DynamicSet#predecessor(java.lang.Object)
+	 */
 	@Override
 	public Object predecessor(Type key) {
 		@SuppressWarnings("unchecked")
@@ -201,7 +257,13 @@ public class BTree<Type> implements DynamicSet<Type>{
 		}
 	}
 	
-	/* Helper method that gets the minimum of a subtree */
+
+	/**
+	 * Gets the minimum of the tree
+	 *
+	 * @param node The root of the tree 
+	 * @return The minimum node of the tree
+	 */
 	public BNode<Type> minimum(BNode<Type> node){
 		while (node.getLeftChild() != null) {
 			node = node.getLeftChild();
@@ -209,7 +271,12 @@ public class BTree<Type> implements DynamicSet<Type>{
 		return node;
 	}
 	
-	/* Helper method that gets the maximum of a subtree */
+	/**
+	 * Gets the maximum of the tree
+	 *
+	 * @param node The root of the tree
+	 * @return The maximum node in the tree
+	 */
 	public BNode<Type> maximum(BNode<Type> node){
 		while (node.getRightChild() != null) {
 			node = node.getRightChild();
@@ -217,7 +284,12 @@ public class BTree<Type> implements DynamicSet<Type>{
 		return node;
 	}
 	
-	/*Helper method for delete*/
+	/**
+	 * Replaces one subtree as a child of its parent with another subtree
+	 *
+	 * @param u The root of a tree
+	 * @param v The root of another tree
+	 */
 	public void transplant(BNode<Type> u, BNode<Type> v) {
 		if (u.getParent() == null) //u is the root of its subtree
 				setRoot(v);
@@ -227,7 +299,12 @@ public class BTree<Type> implements DynamicSet<Type>{
 		if (v != null)
 			v.setParent(u.getParent());
 	}
-	/*Sets the value of the root*/
+
+	/**
+	 * Sets the root.
+	 *
+	 * @param node the new root
+	 */
 	public void setRoot(BNode<Type> node) {
 		root = node;
 	}
