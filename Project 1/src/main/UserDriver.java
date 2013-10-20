@@ -23,6 +23,16 @@ public class UserDriver {
 	static String[] array;
 	static Scanner inputReader = new Scanner(System.in);
 	
+	//Colors for output in the console
+	public static final String RESET = "\u001B[0m";
+	public static final String BLACK = "\u001B[30m";
+	public static final String RED = "\u001B[31m";
+	public static final String GREEN = "\u001B[32m";
+	public static final String BLUE = "\u001B[34m";
+	public static final String PURPLE = "\u001B[35m";
+	public static final String CYAN = "\u001B[36m";
+
+	
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		String key;
@@ -40,13 +50,13 @@ public class UserDriver {
 			}
 			else {
 				while (true) {
-				System.out.println("\nWhat would you like to do?");
-				System.out.println("Options available:");
-				System.out.println("runtest, insert, search, delete, pred, succ, min, max, loadNew, quit");
+				System.out.println(PURPLE + "\nWhat would you like to do?");
+				System.out.println(PURPLE + "Options available:");
+				System.out.println(PURPLE + "runtest, insert, search, delete, pred, succ, min, max, loadNew, quit" + RESET);
 				
 				String choice = inputReader.nextLine();
 				if (!Utils.isEnum(choice)) {
-					System.out.println("That command is not recognized");
+					System.out.println(RED + "That command is not recognized");
 					continue;
 				}
 				if (Utils.Command.valueOf(choice) == Utils.Command.quit) {
@@ -55,10 +65,10 @@ public class UserDriver {
 				switch(Utils.Command.valueOf(choice)) {
 					case delete:
 						if (bst.size() == 0) {
-							System.out.println("The ADT's are emtpy!");
+							System.out.println(RED + "The ADT's are emtpy!");
 							break;
 						}
-						System.out.println("Please type in the key:  ");
+						System.out.println(BLUE + "Please type in the key:  " + RESET);
 						key = inputReader.nextLine();
 						bst.delete(key);
 						dll.delete(key);
@@ -66,7 +76,7 @@ public class UserDriver {
 						System.out.println("deleted:  " + choice);
 						break;
 					case insert:
-						System.out.println("Please type in the key:  ");
+						System.out.println(BLUE + "Please type in the key:  " + RESET);
 						key = inputReader.nextLine();
 						bst.insert(key,null);
 						dll.insert(key,null);
@@ -74,77 +84,77 @@ public class UserDriver {
 						break;
 					case max:
 						if (bst.size() == 0) {
-							System.out.println("The ADT's are emtpy!");
+							System.out.println(RED + "The ADT's are emtpy!");
 							break;
 						}
-						System.out.println("maximum of binary search tree:  " + ((BNode<String>)bst.maximum()).getKey());
-						System.out.println("maximum of doubly-linked list:  " + ((DNode<String>)dll.maximum()).getValue());
-						System.out.println("maximum of skip list:  " + ((SkipListEntry<String>)skip.maximum()));
+						System.out.println(GREEN + "maximum of binary search tree:  " + ((BNode<String>)bst.maximum()).getKey());
+						System.out.println(GREEN + "maximum of doubly-linked list:  " + ((DNode<String>)dll.maximum()).getValue());
+						System.out.println(GREEN + "maximum of skip list:  " + ((SkipListEntry<String>)skip.maximum()));
 						break;
 					case min:
 						if (bst.size() == 0) {
-							System.out.println("The ADT's are emtpy!");
+							System.out.println(RED + "The ADT's are emtpy!");
 							break;
 						}
-						System.out.println("minimum of binary search tree:  " + ((BNode<String>)bst.minimum()).getKey());
-						System.out.println("minimum of doubly-linked list:  " + ((DNode<String>)dll.minimum()).getValue());
-						System.out.println("minimum of skip list:  " + ((SkipListEntry<String>)skip.minimum()));
+						System.out.println(GREEN + "minimum of binary search tree:  " + ((BNode<String>)bst.minimum()).getKey());
+						System.out.println(GREEN + "minimum of doubly-linked list:  " + ((DNode<String>)dll.minimum()).getValue());
+						System.out.println(GREEN + "minimum of skip list:  " + ((SkipListEntry<String>)skip.minimum()));
 						break;
 					case pred:
 						if (bst.size() == 0) {
-							System.out.println("The ADT's are emtpy! ise empty!");
+							System.out.println(RED + "The ADT's are emtpy! is empty!");
 							break;
 						}
-						System.out.println("Please type in the key:  ");
+						System.out.println(BLUE + "Please type in the key:  " + RESET);
 						key = inputReader.nextLine();
 						Object node1 = bst.predecessor(key);
 						if (node1 == null) { //if there is none for bst, there shouldn't be any for the others
-							System.out.println("The key has no predecessor.");
+							System.out.println(RED + "The key has no predecessor.");
 							 break;
 						}
 						else {
-							System.out.println("Predecessor of binary search tree:  " + ((BNode<String>)bst.predecessor(key)).getKey());
-							System.out.println("Predecessor of doubly-linked list:  " + ((DNode<String>)dll.predecessor(key)).getValue());
-							System.out.println("Predecessor of skip list:  " + ((SkipListEntry<String>)skip.predecessor(key)));
+							System.out.println(GREEN + "Predecessor of binary search tree:  " + ((BNode<String>)bst.predecessor(key)).getKey());
+							System.out.println(GREEN + "Predecessor of doubly-linked list:  " + ((DNode<String>)dll.predecessor(key)).getValue());
+							System.out.println(GREEN + "Predecessor of skip list:  " + ((SkipListEntry<String>)skip.predecessor(key)));
 						}
 						break;
 					case runtest:
 						runTest(array,randomValues);
 						break;
 					case search:
-						System.out.println("Please type in the key:  ");
+						System.out.println(BLUE + "Please type in the key:  " + RESET);
 						key = inputReader.nextLine();
 						if (bst.size() == 0) {
-							System.out.println("The ADT's are emtpy!");
+							System.out.println(RED + "The ADT's are emtpy!");
 							break;
 						}
 						Object search = bst.search(key);
 						if (search == null) { //if there is none for bst, there shouldn't be any for the others
-							System.out.println("The key does not exist");
+							System.out.println(RED + "The key does not exist");
 							 break;
 						}
 						else {
-							System.out.println("Found key:  " + ((BNode<String>)bst.search(key)).getKey() + " in binary search tree");
-							System.out.println("Found key:  " + ((DNode<String>)dll.search(key)).getValue() + " in doubly-linked list");
-							System.out.println("Found key:  " + ((SkipListEntry<String>)skip.search(key))+ " in skip list");
+							System.out.println(GREEN + "Found key:  " + ((BNode<String>)bst.search(key)).getKey() + " in binary search tree");
+							System.out.println(GREEN + "Found key:  " + ((DNode<String>)dll.search(key)).getValue() + " in doubly-linked list");
+							System.out.println(GREEN + "Found key:  " + ((SkipListEntry<String>)skip.search(key))+ " in skip list");
 						}
 						break;
 					case succ:
 						if (bst.size() == 0) {
-							System.out.println("The ADT's are emtpy!");
+							System.out.println(RED + "The ADT's are emtpy!");
 							break;
 						}
-						System.out.println("Please type in the key:  ");
+						System.out.println(BLUE + "Please type in the key:  " + RESET);
 						key = inputReader.nextLine();
 						Object node = bst.successor(key);
 						if (node == null) { //if there is none for bst, there shouldn't be any for the others
-							System.out.println("The key has no predecessor.");
+							System.out.println(RED + "The key has no successor.");
 							 break;
 						}
 						else {
-							System.out.println("Successor of binary search tree:  " + ((BNode<String>)bst.successor(key)).getKey());
-							System.out.println("Successor of doubly-linked list:  " + ((DNode<String>)dll.successor(key)).getValue());
-							System.out.println("Successor of skip list:  " + ((SkipListEntry<String>)skip.successor(key)));
+							System.out.println(GREEN + "Successor of binary search tree:  " + ((BNode<String>)bst.successor(key)).getKey());
+							System.out.println(GREEN + "Successor of doubly-linked list:  " + ((DNode<String>)dll.successor(key)).getValue());
+							System.out.println(GREEN + "Successor of skip list:  " + ((SkipListEntry<String>)skip.successor(key)));
 						}
 						break;
 					case loadNew:
@@ -216,11 +226,11 @@ public class UserDriver {
 	}
 	public static String loadFile() {
 		String fileName;			
-		System.out.println("\nPlease type in file name to read, or quit to exit:");
+		System.out.println(PURPLE + "\nPlease type in file name to read, or quit to exit:" + RESET);
 		fileName = inputReader.nextLine();
 		//check if file exists
 		if (fileName.equals("quit")) {
-			System.out.println("Goodbye!");
+			System.out.println(GREEN + "Goodbye!" + RESET);
 			inputReader.close();
 			return "quit";
 		}
@@ -263,7 +273,7 @@ public class UserDriver {
 			return "continue";
 		}
 		catch (FileNotFoundException e) {
-			System.out.println("File not found.  Please try again.");
+			System.out.println(RED + "File not found.  Please try again.");
 			return "error";
 		}
 	}
