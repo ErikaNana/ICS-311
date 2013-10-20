@@ -182,8 +182,8 @@ public class UserDriver {
 				"|Search                      " +
 				"|Predecessor                 " +
 				"|Successor                   " +
-				"|Minimum                     " +
-				"|Maximum                     |");
+				"|Minimum   " +
+				"|Maximum   |");
 		Utils.printDivider();
 		System.out.print("LinkedList     |");
 		Utils.printRow(set, array, randomValues);

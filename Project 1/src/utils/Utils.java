@@ -79,7 +79,6 @@ public class Utils<Type> {
 			set.maximum();
 		}
 		double end = System.nanoTime();
-		System.out.println("time:  " + (end - start));
 		return end - start;
 	}
 	/**Checks to see if command is valid*/
@@ -94,7 +93,7 @@ public class Utils<Type> {
 	}
 	
 	public static void printDivider() {
-		for(int i = 0; i < 189; i++) {
+		for(int i = 0; i < 153; i++) {
 			System.out.print("-");
 		}
 		System.out.println("");
@@ -109,8 +108,8 @@ public class Utils<Type> {
 		double[] search = testSet(set, randomValues, Utils.SEARCH);
 		double[] pred = testSet(set, randomValues, Utils.PREDECESSOR);
 		double[] succ = testSet(set, randomValues, Utils.SUCCESSOR);
-		double[] min = testSet(set, array, Utils.MINIMUM);
-		double[] max = testSet(set, array, Utils.MAXIMUM);
+		double min = testMinMax(set, Utils.MINIMUM);
+		double max = testMinMax(set, Utils.MAXIMUM);
 		
 		printCell(insert);
 		System.out.print(" | ");
@@ -120,9 +119,9 @@ public class Utils<Type> {
 		System.out.print(" | ");
 		printCell(succ);
 		System.out.print(" | ");
-		printCell(min);
+		System.out.printf("%-4.2e", min);
 		System.out.print(" | ");
-		printCell(max);
+		System.out.printf("%-4.2e", max);
 		System.out.print(" | \n");
 		printDivider();
 	}
