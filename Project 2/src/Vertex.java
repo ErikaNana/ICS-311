@@ -15,4 +15,8 @@ public class Vertex {
 	public void setValue(String key) {
 		this.key = key;
 	}
+	
+	public String toString() {
+		return key;
+	}
 }
