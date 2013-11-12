@@ -41,6 +41,9 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 	/** The head. */
 	private DNode<Type> head = null;
 	
+	/** The tail.  */
+	private DNode<Type> tail = null;
+	
 	/** The size. */
 	private int size = 0;
 	
@@ -93,16 +96,20 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 		
 		if (size == 0) {
 			head = newNode;
+			tail = newNode;
 		}
 		if (size == 1) {
 			int compare = Utils.compareValue((String)value, (String) head.getValue());
 			if (compare == Utils.GREATER || compare == Utils.EQUAL) {
 				//add the thing after
 				head.connectNext(newNode);
+				tail = newNode;
 			}
 			else { //add the thing before
 				head = newNode;
 				head.connectNext(temp);
+				tail = temp;
+				
 			}
 		}
 		else {
@@ -137,6 +144,7 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 					}
 					else {
 						temp.connectNext(newNode);
+						tail = newNode;
 					}	
 				}
 			}
@@ -158,8 +166,12 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 					size--;
 					break;
 				}
+				if (temp == tail) {
+					tail = temp.getPrev();
+				}
 				temp.getPrev().connectNext(temp.getNext());
 				size--;
+				break;
 			}
 			temp = temp.getNext();
 		}
@@ -194,11 +206,7 @@ public class DLinkedList<Type> implements DynamicSet<Type> {
 	 */
 	
 	public Object maximum() {
-		DNode<Type> temp = head;
-		while (temp.getNext() != null) {
-			temp = temp.getNext();
-		}
-		return temp;
+		return tail;
 	}
 	
 	/* (non-Javadoc)

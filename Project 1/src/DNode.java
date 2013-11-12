@@ -73,7 +73,10 @@ public class DNode<Type> {
 	public void setValue(Type value) {
 		this.value = value;
 	}
-
+	
+	public String toString() {
+		return (String) this.value;
+	}
 	/**
 	 * Gets the next node.
 	 *
