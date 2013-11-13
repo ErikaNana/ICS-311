@@ -4,15 +4,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import code.AList;
+import code.BTree;
+import code.Vertex;
+
 import junit.framework.TestCase;
 
 public class AListTest extends TestCase {
 	AList aList;
 	HashMap<Vertex,BTree<Vertex>> map;
-	test.Vertex one = new test.Vertex("1");
-	test.Vertex two = new test.Vertex("2");
-	test.Vertex three = new test.Vertex("3");
-	test.Vertex four = new test.Vertex("4");
+	code.Vertex one = new code.Vertex("1");
+	code.Vertex two = new code.Vertex("2");
+	code.Vertex three = new code.Vertex("3");
+	code.Vertex four = new code.Vertex("4");
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -60,9 +64,9 @@ public class AListTest extends TestCase {
 		assertTrue("last node is 3", checkMap.containsKey(three));
 	}*/
 	public void testDeleteVertex() {
-		aList.addStartVertex(one);
-		aList.addStartVertex(two);
-		aList.addStartVertex(three);
+		aList.addVertex(one);
+		aList.addVertex(two);
+		aList.addVertex(three);
 		aList.addEdge(one, two);
 		aList.addEdge(two, three);
 		aList.addEdge(three, one);
@@ -77,9 +81,9 @@ public class AListTest extends TestCase {
 		assertEquals(1, checkMap.get(three).size());
 	}
 	public void testAddEdge() {
-		aList.addStartVertex(one);
-		aList.addStartVertex(two);
-		aList.addStartVertex(three);
+		aList.addVertex(one);
+		aList.addVertex(two);
+		aList.addVertex(three);
 		aList.addEdge(one, two);
 		aList.addEdge(two, three);
 		aList.addEdge(three, one);

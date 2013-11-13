@@ -1,4 +1,4 @@
-package test;
+package code;
 /*
  * Copyright (c) 2013, Erika Nana
  * All rights reserved.

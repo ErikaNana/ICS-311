@@ -1,6 +1,7 @@
-package test;
+package code;
 
 import java.util.HashMap;
+
 
 
 public class AList {
@@ -11,7 +12,7 @@ public class AList {
 		map = new HashMap<Vertex,BTree<Vertex>>();
 	}
 	
-	public void addStartVertex(Vertex vertex) {
+	public void addVertex(Vertex vertex) {
 		//add start vertex to the HashMap
 		if (!map.containsKey(vertex)) {
 			BTree<Vertex> tree = new BTree<Vertex>();
