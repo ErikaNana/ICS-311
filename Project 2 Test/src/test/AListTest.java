@@ -12,6 +12,7 @@ public class AListTest extends TestCase {
 	test.Vertex one = new test.Vertex("1");
 	test.Vertex two = new test.Vertex("2");
 	test.Vertex three = new test.Vertex("3");
+	test.Vertex four = new test.Vertex("4");
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -41,7 +42,7 @@ public class AListTest extends TestCase {
 		assertTrue("has value three", checkMap.containsKey(three));
 	}*/
 	
-/*	public void testDeleteVertexJustStartVertex() {
+/*	public void testDeleteJustStartVertex() {
 		aList.addStartVertex(one);
 		aList.addStartVertex(two);
 		aList.addStartVertex(three);
@@ -58,14 +59,30 @@ public class AListTest extends TestCase {
 		}
 		assertTrue("last node is 3", checkMap.containsKey(three));
 	}*/
+	public void testDeleteVertex() {
+		aList.addStartVertex(one);
+		aList.addStartVertex(two);
+		aList.addStartVertex(three);
+		aList.addEdge(one, two);
+		aList.addEdge(two, three);
+		aList.addEdge(three, one);
+		
+		aList.deleteVertex(one);
+		
+		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
+		assertEquals(null, checkMap.get(one));
+		assertEquals("3", checkMap.get(two).getRoot().toString());
+		assertEquals(1, checkMap.get(two).size());
+		assertEquals("2", checkMap.get(three).getRoot().toString());
+		assertEquals(1, checkMap.get(three).size());
+	}
 	public void testAddEdge() {
 		aList.addStartVertex(one);
 		aList.addStartVertex(two);
 		aList.addStartVertex(three);
-		System.out.println("***************************");
-		aList.addEndVertex(one, two);
-		aList.addEndVertex(two, three);
-		aList.addEndVertex(three, one);
+		aList.addEdge(one, two);
+		aList.addEdge(two, three);
+		aList.addEdge(three, one);
 		
 		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
 		Set<Vertex> keys = checkMap.keySet();
@@ -78,7 +95,10 @@ public class AListTest extends TestCase {
 			assertEquals(2, tree.size());
 		}
 		assertEquals("2", checkMap.get(one).getRoot().toString());
+		assertEquals("3", checkMap.get(one).getRoot().getRightChild().toString());
 		assertEquals("1", checkMap.get(two).getRoot().toString());
+		assertEquals("3", checkMap.get(two).getRoot().getRightChild().toString());
 		assertEquals("2", checkMap.get(three).getRoot().toString());
+		assertEquals("1", checkMap.get(three).getRoot().getLeftChild().toString());
 	}
 }

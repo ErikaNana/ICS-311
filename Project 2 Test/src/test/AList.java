@@ -18,8 +18,8 @@ public class AList {
 			map.put(vertex,tree);
 		}
 	}
-	public void addEndVertex(Vertex start, Vertex end) {
-		//add end vertex to the BTree
+	public void addEdge(Vertex start, Vertex end) {
+		//this assumes that vertices to be connected already exist in the adj. tree
 
 		if (map.containsKey(start)) {
 			System.out.println("add end vertex " + end + " to " + start);
@@ -35,15 +35,8 @@ public class AList {
 			tree.insert(start, null);
 			map.put(end, tree);
 		}
-		else { //if end vertex is not in the tree
-			System.out.println("in else clause");
-			addStartVertex(end);
-			BTree<Vertex> tree = map.get(end); //this should be empty
-			tree.insert(start, null);
-			map.put(end, tree);
-		}
 	}
-/*	public void deleteVertex(Vertex vertex) {
+	public void deleteVertex(Vertex vertex) {
 		//remove vertex and update BTrees and HashMap
 		if (map.containsKey(vertex)) {
 			System.out.println("deleting vertex");
@@ -55,9 +48,8 @@ public class AList {
 				}
 			}
 		}
-		
 	}
-	*/
+	
 	public HashMap<Vertex,BTree<Vertex>> getMap() {
 		return map;
 	}
