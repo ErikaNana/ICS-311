@@ -78,18 +78,12 @@ public class BTree<Type> implements DynamicSet<Type>{
 	 *
 	 * @param node The node to start the walk from
 	 */
-	public String inorderTreeWalk(BNode<Type> node) {
-		String output = " ";
+	public void inorderTreeWalk(BNode<Type> node) {
 		if (node != null) {
 			inorderTreeWalk(node.getLeftChild());
-			//System.out.println(node.getKey());
-			output = " " + node.toString();
+			System.out.println(node.getKey());
 			inorderTreeWalk(node.getRightChild());
 		}
-		else {
-			System.out.println("tree is null");
-		}
-		return output;
 	}
 	
 	/* (non-Javadoc)
@@ -105,7 +99,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 	 */
 	
 	public void insert(Type key, Object e) {
-		System.out.println("inserting into tree");
 		BNode<Type> node = new BNode<Type>(key);
 		node.setKey(key);
 		BNode<Type> y = null;
@@ -122,8 +115,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 		}
 		node.setParent(y);
 		if (y == null) {
-			System.out.println("tree is empty to begin with");
-			System.out.println("node is:  " + node);
 			this.root = node; //tree is empty to begin with
 		}
 		else if (Utils.compareValue(node.getKey().toString(), y.getKey().toString()) == Utils.LESSER) {
