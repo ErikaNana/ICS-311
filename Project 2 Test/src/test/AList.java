@@ -29,7 +29,7 @@ public class AList {
 			map.put(start, tree);
 		}
 		//also add an edge from end to start
-/*		if (map.containsKey(end)) {
+		if (map.containsKey(end)) {
 			System.out.println("map contains end");
 			BTree<Vertex>tree = map.get(end);
 			tree.insert(start, null);
@@ -41,7 +41,7 @@ public class AList {
 			BTree<Vertex> tree = map.get(end); //this should be empty
 			tree.insert(start, null);
 			map.put(end, tree);
-		}*/
+		}
 	}
 /*	public void deleteVertex(Vertex vertex) {
 		//remove vertex and update BTrees and HashMap

@@ -9,9 +9,9 @@ import junit.framework.TestCase;
 public class AListTest extends TestCase {
 	AList aList;
 	HashMap<Vertex,BTree<Vertex>> map;
-	test.Vertex one = new test.Vertex("one");
-	test.Vertex two = new test.Vertex("two");
-	test.Vertex three = new test.Vertex("three");
+	test.Vertex one = new test.Vertex("1");
+	test.Vertex two = new test.Vertex("2");
+	test.Vertex three = new test.Vertex("3");
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -20,9 +20,6 @@ public class AListTest extends TestCase {
 		BTree<Vertex> tree = new BTree<Vertex>();
 		System.out.println("set up");
 		System.out.println("***********");
-		test.Vertex one = new test.Vertex("one");
-		test.Vertex two = new test.Vertex("two");
-		test.Vertex three = new test.Vertex("three");
 		map.put(one, tree);
 		map.put(two, tree);
 		map.put(three, tree);
@@ -61,7 +58,7 @@ public class AListTest extends TestCase {
 		}
 		assertTrue("last node is 3", checkMap.containsKey(three));
 	}*/
-	public void testAddEndVertex() {
+	public void testAddEdge() {
 		aList.addStartVertex(one);
 		aList.addStartVertex(two);
 		aList.addStartVertex(three);
@@ -78,10 +75,10 @@ public class AListTest extends TestCase {
 			System.out.println("key:  " + key);
 			BTree<Vertex> tree = checkMap.get(key);
 			assertNotNull(tree);
-			assertEquals(1, tree.size());
+			assertEquals(2, tree.size());
 		}
-		assertEquals("two", checkMap.get(one).getRoot().toString());
-		assertEquals("three", checkMap.get(two).getRoot().toString());
-		assertEquals("one", checkMap.get(three).getRoot().toString());
+		assertEquals("2", checkMap.get(one).getRoot().toString());
+		assertEquals("1", checkMap.get(two).getRoot().toString());
+		assertEquals("2", checkMap.get(three).getRoot().toString());
 	}
 }
