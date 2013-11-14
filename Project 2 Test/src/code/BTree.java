@@ -184,7 +184,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 				}
 			}
 			else {
-				System.out.println("FOUND IT");
 				return current;
 			}
 		}

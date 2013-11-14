@@ -10,7 +10,11 @@ public class Arc {
 		this.startVertex = start;
 		this.endVertex = end;
 	}
-	
+	public Arc(Vertex start, Vertex end, Object data) {
+		this.startVertex = start;
+		this.endVertex = end;
+		this.data = data;
+	}
 	public Vertex getStartVertex() {
 		return startVertex;
 	}

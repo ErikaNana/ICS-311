@@ -71,25 +71,27 @@ public class DirectedGraph {
 	
 	//getVertexData
 	public Object getVertexData(Vertex v) {
-		return null;
+		Vertex vertex = getVertex(v);
+		return vertex.getData();
 	}
 	    //Returns the client data Object associated with Vertex v.
 	
 	//getArcData
 	public Object getArcData(Arc a) {
-		return null;
+		Arc arc = getArc(a.getStartVertex(), a.getEndVertex());
+		return arc.getData();
 	}
 	    //Returns the client data Object associated with Arc a.
 	
 	//inDegree
 	public int inDegree(Vertex v) {
-		return 0;
+		return aList.getInDegree(v);
 	}
 	    //Returns the number of arcs incoming to v.
 	
 	//outDegree
 	public int outDegree(Vertex v) {
-		return 0;
+		return aList.getOutDegree(v);
 	}
 	    //Returns the number of arcs outgoing from v.
 	
@@ -107,13 +109,13 @@ public class DirectedGraph {
 	
 	//origin
 	public Vertex origin(Arc a) {
-		return null;
+		return a.getStartVertex();
 	}
 	    //Returns the origin (start); vertex of Arc a.
 	
 	
 	public Vertex destination(Arc a) {
-		return null;
+		return a.getEndVertex();
 	}
 	    //Returns the destination (end); vertex of Arc a.
 	
@@ -128,7 +130,11 @@ public class DirectedGraph {
 		return vertex;
 	}
 	public Vertex insertVertex(Object key, Object data) {
-		return null;
+		Vertex vertex = new Vertex((String) key, data);
+		BTree<Arc> tree = new BTree<Arc>();
+		map.put(vertex, tree);
+		aList.addVertex(vertex);
+		return vertex;
 	}
 	    //Inserts a new isolated vertex indexed under (retrievable via); key and optionally containing an object data (which defaults to null);.
 	    //Returns the new Vertex.
@@ -144,18 +150,27 @@ public class DirectedGraph {
 		return arc;
 	}
 	public Arc insertArc(Vertex u, Vertex v, Object data) {
-		return null;
+		Arc arc = new Arc(u,v,data);
+		BTree<Arc> tree = map.get(u);
+		tree.insert(arc, null);
+		map.put(u, tree);
+		aList.addEdge(u, v);
+		return arc;
 	}
 	    //Inserts a new arc from an existing vertex to another, optionally containing an object data.
 	    //Returns the new Arc.
 	
 	//setVertexData
 	public void setVertexData(Vertex v, Object data) {
+		Vertex vertex = getVertex(v);
+		vertex.setData(data);
 	}
 	    //Changes the data Object associated with Vertex v to data.
 	
 	//setArcData
 	public void setArcData(Arc a, Object data) {
+		Arc arc = getArc(a.getStartVertex(), a.getEndVertex());
+		arc.setData(data);
 	}
 	    //Changes the data Object associated with Arc a to data.
 	

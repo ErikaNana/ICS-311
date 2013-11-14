@@ -1,18 +1,18 @@
 package code;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 
 
 public class AList {
 	
-	HashMap<Vertex,BTree<Vertex>> map = null;
+	HashMap<Vertex,BTree<Vertex>> map;
 	int numOfEdges;
+	HashMap<Vertex,Integer> inDegree;
 	
 	public AList() {
 		map = new HashMap<Vertex,BTree<Vertex>>();
+		inDegree = new HashMap<Vertex,Integer>();
 		numOfEdges = 0;
 	}
 	
@@ -21,6 +21,7 @@ public class AList {
 		if (!map.containsKey(vertex)) {
 			BTree<Vertex> tree = new BTree<Vertex>();
 			map.put(vertex,tree);
+			inDegree.put(vertex, 0);
 		}
 	}
 	public void addEdge(Vertex start, Vertex end) {
@@ -32,6 +33,7 @@ public class AList {
 			tree.insert(end, null);
 			//update the tree
 			map.put(start, tree);
+			inDegree.put(end,inDegree.get(end)+1); 
 			numOfEdges++;
 		}
 	}
@@ -49,21 +51,20 @@ public class AList {
 		}
 	}
 	
-	//searches the vertex by string
-	public Vertex getVertex(Object key) {
-		Set<Vertex> keys = map.keySet();
-		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
-			Vertex currentKey = i.next();
-			if (Utils.compareValue(currentKey.toString(), (String)key) == Utils.EQUAL){
-				return currentKey;
-			}
-		}
-		return null;
+	public void deleteEdge(Vertex start, Vertex end) {
+		BTree<Vertex> tree = map.get(start);
+		tree.delete(end);
+		numOfEdges--;
+	}
+	public int getOutDegree(Vertex vertex) {
+		BTree<Vertex> tree = map.get(vertex);
+		return tree.size();
 	}
 	
-	public boolean checkEdgeExist(Vertex source, Vertex end) {
-		return false;
+	public int getInDegree(Vertex vertex) {
+		return inDegree.get(vertex);
 	}
+	
 	public HashMap<Vertex,BTree<Vertex>> getMap() {
 		return map;
 	}

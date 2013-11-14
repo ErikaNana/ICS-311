@@ -24,6 +24,9 @@ public class Vertex {
 	public Object getData() {
 		return data;
 	}
+	public void setData(Object data) {
+		this.data = data;
+	}
 	//just in case
 	public void setValue(String key) {
 		this.key = key;

@@ -105,5 +105,19 @@ public class AListTest extends TestCase {
 		assertEquals("1", checkMap.get(three).getRoot().toString());
 		assertEquals(3, aList.getNumOfEdges());
 	}
+	
+	public void testDeleteMethods() {
+		aList.addVertex(one);
+		aList.addVertex(two);
+		aList.addVertex(three);
+		aList.addEdge(one, two);
+		aList.addEdge(two, three);
+		aList.addEdge(three, one);
+		
+		aList.deleteEdge(two,three);
+		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
+		assertEquals(null,checkMap.get(two).getRoot());
+		assertEquals(2,aList.getNumOfEdges());
+	}
 
 }
