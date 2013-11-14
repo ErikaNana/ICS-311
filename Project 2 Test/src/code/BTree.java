@@ -51,7 +51,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 	 * Instantiates a new b tree.
 	 */
 	public BTree() {
-		System.out.println("making new tree");
 		empty = new BNode<Type>(null); //for null pointer
 	}
 	
@@ -185,7 +184,37 @@ public class BTree<Type> implements DynamicSet<Type>{
 				}
 			}
 			else {
+				System.out.println("FOUND IT");
 				return current;
+			}
+		}
+	}
+	/*
+	 * Instead of returning the node it returns the actual thing in the node
+	 * */
+	public Object searchForValue(Type key) {
+		//matches at the root
+		BNode<Type> current = root;
+		
+		while (true) {
+			int compare = Utils.compareValue(key.toString(), current.getKey().toString());
+			if (compare == Utils.LESSER) {
+				current = current.getLeftChild();
+				if (current == null) {
+					//System.out.println("Not in the tree");
+					return null;
+				}
+			}
+			else if (compare == Utils.GREATER) {
+				current = current.getRightChild();
+				if (current == null) {
+					//System.out.println("Not in the tree");
+					return null;
+				}
+			}
+			else {
+				System.out.println("FOUND IT");
+				return current.getKey();
 			}
 		}
 	}

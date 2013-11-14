@@ -46,7 +46,7 @@ public class DirectedGraph {
 		Set<Vertex> keys = map.keySet();
 		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
 			Vertex currentKey = i.next();
-			if (Utils.compareValue(currentKey.toString(), (String)key) == Utils.EQUAL){
+			if (Utils.compareValue(currentKey.toString(), key.toString()) == Utils.EQUAL){
 				return currentKey;
 			}
 		}
@@ -55,7 +55,16 @@ public class DirectedGraph {
 	    //Returns the Vertex associated with client key.
 	
 	//getArc
+	//source and target will be strings
 	public Arc getArc(Object source, Object target) {
+		Vertex start = getVertex(source);
+		Vertex end = getVertex(target);
+		if (start != null && end != null) {
+			BTree<Arc> tree = map.get(start);
+			//dummy: just using it to check variables
+			Arc arc = new Arc(start,end);
+			return (Arc) tree.searchForValue(arc);
+		}
 		return null;
 	}
 	    //Returns the Arc that connects client keys source and target, or null if none.

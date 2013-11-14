@@ -36,20 +36,20 @@ public class AListTest extends TestCase {
 		System.out.println("-------------------");
 	}
 	
-/*	public void testAddStartVertex() {
-		aList.addStartVertex(one);
-		aList.addStartVertex(two);
-		aList.addStartVertex(three);
+	public void testAddStartVertex() {
+		aList.addVertex(one);
+		aList.addVertex(two);
+		aList.addVertex(three);
 		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
 		assertTrue("has value one", checkMap.containsKey(one));
 		assertTrue("has value two", checkMap.containsKey(two));
 		assertTrue("has value three", checkMap.containsKey(three));
-	}*/
+	}
 	
-/*	public void testDeleteJustStartVertex() {
-		aList.addStartVertex(one);
-		aList.addStartVertex(two);
-		aList.addStartVertex(three);
+	public void testDeleteJustStartVertex() {
+		aList.addVertex(one);
+		aList.addVertex(two);
+		aList.addVertex(three);
 		aList.deleteVertex(one);
 		aList.deleteVertex(two);
 		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
@@ -58,11 +58,11 @@ public class AListTest extends TestCase {
 		assertTrue(checkMap.size() == 1);
 		Set<Vertex> keys = checkMap.keySet();
 		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
-			String key = i.next().getValue();
+			Vertex key = i.next();
 			System.out.println("key:  " + key);
 		}
 		assertTrue("last node is 3", checkMap.containsKey(three));
-	}*/
+	}
 	public void testDeleteVertex() {
 		aList.addVertex(one);
 		aList.addVertex(two);

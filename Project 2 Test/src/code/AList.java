@@ -27,7 +27,7 @@ public class AList {
 		//this assumes that vertices to be connected already exist in the adj. tree
 
 		if (map.containsKey(start)) {
-			System.out.println("add end vertex " + end + " to " + start);
+			//System.out.println("add end vertex " + end + " to " + start);
 			BTree<Vertex>tree = map.get(start);
 			tree.insert(end, null);
 			//update the tree
