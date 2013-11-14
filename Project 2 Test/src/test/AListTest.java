@@ -67,11 +67,13 @@ public class AListTest extends TestCase {
 		aList.addVertex(one);
 		aList.addVertex(two);
 		aList.addVertex(three);
+		assertEquals(3, aList.getNumOfVertices());
 		aList.addEdge(one, two);
 		aList.addEdge(two, three);
 		aList.addEdge(three, one);
 		
 		aList.deleteVertex(one);
+		assertEquals(2, aList.getNumOfVertices());
 		
 		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
 		assertEquals(null, checkMap.get(one));
@@ -103,4 +105,5 @@ public class AListTest extends TestCase {
 		assertEquals("1", checkMap.get(three).getRoot().toString());
 		assertEquals(3, aList.getNumOfEdges());
 	}
+
 }

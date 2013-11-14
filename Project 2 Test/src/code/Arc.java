@@ -2,12 +2,13 @@ package code;
 
 public class Arc {
 
-	private Vertex startVertex = null;
-	private Vertex endVertex = null;
+	private Vertex startVertex;
+	private Vertex endVertex;
+	private Object data;
 	
-	public Arc(String start, String end) {
-		this.startVertex = new Vertex(start);
-		this.endVertex = new Vertex(end);
+	public Arc(Vertex start, Vertex end) {
+		this.startVertex = start;
+		this.endVertex = end;
 	}
 	
 	public Vertex getStartVertex() {
@@ -16,5 +17,18 @@ public class Arc {
 	
 	public Vertex getEndVertex() {
 		return endVertex;
+	}
+	public void setData(Object data) {
+		this.data = data;
+	}
+	public Object getData() {
+		return data;
+	}
+	//overloaded so that when inserted into BTree, it will store by end value
+	public String toString() {
+		return endVertex.toString();
+	}
+	public String getFullArc() {
+		return startVertex.toString() + " to " + endVertex.toString();
 	}
 }

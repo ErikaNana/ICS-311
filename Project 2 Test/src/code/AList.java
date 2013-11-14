@@ -1,6 +1,8 @@
 package code;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 
 
@@ -47,11 +49,30 @@ public class AList {
 		}
 	}
 	
+	//searches the vertex by string
+	public Vertex getVertex(Object key) {
+		Set<Vertex> keys = map.keySet();
+		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
+			Vertex currentKey = i.next();
+			if (Utils.compareValue(currentKey.toString(), (String)key) == Utils.EQUAL){
+				return currentKey;
+			}
+		}
+		return null;
+	}
+	
+	public boolean checkEdgeExist(Vertex source, Vertex end) {
+		return false;
+	}
 	public HashMap<Vertex,BTree<Vertex>> getMap() {
 		return map;
 	}
 	
 	public int getNumOfEdges() {
 		return numOfEdges;
+	}
+	
+	public int getNumOfVertices() {
+		return map.size();
 	}
 }
