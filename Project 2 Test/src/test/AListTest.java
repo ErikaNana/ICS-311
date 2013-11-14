@@ -77,8 +77,8 @@ public class AListTest extends TestCase {
 		assertEquals(null, checkMap.get(one));
 		assertEquals("3", checkMap.get(two).getRoot().toString());
 		assertEquals(1, checkMap.get(two).size());
-		assertEquals("2", checkMap.get(three).getRoot().toString());
-		assertEquals(1, checkMap.get(three).size());
+		assertNull(checkMap.get(three).getRoot());
+		assertEquals(0, checkMap.get(three).size());
 	}
 	public void testAddEdge() {
 		aList.addVertex(one);
@@ -96,13 +96,11 @@ public class AListTest extends TestCase {
 			System.out.println("key:  " + key);
 			BTree<Vertex> tree = checkMap.get(key);
 			assertNotNull(tree);
-			assertEquals(2, tree.size());
+			assertEquals(1, tree.size());
 		}
 		assertEquals("2", checkMap.get(one).getRoot().toString());
-		assertEquals("3", checkMap.get(one).getRoot().getRightChild().toString());
-		assertEquals("1", checkMap.get(two).getRoot().toString());
-		assertEquals("3", checkMap.get(two).getRoot().getRightChild().toString());
-		assertEquals("2", checkMap.get(three).getRoot().toString());
-		assertEquals("1", checkMap.get(three).getRoot().getLeftChild().toString());
+		assertEquals("3", checkMap.get(two).getRoot().toString());
+		assertEquals("1", checkMap.get(three).getRoot().toString());
+		assertEquals(3, aList.getNumOfEdges());
 	}
 }

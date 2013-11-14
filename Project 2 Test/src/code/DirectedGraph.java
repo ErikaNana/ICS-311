@@ -4,8 +4,13 @@ import java.util.Iterator;
 /** ADT for a directed graph where V is a set of vertices ands A a set of directed
  * edges (arcs) */
 
-public class DirectedGraph<Type> {
+public class DirectedGraph {
 
+AList aList;
+
+public DirectedGraph() {
+	aList = new AList();
+}
 /******************** ACCESSORS ******************************/
 
 //Returns the number of vertices
@@ -19,12 +24,12 @@ public int numArcs() {
 }
 
 //Returns an iterator over the vertices V
-public Iterator<Type> vertices() {
+public Iterator<Vertex> vertices() {
 	return null;
 }
 
 //Returns an iterator over the arcs A of G
-public Iterator<Type> arcs() {
+public Iterator<Arc> arcs() {
 	return null;
 }
 
@@ -65,13 +70,13 @@ public int outDegree(Vertex v) {
     //Returns the number of arcs outgoing from v.
 
 //inAdjacentVertices
-public Iterator<Type> inAdjacentVertices(Vertex v) {
+public Iterator<Vertex> inAdjacentVertices(Vertex v) {
 	return null;
 }
     //Returns an iterator over the vertices adjacent to v by incoming arcs.
 
 //outAdjacentVertices
-public Iterator<Type> outAdjacentVertices(Vertex v) {
+public Iterator<Vertex> outAdjacentVertices(Vertex v) {
 	return null;
 }
     //Returns an iterator over the vertices adjacent to v by outgoing arcs.

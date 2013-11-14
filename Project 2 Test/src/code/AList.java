@@ -7,9 +7,11 @@ import java.util.HashMap;
 public class AList {
 	
 	HashMap<Vertex,BTree<Vertex>> map = null;
+	int numOfEdges;
 	
 	public AList() {
 		map = new HashMap<Vertex,BTree<Vertex>>();
+		numOfEdges = 0;
 	}
 	
 	public void addVertex(Vertex vertex) {
@@ -28,13 +30,7 @@ public class AList {
 			tree.insert(end, null);
 			//update the tree
 			map.put(start, tree);
-		}
-		//also add an edge from end to start
-		if (map.containsKey(end)) {
-			System.out.println("map contains end");
-			BTree<Vertex>tree = map.get(end);
-			tree.insert(start, null);
-			map.put(end, tree);
+			numOfEdges++;
 		}
 	}
 	public void deleteVertex(Vertex vertex) {
@@ -53,5 +49,9 @@ public class AList {
 	
 	public HashMap<Vertex,BTree<Vertex>> getMap() {
 		return map;
+	}
+	
+	public int getNumOfEdges() {
+		return numOfEdges;
 	}
 }
