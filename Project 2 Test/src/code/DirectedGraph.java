@@ -174,8 +174,27 @@ public class DirectedGraph {
 	}
 	    //Changes the data Object associated with Arc a to data.
 	
-	//removeVertex
+	//removeVertex	
 	public Object removeVertex(Vertex v) {
+		if (map.containsKey(v)) {
+			//remove from edges
+			for (BTree<Arc> tree: map.values()) {
+				if (!tree.isEmpty()) {
+					//dummy arc
+					Vertex dummy = new Vertex("dummy");
+					Arc arc = new Arc(dummy,v);
+					Arc foundArc = (Arc) tree.searchForValue(arc);
+					if (foundArc != null) {
+						tree.delete(foundArc);
+						map.put(v, tree);
+					}
+				}
+			}
+			map.remove(v);
+			//remove from aList
+			aList.deleteVertex(v);
+			return v;
+		}
 		return null;
 	}
 	//Deletes a vertex and all its incident arcs (and edges under the undirected extension);.

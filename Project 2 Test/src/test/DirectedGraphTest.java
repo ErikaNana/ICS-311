@@ -64,6 +64,12 @@ public class DirectedGraphTest extends TestCase {
 	}
 	
 	public void testDeleteMethods() {
-		
+		//test the alist and graph		
+		Vertex found = (Vertex) graph.removeVertex(one);
+		assertEquals(2, graph.getAList().getNumOfVertices());
+		assertEquals(1, graph.getAList().getNumOfEdges());
+		assertEquals(2,graph.numVertices());
+		assertEquals(1,graph.numArcs());
+		assertEquals(one, found);
 	}
 }

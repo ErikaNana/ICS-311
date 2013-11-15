@@ -40,12 +40,18 @@ public class AList {
 	public void deleteVertex(Vertex vertex) {
 		//remove vertex and update BTrees and HashMap
 		if (map.containsKey(vertex)) {
-			System.out.println("deleting vertex");
+			//check if that vertex has outgoing edges
+			numOfEdges = numOfEdges - map.get(vertex).size();
 			map.remove(vertex);
 			//get the tree from each value in HashMap and delete the vertex from that tree
 			for (BTree<Vertex> tree: map.values()) {
 				if (!tree.isEmpty()) {
-					tree.delete(vertex);					
+					Vertex found = (Vertex) tree.searchForValue(vertex);
+					System.out.println();
+					if (found != null) {
+						tree.delete(found);	
+						numOfEdges--;
+					}		
 				}
 			}
 		}

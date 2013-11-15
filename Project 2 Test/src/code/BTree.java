@@ -1,6 +1,7 @@
 package code;
 
 
+
 /*
  * Copyright (c) 2013, Erika Nana
  * All rights reserved.
@@ -133,7 +134,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 		//search for the key to delete
 		@SuppressWarnings("unchecked")
 		BNode<Type> node = (BNode<Type>) this.search(key);
-		
 		if (node == null) {
 			System.out.println("Can't delete from a node that doesn't exist!");
 			return;
@@ -212,7 +212,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 				}
 			}
 			else {
-				System.out.println("FOUND IT");
 				return current.getKey();
 			}
 		}

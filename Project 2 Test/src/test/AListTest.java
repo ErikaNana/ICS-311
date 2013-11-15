@@ -23,8 +23,6 @@ public class AListTest extends TestCase {
 		map = new HashMap<Vertex,BTree<Vertex>>();
 		aList = new AList();
 		BTree<Vertex> tree = new BTree<Vertex>();
-		System.out.println("set up");
-		System.out.println("***********");
 		map.put(one, tree);
 		map.put(two, tree);
 		map.put(three, tree);
@@ -33,7 +31,6 @@ public class AListTest extends TestCase {
 	protected void tearDown() throws Exception {
 		super.tearDown();
 		aList = null;
-		System.out.println("-------------------");
 	}
 	
 	public void testAddStartVertex() {
@@ -54,13 +51,7 @@ public class AListTest extends TestCase {
 		aList.deleteVertex(two);
 		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
 		assertNotNull(checkMap);
-		System.out.println("checkMap size:  " + checkMap.size());
 		assertTrue(checkMap.size() == 1);
-		Set<Vertex> keys = checkMap.keySet();
-		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
-			Vertex key = i.next();
-			System.out.println("key:  " + key);
-		}
 		assertTrue("last node is 3", checkMap.containsKey(three));
 	}
 	public void testDeleteVertex() {
@@ -92,10 +83,8 @@ public class AListTest extends TestCase {
 		
 		HashMap<Vertex, BTree<Vertex>> checkMap = aList.getMap();
 		Set<Vertex> keys = checkMap.keySet();
-		System.out.println("keys in hashmap");
 		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
 			Vertex key = i.next();
-			System.out.println("key:  " + key);
 			BTree<Vertex> tree = checkMap.get(key);
 			assertNotNull(tree);
 			assertEquals(1, tree.size());
