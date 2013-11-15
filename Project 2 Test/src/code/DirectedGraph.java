@@ -202,6 +202,19 @@ public class DirectedGraph {
 	
 	//removeArc
 	public Object removeArc(Arc a) {
+		Vertex key = a.getStartVertex();
+		Set<Vertex> keys = map.keySet();
+		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
+			Vertex currentKey = i.next();
+			if (Utils.compareValue(currentKey.toString(), key.toString()) == Utils.EQUAL){
+				BTree<Arc> tree = map.get(currentKey);
+				tree.delete(a);
+				Vertex start = a.getStartVertex();
+				Vertex end = a.getEndVertex();
+				aList.deleteEdge(start, end);
+				return a;
+			}
+		}
 		return null;
 	}
 	    //Removes an arc.

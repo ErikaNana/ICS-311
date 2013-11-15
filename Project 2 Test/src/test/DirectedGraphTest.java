@@ -63,7 +63,7 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(2,graph.outDegree(three));
 	}
 	
-	public void testDeleteMethods() {
+	public void testDeleteVertex() {
 		//test the alist and graph		
 		Vertex found = (Vertex) graph.removeVertex(one);
 		assertEquals(2, graph.getAList().getNumOfVertices());
@@ -71,5 +71,14 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(2,graph.numVertices());
 		assertEquals(1,graph.numArcs());
 		assertEquals(one, found);
+	}
+	
+	public void testDeleteArc() {
+		Arc arc = (Arc) graph.removeArc(arcOne);
+		assertEquals(arc,arcOne);
+		assertEquals(2, graph.getAList().getNumOfEdges());
+		assertEquals(2, graph.numArcs());
+		assertEquals(3, graph.getAList().getNumOfVertices());
+		assertEquals(3,graph.numVertices());
 	}
 }
