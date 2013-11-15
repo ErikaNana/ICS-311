@@ -85,5 +85,9 @@ public class DirectedGraphTest extends TestCase {
 		graph.reverseDirection(arcOne);
 		assertEquals(2, graph.outDegree(two));
 		assertEquals(2, graph.inDegree(one));
+		Vertex four = graph.insertVertex("four");
+		Arc arc = new Arc(three,four,"what");
+		graph.reverseDirection(arc);
+		assertEquals("what",graph.getArc(four, three).getData());
 	}
 }
