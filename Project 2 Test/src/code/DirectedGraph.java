@@ -222,6 +222,18 @@ public class DirectedGraph {
 	
 	//reverseDirection
 	public void reverseDirection(Arc a) {
+		//delete and update
+		Arc arc = a;
+		Vertex start = a.getStartVertex();
+		Vertex end = a.getEndVertex();
+
+		this.removeArc(a);
+		if (arc.getData() != null) {
+			this.insertArc(end, start,arc.getData());
+		}
+		else {
+			this.insertArc(end, start);
+		}
 	} 
 	    //Reverse the direction of an arc.
 	

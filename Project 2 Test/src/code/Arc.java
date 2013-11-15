@@ -9,6 +9,7 @@ public class Arc {
 	public Arc(Vertex start, Vertex end) {
 		this.startVertex = start;
 		this.endVertex = end;
+		this.data = null;
 	}
 	public Arc(Vertex start, Vertex end, Object data) {
 		this.startVertex = start;
@@ -21,6 +22,12 @@ public class Arc {
 	
 	public Vertex getEndVertex() {
 		return endVertex;
+	}
+	public void setStartVertex(Vertex vertex) {
+		this.startVertex = vertex;
+	}
+	public void setEndVertex(Vertex vertex) {
+		this.endVertex = vertex;
 	}
 	public void setData(Object data) {
 		this.data = data;
