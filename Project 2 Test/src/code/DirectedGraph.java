@@ -1,4 +1,5 @@
 package code;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -14,8 +15,9 @@ public class DirectedGraph {
 	AList aList;
 	//BTree will insert by end vertex
 	HashMap<Vertex,BTree<Arc>> map ; //since keys are strings
+	HashMap<Object,ArrayList<Object>> annotation;
 	
-	public DirectedGraph() {
+	public DirectedGraph(){
 		aList = new AList();
 		map = new HashMap<Vertex,BTree<Arc>>();
 	}
@@ -245,33 +247,47 @@ public class DirectedGraph {
 	//For example, you can annotate a node under keys "COLOR" and "PARENT" simultaneously.
 	
 	//setAnnotation
+	//change to var args?
+	//annotation is a hash map, no value pair
 	public void setAnnotation(Vertex v, Object k, Object o) {
+		v.setAnnotation(k, o);
 	} 
 	public void setAnnotation(Arc a, Object k, Object o) {
+		a.setAnnotation(k, o);
 	} 
 	
 	//Annotates a vertex v or arc a with object o indexed by key k.
 	
 	//getAnnotation
 	public Object getAnnotation(Vertex v, Object k) {
-		return null;
+		return v.getAnnotation(k);
 	} 
 	public Object getAnnotation(Arc a, Object k) {
-		return null;
+		return a.getAnnotation(k);
 	} 
 	    //Returns the object indexed by k annotating a vertex v or arc a.
 	
 	//removeAnnotation
 	public Object removeAnnotation(Vertex v, Object k) {
-		return null;
+		Object annotation = v.getAnnotation(k);
+		v.removeAnnotation(k);
+		return annotation;
 	} 
 	public Object removeAnnotation(Arc a, Object k) {
-		return null;
+		Object annotation = a.getAnnotation(k);
+		a.removeAnnotation(k);
+		return annotation;
 	} 
 	    //Removes the annotation on a vertex v or arc a indexed by k and returns it.
 	
 	//clearAnnotations
 	public void clearAnnotations(Object k) {
+		if (k instanceof Arc) {
+			((Arc) k).clearAnnotations();
+		}
+		else if (k instanceof Vertex) {
+			((Vertex) k).clearAnnotations();
+		}
 	} 
     //Removes all annotations on vertices or arcs indexed by k. Use this to clean up between runs.
 	class ArcIterator implements Iterator<Arc>{
