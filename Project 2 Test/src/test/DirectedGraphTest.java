@@ -112,6 +112,7 @@ public class DirectedGraphTest extends TestCase {
 		Object removeVertex = graph.removeAnnotation(one, "Parent");
 		assertNull(graph.getAnnotation(one, "Parent"));
 		assertEquals(removeVertex,"Parent");
+		
 		//reset
 		graph.setAnnotation(one, "Parent", "Color");
 		graph.setAnnotation(arcOne, "Color", "Parent");
@@ -121,6 +122,7 @@ public class DirectedGraphTest extends TestCase {
 		graph.clearAnnotations(arcOne);
 		assertNull(graph.getAnnotation(arcOne, "Parent"));
 		assertNull(graph.getAnnotation(arcOne, "Color"));
+		
 		//test general functionality
 		assertEquals(3,graph.numVertices());
 		assertEquals(3,graph.numArcs());

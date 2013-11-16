@@ -1,17 +1,19 @@
 package code;
 
+import java.util.HashMap;
+
 public class Arc {
 
 	private Vertex startVertex;
 	private Vertex endVertex;
 	private Object data;
-	private Object anOne;
-	private Object anTwo;
+	private HashMap<Object,Object> annotations;
 	
 	public Arc(Vertex start, Vertex end) {
 		this.startVertex = start;
 		this.endVertex = end;
 		this.data = null;
+		this.annotations = new HashMap<Object,Object>();
 	}
 	public Arc(Vertex start, Vertex end, Object data) {
 		this.startVertex = start;
@@ -45,30 +47,16 @@ public class Arc {
 		return startVertex.toString() + " to " + endVertex.toString();
 	}
 	public void setAnnotation(Object one, Object two) {
-		anOne = one;
-		anTwo = two;
+		annotations.put(one, one);
+		annotations.put(two, two);
 	}
 	public Object getAnnotation(Object annotation) {
-		if (annotation == anOne) {
-			return anOne;
-		}
-		else if (annotation == anTwo) {
-			return anTwo;
-		}
-		return null;
+		return annotations.get(annotation);
 	}
 	public void removeAnnotation(Object annotation) {
-		if ((annotation == anOne) || (annotation == anTwo)) {
-			if (annotation == anOne) {
-				anOne = null;
-			}
-			else {
-				anTwo = null;
-			}
-		}
+		annotations.remove(annotation);
 	}
 	public void clearAnnotations() {
-		anOne = null;
-		anTwo = null;
+		annotations.clear();
 	}
 }

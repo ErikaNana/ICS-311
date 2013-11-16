@@ -1,15 +1,17 @@
 package code;
 
+import java.util.HashMap;
+
 public class Vertex {
 
 	private String key;
 	private Object data;
-	private Object anOne;
-	private Object anTwo;
+	private HashMap<Object,Object> annotations;
 	
 	public Vertex(String key) {
 		this.key = key;
 		this.data = null;
+		this.annotations = new HashMap<Object,Object>();
 	}
 	
 	public Vertex(String key, Object data) {
@@ -34,30 +36,16 @@ public class Vertex {
 		this.key = key;
 	}
 	public void setAnnotation(Object one, Object two) {
-		anOne = one;
-		anTwo = two;
+		annotations.put(one, one);
+		annotations.put(two, two);
 	}
 	public Object getAnnotation(Object annotation) {
-		if (annotation == anOne) {
-			return anOne;
-		}
-		else if (annotation == anTwo) {
-			return anTwo;
-		}
-		return null;
+		return annotations.get(annotation);
 	}
 	public void removeAnnotation(Object annotation) {
-		if ((annotation == anOne) || (annotation == anTwo)) {
-			if (annotation == anOne) {
-				anOne = null;
-			}
-			else {
-				anTwo = null;
-			}
-		}
+		annotations.remove(annotation);
 	}
 	public void clearAnnotations() {
-		anOne = null;
-		anTwo = null;
+		annotations.clear();
 	}
 }
