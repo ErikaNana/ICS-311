@@ -1,5 +1,7 @@
 package test;
 
+import java.util.Iterator;
+
 import junit.framework.TestCase;
 import code.Arc;
 import code.DirectedGraph;
@@ -29,7 +31,7 @@ public class DirectedGraphTest extends TestCase {
 		super.tearDown();
 	}
 	
-/*	public void testGettingAndSetting() {
+	public void testGettingAndSetting() {
 		Arc arcFour = graph.insertArc(three,two);
 		assertEquals(one, graph.getVertex(one));
 		assertEquals(arcOne,graph.getArc(one, two));
@@ -72,7 +74,7 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(1,graph.numArcs());
 		assertEquals(one, found);
 	}
-	s
+	
 	public void testDeleteArc() {
 		Arc arc = (Arc) graph.removeArc(arcOne);
 		assertEquals(arc,arcOne);
@@ -80,7 +82,7 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(2, graph.numArcs());
 		assertEquals(3, graph.getAList().getNumOfVertices());
 		assertEquals(3,graph.numVertices());
-	}*/
+	}
 	public void testReverseArc() {
 		graph.reverseDirection(arcOne);
 		assertEquals(2, graph.outDegree(two));
@@ -90,7 +92,46 @@ public class DirectedGraphTest extends TestCase {
 		graph.reverseDirection(arcFour);
 		assertEquals("what",graph.getArc(four, three).getData());
 	}
-/*	public void testAnnotations() {
+	public void testIterators() {
+		Iterator<Vertex> allVertices = graph.vertices();
+		int counter = 0;
+		while (allVertices.hasNext()){
+			Vertex currentKey = allVertices.next();
+/*			System.out.println("current key:  " + currentKey);*/
+			assertNotNull(graph.getVertex(currentKey));
+			counter++;
+		}
+		assertEquals(3, counter);
+		
+		counter = 0;
+		Iterator<Vertex> inVerticesTwo = graph.inAdjacentVertices(two);
+		while (inVerticesTwo.hasNext()){
+			Vertex currentKey = inVerticesTwo.next();
+			assertEquals(one,graph.getVertex(currentKey));
+			counter++;
+		}
+		assertEquals(1, counter);
+		
+		counter = 0;
+		Iterator<Vertex> inVerticesOne = graph.inAdjacentVertices(one);
+		while (inVerticesOne.hasNext()){
+			Vertex currentKey = inVerticesOne.next();
+			assertEquals(three,graph.getVertex(currentKey));
+			counter++;
+		}
+		assertEquals(1, counter);
+		
+		counter = 0;
+		Iterator<Vertex> inVerticesThree = graph.inAdjacentVertices(three);
+		while (inVerticesThree.hasNext()){
+			Vertex currentKey = inVerticesThree.next();
+			assertEquals(two,graph.getVertex(currentKey));
+			counter++;
+		}
+		assertEquals(1, counter);
+		
+	}
+	public void testAnnotations() {
 		//test set annotations
 		graph.setAnnotation(one, "Parent", "Color");
 		Arc arc = graph.getArc(one, two);
@@ -126,5 +167,5 @@ public class DirectedGraphTest extends TestCase {
 		//test general functionality
 		assertEquals(3,graph.numVertices());
 		assertEquals(3,graph.numArcs());
-	}*/
+	}
 }

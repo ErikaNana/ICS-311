@@ -62,6 +62,7 @@ public class DirectedGraph {
 		}
 		return null;
 	}
+	
 	    //Returns the Vertex associated with client key.
 	
 	//getArc
@@ -229,7 +230,6 @@ public class DirectedGraph {
 				tree.delete(a);
 				Vertex start = a.getStartVertex();
 				Vertex end = a.getEndVertex();
-				System.out.println("");
 				aList.deleteEdge(start, end);
 				return a;
 			}
@@ -265,7 +265,7 @@ public class DirectedGraph {
 	
 	//setAnnotation
 	//change to var args?
-	//annotation is a hash map, no value pair
+	//annotation is hashed to itself
 	public void setAnnotation(Vertex v, Object k, Object o) {
 		v.setAnnotation(k, o);
 	} 
@@ -346,15 +346,24 @@ public class DirectedGraph {
 					if (currentIndex >= vertices.size()) {
 						return false;
 					}
+					else {
+						return true;
+					}
 				}
 				case IN:{
 					if (currentIndex >= inVertices.size()) {
 						return false;
 					}
+					else {
+						return true;
+					}
 				}
 				case OUT:{
 					if (currentIndex >= outVertices.size()) {
 						return false;
+					}
+					else {
+						return true;
 					}
 				}
 				default:{

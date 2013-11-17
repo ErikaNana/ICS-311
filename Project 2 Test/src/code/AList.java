@@ -78,13 +78,13 @@ public class AList {
 	}
 	
 	public void deleteEdge(Vertex start, Vertex end) {
-		System.out.println("start:  " + start);
-		System.out.println("end:  " + end);
+/*		System.out.println("start:  " + start);
+		System.out.println("end:  " + end);*/
 		BTree<Vertex> outTree = outVertices.get(start);
 		outTree.delete(end);
 		BTree<Vertex> inTree = inVertices.get(end);
-		System.out.println("tree size:  " + inTree.size());
-		System.out.println("root:  " + inTree.getRoot());
+/*		System.out.println("tree size:  " + inTree.size());
+		System.out.println("root:  " + inTree.getRoot());*/
 		inTree.delete(start);
 		numOfEdges--;
 	}
