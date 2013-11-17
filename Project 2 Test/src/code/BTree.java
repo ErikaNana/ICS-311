@@ -1,5 +1,7 @@
 package code;
 
+import java.util.ArrayList;
+
 
 
 /*
@@ -48,11 +50,14 @@ public class BTree<Type> implements DynamicSet<Type>{
 	/** The empty node to return; handles null pointer exceptions. */
 	private BNode<Type> empty = null;
 	
+	/**Unordered iterator*/
+	private ArrayList<Type> list;
 	/**
 	 * Instantiates a new b tree.
 	 */
 	public BTree() {
 		empty = new BNode<Type>(null); //for null pointer
+		list = new ArrayList<Type>();
 	}
 	
 	/**
@@ -123,6 +128,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 		else {
 			y.setRightChild(node);
 		}
+		list.add(key);
 		size++;
 	}
 
@@ -156,6 +162,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 			y.setLeftChild(node.getLeftChild());
 			y.getLeftChild().setParent(y);
 		}
+		list.remove(key);
 		size--;
 	}
 
@@ -366,5 +373,8 @@ public class BTree<Type> implements DynamicSet<Type>{
 	 */
 	public void setRoot(BNode<Type> node) {
 		root = node;
+	}
+	public ArrayList<Type> getListOfNodes(){
+		return list;
 	}
 }

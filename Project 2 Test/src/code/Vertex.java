@@ -17,6 +17,7 @@ public class Vertex {
 	public Vertex(String key, Object data) {
 		this.key = key;
 		this.data = data;
+		this.annotations = new HashMap<Object,Object>();
 	}
 	public String toString() {
 		return key;

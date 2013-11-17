@@ -19,6 +19,7 @@ public class Arc {
 		this.startVertex = start;
 		this.endVertex = end;
 		this.data = data;
+		this.annotations = new HashMap<Object,Object>();
 	}
 	public Vertex getStartVertex() {
 		return startVertex;
