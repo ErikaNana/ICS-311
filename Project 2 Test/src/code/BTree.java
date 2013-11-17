@@ -50,7 +50,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 	/** The empty node to return; handles null pointer exceptions. */
 	private BNode<Type> empty = null;
 	
-	/**Unordered iterator*/
+	/*Used for the iterators*/
 	private ArrayList<Type> list;
 	/**
 	 * Instantiates a new b tree.
