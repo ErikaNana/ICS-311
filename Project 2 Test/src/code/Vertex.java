@@ -2,6 +2,8 @@ package code;
 
 import java.util.HashMap;
 
+//data = attributes, annotations = weight, colors, parent
+
 public class Vertex {
 
 	private String key;
@@ -36,9 +38,8 @@ public class Vertex {
 	public void setValue(String key) {
 		this.key = key;
 	}
-	public void setAnnotation(Object one, Object two) {
-		annotations.put(one, one);
-		annotations.put(two, two);
+	public void setAnnotation(Object key, Object value) {
+		annotations.put(key, value);
 	}
 	public Object getAnnotation(Object annotation) {
 		return annotations.get(annotation);

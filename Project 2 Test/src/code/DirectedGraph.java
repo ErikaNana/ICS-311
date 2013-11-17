@@ -145,6 +145,7 @@ public class DirectedGraph {
 		vertices.add(vertex);
 		return vertex;
 	}
+	
 	public Vertex insertVertex(Object key, Object data) {
 		Vertex vertex = new Vertex((String) key, data);
 		BTree<Arc> tree = new BTree<Arc>();

@@ -133,30 +133,30 @@ public class DirectedGraphTest extends TestCase {
 	}
 	public void testAnnotations() {
 		//test set annotations
-		graph.setAnnotation(one, "Parent", "Color");
+		graph.setAnnotation(one, "Parent", "two");
 		Arc arc = graph.getArc(one, two);
-		graph.setAnnotation(arcOne,"Color", "Parent");
+		graph.setAnnotation(arcOne,"Color", "blue");
 		
 		//make sure that they are still the same arc after modification
 		assertEquals(arc,arcOne);
 		
 		//test get annotations
-		assertEquals("Parent", graph.getAnnotation(one,"Parent"));
+		assertEquals("two", graph.getAnnotation(one,"Parent"));
 		assertNull(one.getAnnotation("WHAT"));
-		assertEquals("Color", graph.getAnnotation(arcOne,"Color"));
+		assertEquals("blue", graph.getAnnotation(arcOne,"Color"));
 		assertNull(graph.getAnnotation(two,"WHAT"));
 		
 		//test remove annotations
 		Object removeGraph = graph.removeAnnotation(arcOne, "Color");
 		assertNull(graph.getAnnotation(arcOne, "Color"));
-		assertEquals(removeGraph, "Color");
+		assertEquals(removeGraph, "blue");
 		Object removeVertex = graph.removeAnnotation(one, "Parent");
 		assertNull(graph.getAnnotation(one, "Parent"));
-		assertEquals(removeVertex,"Parent");
+		assertEquals(removeVertex,"two");
 		
 		//reset
-		graph.setAnnotation(one, "Parent", "Color");
-		graph.setAnnotation(arcOne, "Color", "Parent");
+		graph.setAnnotation(one, "Parent", "two");
+		graph.setAnnotation(arcOne, "Color", "blue");
 		graph.clearAnnotations(one);
 		assertNull(graph.getAnnotation(one, "Parent"));
 		assertNull(graph.getAnnotation(one, "Color"));

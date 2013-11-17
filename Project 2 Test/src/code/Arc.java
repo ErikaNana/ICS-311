@@ -47,9 +47,8 @@ public class Arc {
 	public String getFullArc() {
 		return startVertex.toString() + " to " + endVertex.toString();
 	}
-	public void setAnnotation(Object one, Object two) {
-		annotations.put(one, one);
-		annotations.put(two, two);
+	public void setAnnotation(Object key, Object value) {
+		annotations.put(key, value);
 	}
 	public Object getAnnotation(Object annotation) {
 		return annotations.get(annotation);
