@@ -92,9 +92,10 @@ public class DirectedGraphTest extends TestCase {
 		graph.reverseDirection(arcFour);
 		assertEquals("what",graph.getArc(four, three).getData());
 	}
-	public void testIterators() {
+	public void testVertexIterators() {
 		Iterator<Vertex> allVertices = graph.vertices();
 		int counter = 0;
+		//test all vertices
 		while (allVertices.hasNext()){
 			Vertex currentKey = allVertices.next();
 /*			System.out.println("current key:  " + currentKey);*/
@@ -130,6 +131,15 @@ public class DirectedGraphTest extends TestCase {
 		}
 		assertEquals(1, counter);
 		
+		//test outVertices
+		counter = 0;
+		Iterator<Vertex> outVerticesOne = graph.outAdjacentVertices(one);
+		while (outVerticesOne.hasNext()){
+			Vertex currentKey = outVerticesOne.next();
+			assertEquals(two,graph.getVertex(currentKey));
+			counter++;
+		}
+		assertEquals(1, counter);
 	}
 	public void testAnnotations() {
 		//test set annotations

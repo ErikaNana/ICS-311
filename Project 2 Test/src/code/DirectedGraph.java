@@ -16,17 +16,11 @@ public class DirectedGraph {
 	//BTree will insert by end vertex
 	HashMap<Vertex,BTree<Arc>> map ; //since keys are strings
 	HashMap<Object,ArrayList<Object>> annotation;
-	ArrayList<Vertex> vertices;
-	ArrayList<Arc> arcs;
-	ArrayList<Vertex> inVertices;
-	ArrayList<Vertex> outVertices;
+	ArrayList<Arc> arcs;	
 	
 	public DirectedGraph(){
 		aList = new AList();
 		map = new HashMap<Vertex,BTree<Arc>>();
-		vertices = new ArrayList<Vertex>();
-		inVertices = new ArrayList<Vertex>();
-		outVertices = new ArrayList<Vertex>();
 		arcs = new ArrayList<Arc>();
 	}
 	/******************** ACCESSORS ******************************/
@@ -43,7 +37,7 @@ public class DirectedGraph {
 	
 	//Returns an iterator over the vertices V
 	public Iterator<Vertex> vertices() {
-		return new VertexIterator(VertexIterator.ALL);
+		return map.keySet().iterator();
 	}
 	
 	//Returns an iterator over the arcs A of G
@@ -108,17 +102,38 @@ public class DirectedGraph {
 	
 	//inAdjacentVertices
 	public Iterator<Vertex> inAdjacentVertices(Vertex v) {
-		BTree<Vertex> tree = aList.getInVertices(v);
-		inVertices = tree.getListOfNodes();
-		return new VertexIterator(VertexIterator.IN);
+		ArrayList<Vertex> inVertices = new ArrayList<Vertex>();
+		//get an arrayList for the iterator
+		Set<Vertex> keys = map.keySet();
+		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
+			Vertex currentKey = i.next();
+			BTree<Arc> arcs = map.get(currentKey);
+			ArrayList<Arc> list = arcs.getListOfNodes();
+			for (Arc arc: list) {
+				if (arc.getEndVertex() == v) {
+					inVertices.add(currentKey);
+				}
+			}
+		}
+		return new VertexIterator(inVertices);
 	}
 	    //Returns an iterator over the vertices adjacent to v by incoming arcs.
 	
 	//outAdjacentVertices
 	public Iterator<Vertex> outAdjacentVertices(Vertex v) {
-		BTree<Vertex> tree = aList.getOutVertices(v);
-		outVertices = tree.getListOfNodes();
-		return new VertexIterator(VertexIterator.OUT);
+		ArrayList<Vertex> outVertices = new ArrayList<Vertex>();
+		Set<Vertex> keys = map.keySet();
+		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
+			Vertex currentKey = i.next();
+			if (currentKey == v) {
+				BTree<Arc> arcs = map.get(currentKey);
+				ArrayList<Arc> list = arcs.getListOfNodes();
+				for (Arc arc: list) {
+					outVertices.add(arc.getEndVertex());
+				}
+			}
+		}
+		return new VertexIterator(outVertices);
 	}
 	    //Returns an iterator over the vertices adjacent to v by outgoing arcs.
 	
@@ -142,7 +157,6 @@ public class DirectedGraph {
 		BTree<Arc> tree = new BTree<Arc>();
 		map.put(vertex, tree);
 		aList.addVertex(vertex);
-		vertices.add(vertex);
 		return vertex;
 	}
 	
@@ -151,7 +165,6 @@ public class DirectedGraph {
 		BTree<Arc> tree = new BTree<Arc>();
 		map.put(vertex, tree);
 		aList.addVertex(vertex);
-		vertices.add(vertex);
 		return vertex;
 	}
 	    //Inserts a new isolated vertex indexed under (retrievable via); key and optionally containing an object data (which defaults to null);.
@@ -332,79 +345,30 @@ public class DirectedGraph {
 	}
 	class VertexIterator implements Iterator<Vertex>{
 		int currentIndex = 0;
-		public static final int ALL = 1;
-		public static final int IN = 2;
-		public static final int OUT = 3;
-		int type;
-		
-		public VertexIterator(int type) {
-			this.type = type;
+		ArrayList<Vertex> list;
+		public VertexIterator(ArrayList<Vertex> list) {
+			this.list = list;
 		}
 		@Override
+		
 		public boolean hasNext() {
-			switch(type) {
-				case ALL:{
-					if (currentIndex >= vertices.size()) {
-						return false;
-					}
-					else {
-						return true;
-					}
-				}
-				case IN:{
-					if (currentIndex >= inVertices.size()) {
-						return false;
-					}
-					else {
-						return true;
-					}
-				}
-				case OUT:{
-					if (currentIndex >= outVertices.size()) {
-						return false;
-					}
-					else {
-						return true;
-					}
-				}
-				default:{
-					return true;
-				}
+			if (currentIndex >= list.size()) {
+				return false;
+			}
+			else {
+				return true;
 			}
 		}
 
 		@Override
 		public Vertex next() {
-			switch(type) {
-				case ALL:{
-					return vertices.get(currentIndex++);
-				}
-				case IN:{
-					return inVertices.get(currentIndex++);
-				}
-				case OUT:{
-					return outVertices.get(currentIndex++);
-				}
-				default:{
-					return null;
-				}
-			}		
+			return list.get(currentIndex++);		
 		}
 		
 
 		@Override
 		public void remove() {
-			switch(type) {
-				case ALL:{
-					vertices.remove(--currentIndex);
-				}
-				case IN:{
-					vertices.remove(--currentIndex);
-				}
-				case OUT:{
-					vertices.remove(--currentIndex);
-				}
-			}
+			list.remove(--currentIndex);
 		}
 		
 	}
