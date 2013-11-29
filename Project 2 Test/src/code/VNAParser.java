@@ -40,8 +40,9 @@ public class VNAParser {
 						String[] words = next.split(" ");
 						System.out.println("creating!");
 						//first column is always the id
-						if (words.length == 1) {
-							graph.insertVertex(words[0]);
+						if (words.length == 1) {			
+							//\r is a carriage return
+							graph.insertVertex(words[0].replaceAll("\\r|\\n", ""));
 						}
 						else {
 							graph.insertVertex(words[0], words[1]);
