@@ -7,18 +7,19 @@ import java.util.HashMap;
 public class Vertex {
 
 	private String key;
-	private Object data;
+	private Data dataList;
 	private HashMap<Object,Object> annotations;
 	
 	public Vertex(String key) {
 		this.key = key;
-		this.data = null;
 		this.annotations = new HashMap<Object,Object>();
+		this.dataList = new Data();
 	}
 	
-	public Vertex(String key, Object data) {
+	public Vertex(String key, String data) {
 		this.key = key;
-		this.data = data;
+		this.dataList = new Data();
+		this.dataList.setData(data);
 		this.annotations = new HashMap<Object,Object>();
 	}
 	public String toString() {
@@ -29,10 +30,10 @@ public class Vertex {
 	}
 	
 	public Object getData() {
-		return data;
+		return dataList.getData();
 	}
-	public void setData(Object data) {
-		this.data = data;
+	public void setData(String data) {
+		this.dataList.setData(data);
 	}
 	//just in case
 	public void setValue(String key) {
