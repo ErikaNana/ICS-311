@@ -47,12 +47,10 @@ public class DirectedGraph {
 	
 	//getVertex
 	public Vertex getVertex(Object key) {
-		System.out.println("key:  " + key);
 		Set<Vertex> keys = map.keySet();
 		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
 			Vertex currentKey = i.next();
 			if (Utils.compareValue(currentKey.toString(), key.toString()) == Utils.EQUAL){
-				System.out.println("returning match");
 				return currentKey;
 			}
 		}
