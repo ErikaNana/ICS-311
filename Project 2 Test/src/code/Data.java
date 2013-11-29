@@ -26,7 +26,7 @@ public class Data {
 		return returnString;
 	}
 	
-	public void setData(String attribute) {
+	public void addData(String attribute) {
 		data.add(attribute);
 	}
 	public String toString() {

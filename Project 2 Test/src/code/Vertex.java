@@ -16,10 +16,12 @@ public class Vertex {
 		this.dataList = new Data();
 	}
 	
-	public Vertex(String key, String data) {
+	public Vertex(String key, Object data) {
 		this.key = key;
-		this.dataList = new Data();
-		this.dataList.setData(data);
+		if (dataList == null) {
+			this.dataList = new Data();
+		}
+		this.dataList.addData((String) data);
 		this.annotations = new HashMap<Object,Object>();
 	}
 	public String toString() {
@@ -32,8 +34,11 @@ public class Vertex {
 	public Object getData() {
 		return dataList.getData();
 	}
-	public void setData(String data) {
-		this.dataList.setData(data);
+	public void addData(String data) {
+		if (dataList == null) {
+			dataList = new Data();
+		}
+		this.dataList.addData(data);
 	}
 	//just in case
 	public void setValue(String key) {

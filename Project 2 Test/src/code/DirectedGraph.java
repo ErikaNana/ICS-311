@@ -161,7 +161,7 @@ public class DirectedGraph {
 	}
 	
 	public Vertex insertVertex(Object key, Object data) {
-		Vertex vertex = new Vertex((String) key, (String)data);
+		Vertex vertex = new Vertex((String) key, data);
 		BTree<Arc> tree = new BTree<Arc>();
 		map.put(vertex, tree);
 		aList.addVertex(vertex);
@@ -196,7 +196,7 @@ public class DirectedGraph {
 	//setVertexData
 	public void setVertexData(Vertex v, String data) {
 		Vertex vertex = getVertex(v);
-		vertex.setData(data);
+		vertex.addData(data);
 	}
 	    //Changes the data Object associated with Vertex v to data.
 	
