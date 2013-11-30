@@ -1,7 +1,9 @@
 package test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.TestCase;
 import code.Arc;
@@ -51,10 +53,21 @@ public class MetricsTest extends TestCase {
 		assertEquals("three", graph.getArc(two, one).getData());
 	}
 	public void testSCC() {
-		assertEquals(12, Metrics.getSCC(graph));
+		Metrics.runSCC(graph);
+		assertEquals(12, Metrics.getNumberOfSCC());
+		System.out.println("percentage:  " + Metrics.getPercentLargestSCC());
+		List<ArrayList<Vertex>> list = Metrics.sortedSCC();
+		long counter = 0;
+		for (ArrayList<Vertex> vertexList: list) {
+			System.out.println("scc:  " + counter + "  size:  " + vertexList.size());
+			for (Vertex vertex: vertexList) {
+				System.out.println("    vertex:  " + vertex);
+			}
+			counter++;
+		}
 	}
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
-
+	
 }

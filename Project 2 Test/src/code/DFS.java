@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DFS {
 	static int time;
-	static int scc;
+	static long scc;
 	
 	public static DirectedGraph runDFS(DirectedGraph graph) {
 		Iterator<Vertex>iterator = graph.vertices();
