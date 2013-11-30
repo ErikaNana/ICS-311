@@ -15,7 +15,7 @@ public class VNAParser {
 		
 		DirectedGraph graph = new DirectedGraph();
 		File file = new File(fileName);
-		System.out.println("file:  " + file);
+		//System.out.println("file:  " + file);
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			//read file in line by line
@@ -44,7 +44,6 @@ public class VNAParser {
 						}
 						//first column is always the id
 						if (words.length == 1) {			
-							//\r is a carriage return
 							graph.insertVertex(words[0]);
 						}
 						else {
