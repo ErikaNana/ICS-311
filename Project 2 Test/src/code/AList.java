@@ -82,4 +82,11 @@ public class AList {
 	public int getNumOfVertices() {
 		return outVertices.size();
 	}
+	
+	public void reverseEdge(Vertex startVertex, Vertex endVertex) {
+		HashSet<Vertex> list = outVertices.get(startVertex);
+		list.remove(endVertex);
+		HashSet<Vertex> updated = outVertices.get(endVertex);
+		updated.add(startVertex);
+	}
 }

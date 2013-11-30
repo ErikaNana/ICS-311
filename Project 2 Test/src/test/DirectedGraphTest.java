@@ -91,6 +91,7 @@ public class DirectedGraphTest extends TestCase {
 		Arc arcFour = graph.insertArc(three, four, "what");
 		graph.reverseDirection(arcFour);
 		assertEquals("what",graph.getArc(four, three).getData());
+		assertEquals(4, graph.numArcs());
 	}
 	public void testVertexIterators() {
 		Iterator<Vertex> allVertices = graph.vertices();
@@ -167,7 +168,12 @@ public class DirectedGraphTest extends TestCase {
 		//reset
 		graph.setAnnotation(one, "Parent", "two");
 		graph.setAnnotation(arcOne, "Color", "blue");
+		
+		//test changing annotations
+		graph.setAnnotation(one, "Parent", "five");
+		assertEquals("five", graph.getAnnotation(one, "Parent"));
 		graph.clearAnnotations(one);
+		
 		assertNull(graph.getAnnotation(one, "Parent"));
 		assertNull(graph.getAnnotation(one, "Color"));
 		graph.clearAnnotations(arcOne);

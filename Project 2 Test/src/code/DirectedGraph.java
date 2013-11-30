@@ -16,12 +16,10 @@ public class DirectedGraph {
 	//BTree will insert by end vertex
 	HashMap<Vertex,BTree<Arc>> map ; //since keys are strings
 	HashMap<Object,ArrayList<Object>> annotation;
-	ArrayList<Arc> arcs;	
 	
 	public DirectedGraph(){
 		aList = new AList();
 		map = new HashMap<Vertex,BTree<Arc>>();
-		arcs = new ArrayList<Arc>();
 	}
 	/******************** ACCESSORS ******************************/
 	
@@ -42,7 +40,17 @@ public class DirectedGraph {
 	
 	//Returns an iterator over the arcs A of G
 	public Iterator<Arc> arcs() {
-		return new ArcIterator();
+		ArrayList<Arc> list = new ArrayList<Arc>();
+		Iterator<Vertex> iterator = this.vertices();
+		while (iterator.hasNext()) {
+			Vertex vertex = iterator.next();
+			BTree<Arc> tree = map.get(vertex);
+			ArrayList<Arc> listOfArcs = tree.getListOfNodes();
+			for(Arc arc: listOfArcs) {
+				list.add(arc);
+			}
+		}
+		return new ArcIterator(list);
 	}
 	
 	//getVertex
@@ -178,7 +186,6 @@ public class DirectedGraph {
 		tree.insert(arc, null);
 		map.put(u, tree);
 		aList.addEdge(u, v);
-		arcs.add(arc);
 		return arc;
 	}
 	public Arc insertArc(Vertex u, Vertex v, Object data) {
@@ -187,7 +194,6 @@ public class DirectedGraph {
 		tree.insert(arc, null);
 		map.put(u, tree);
 		aList.addEdge(u, v);
-		arcs.add(arc);
 		return arc;
 	}
 	    //Inserts a new arc from an existing vertex to another, optionally containing an object data.
@@ -256,17 +262,39 @@ public class DirectedGraph {
 	//reverseDirection
 	public void reverseDirection(Arc a) {
 		//delete and update
-		Arc arc = a;
 		Vertex start = a.getStartVertex();
-		Vertex end = a.getEndVertex();
+		System.out.println("     start:  " + start);
 
-		this.removeArc(a);
-		if (arc.getData() != null) {
-			this.insertArc(end, start,arc.getData());
+		Vertex end = a.getEndVertex();
+		System.out.println("     end:  " + end);
+		aList.reverseEdge(start, end);
+		BTree<Arc> tree = map.get(start);
+		System.out.println("the tree for " + start +  " before:");
+		tree.inorderTreeWalk(tree.getRoot());
+		tree.delete(a);
+		//arcs.remove(a);
+		map.put(start, tree);
+		System.out.println("tree now");
+		tree.inorderTreeWalk(tree.getRoot());
+		tree = map.get(end);
+		Object data = a.getData();
+		Arc arc;
+		if (a.getData() != null) {
+			arc = new Arc(end, start,data);
 		}
 		else {
-			this.insertArc(end, start);
+			arc = new Arc(end,start);
 		}
+		System.out.println("adding to " + end);
+		System.out.println("arc now:  " + arc.getStartVertex() + "," + arc.getEndVertex());
+		System.out.println("tree before:");
+		tree.inorderTreeWalk(tree.getRoot());
+		tree.insert(arc, null);
+		System.out.println("tree now");
+		tree.inorderTreeWalk(tree.getRoot());
+		//arcs.add(arc);
+		map.put(end, tree);
+
 	} 
 	    //Reverse the direction of an arc.
 	
@@ -323,10 +351,14 @@ public class DirectedGraph {
     //Removes all annotations on vertices or arcs indexed by k. Use this to clean up between runs.
 	class ArcIterator implements Iterator<Arc>{
 		int currentIndex = 0;
+		ArrayList<Arc>list;
 		
+		public ArcIterator(ArrayList<Arc>list) {
+			this.list = list;
+		}
 		@Override
 		public boolean hasNext() {
-			if (currentIndex >= arcs.size()) {
+			if (currentIndex >= list.size()) {
 				return false;
 			}
 			return true;
@@ -334,12 +366,12 @@ public class DirectedGraph {
 
 		@Override
 		public Arc next() {
-			return arcs.get(currentIndex++);
+			return list.get(currentIndex++);
 		}
 
 		@Override
 		public void remove() {
-			arcs.remove(--currentIndex);
+			list.remove(--currentIndex);
 		}
 		
 	}

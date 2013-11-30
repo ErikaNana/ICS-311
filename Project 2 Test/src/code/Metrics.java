@@ -1,9 +1,11 @@
 package code;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Metrics {
+	
 	public static double getDensity(DirectedGraph graph) {
 		double arcs = (double) graph.numArcs();
 		int denominator = graph.numVertices() * (graph.numVertices() - 1);
@@ -65,5 +67,24 @@ public class Metrics {
 	public static long getSCC(DirectedGraph graph) {
 		long scc = 0;
 		return scc;
+	}
+	
+	public static void createTranspose(DirectedGraph graph) {
+		Iterator<Arc> iterator = graph.arcs();
+		while (iterator.hasNext()) {
+			Arc next = iterator.next();
+			System.out.println("arc:  " + next.getStartVertex()+ "," + next.getEndVertex() );
+			graph.reverseDirection(next);
+		}
+		iterator = graph.arcs();
+		while (iterator.hasNext()) {
+			Arc next = iterator.next();
+			System.out.println("arc:  " + next.getStartVertex()+ "," + next.getEndVertex() );
+		}
+	}
+	
+	public static ArrayList<Vertex> sortByFinishList(DirectedGraph graph){
+		ArrayList<Vertex> list = new ArrayList<Vertex>();
+		return list;
 	}
 }
