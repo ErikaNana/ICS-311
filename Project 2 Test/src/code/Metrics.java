@@ -1,7 +1,6 @@
 package code;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Metrics {
@@ -65,7 +64,18 @@ public class Metrics {
 	}
 	
 	public static long getSCC(DirectedGraph graph) {
+		DirectedGraph newGraph = DFS.runDFS(graph);
+		Metrics.createTranspose(newGraph);
+		DirectedGraph sccGraph = DFS.runDFSWithSCC(newGraph);
 		long scc = 0;
+		Iterator<Vertex> iterator = sccGraph.vertices();
+		while(iterator.hasNext()){
+			Vertex next = iterator.next();
+			int currentSCC = (int) sccGraph.getAnnotation(next, "scc");
+			if (currentSCC > scc) {
+				scc = currentSCC;
+			}
+		}
 		return scc;
 	}
 	
@@ -73,18 +83,7 @@ public class Metrics {
 		Iterator<Arc> iterator = graph.arcs();
 		while (iterator.hasNext()) {
 			Arc next = iterator.next();
-			System.out.println("arc:  " + next.getStartVertex()+ "," + next.getEndVertex() );
 			graph.reverseDirection(next);
 		}
-		iterator = graph.arcs();
-		while (iterator.hasNext()) {
-			Arc next = iterator.next();
-			System.out.println("arc:  " + next.getStartVertex()+ "," + next.getEndVertex() );
-		}
-	}
-	
-	public static ArrayList<Vertex> sortByFinishList(DirectedGraph graph){
-		ArrayList<Vertex> list = new ArrayList<Vertex>();
-		return list;
 	}
 }

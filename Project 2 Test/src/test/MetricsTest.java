@@ -50,12 +50,9 @@ public class MetricsTest extends TestCase {
 		assertEquals(one, graph.getArc(two, one).getEndVertex());
 		assertEquals("three", graph.getArc(two, one).getData());
 	}
-/*	public void testSCC() {
-		DirectedGraph newGraph = DFS.runDFS(graph);
-		newGraph = Metrics.createTranspose(newGraph);
-		DirectedGraph answerGraph = DFS.runDFSWithSCC(newGraph);
-		assertEquals(12, Metrics.getSCC(answerGraph));
-	}*/
+	public void testSCC() {
+		assertEquals(12, Metrics.getSCC(graph));
+	}
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}

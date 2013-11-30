@@ -263,19 +263,14 @@ public class DirectedGraph {
 	public void reverseDirection(Arc a) {
 		//delete and update
 		Vertex start = a.getStartVertex();
-		System.out.println("     start:  " + start);
-
 		Vertex end = a.getEndVertex();
-		System.out.println("     end:  " + end);
+		//update aList
 		aList.reverseEdge(start, end);
+		
+		//update BTrees
 		BTree<Arc> tree = map.get(start);
-		System.out.println("the tree for " + start +  " before:");
-		tree.inorderTreeWalk(tree.getRoot());
 		tree.delete(a);
-		//arcs.remove(a);
 		map.put(start, tree);
-		System.out.println("tree now");
-		tree.inorderTreeWalk(tree.getRoot());
 		tree = map.get(end);
 		Object data = a.getData();
 		Arc arc;
@@ -285,14 +280,7 @@ public class DirectedGraph {
 		else {
 			arc = new Arc(end,start);
 		}
-		System.out.println("adding to " + end);
-		System.out.println("arc now:  " + arc.getStartVertex() + "," + arc.getEndVertex());
-		System.out.println("tree before:");
-		tree.inorderTreeWalk(tree.getRoot());
 		tree.insert(arc, null);
-		System.out.println("tree now");
-		tree.inorderTreeWalk(tree.getRoot());
-		//arcs.add(arc);
 		map.put(end, tree);
 
 	} 
@@ -406,5 +394,9 @@ public class DirectedGraph {
 	}
 	public AList getAList() {
 		return aList;
+	}
+	
+	public HashMap<Vertex,BTree<Arc>> getATree(){
+		return map;
 	}
 }
