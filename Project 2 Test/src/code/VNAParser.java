@@ -3,9 +3,7 @@ package code;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -30,7 +28,7 @@ public class VNAParser {
 			fileReader.useDelimiter(Pattern.compile("[\\r\\n]+"));
 			while(fileReader.hasNext()) {
 				String next = fileReader.next();
-				if (next.contains("properties") || next.contains("*Node")) {
+				if (next.contains("*node") || next.contains("*Node")) {
 					create = true;
 					continue;
 				}
@@ -39,35 +37,21 @@ public class VNAParser {
 					tie = true;
 					continue;
 				}
+				System.out.println("nex:  " + next);
 				if (create) {
-					if (!next.matches("^ID")) { //match beginning of the line
+					if (!next.matches("^ID.*")) { //match beginning of the line
 						String[] words = next.split(" ");
 						graph.insertVertex(words[0]);
+						System.out.println("vertex:  " + words[0]);
 					}
 				}
 				if (tie) {
 					if (!next.matches("from.*")) {
-						String[] info = next.split(" ");
+						//split by ALL the white space
+						String[] info = next.split("\\s+");
 						Vertex start = graph.getVertex(info[0]);
-						String endVertex = "";
-						//get the correct info for end
-						for (int i = 1; i < info.length; i++) {
-							if (endVertex.isEmpty()) {
-								if (!info[i].isEmpty()) {
-									endVertex = info[i];
-									break;
-								}
-							}
-						}
-						Vertex end = graph.getVertex(endVertex);
+						Vertex end = graph.getVertex(info[1]);
 						graph.insertArc(start, end);
-/*						File fileBAH = new File("out.txt");
-						FileOutputStream fos = new FileOutputStream(fileBAH);
-						PrintStream ps = new PrintStream(fos);
-						System.setOut(ps);
-						Arc arc = graph.getArc(start, end);
-						System.out.println("arc:  " + arc.getFullArc());
-						System.out.println("data:  " + arc.getData());;*/
 					}
 				}
 			}
