@@ -57,9 +57,9 @@ public class VNAParser {
 					if (!next.matches("from.*")) {
 						System.out.println("tie dye!");
 						String[] info = next.split(" ");
-						System.out.println("info size:  " + info.length);
 						for (int i = 0; i < info.length; i++) {
 							System.out.println(info[i]);
+							System.out.println("length:  " + info[i].length());
 						}
 						//System.out.println("info:  " + info[0].getClass());
 						Vertex start = graph.getVertex(info[0].toString());

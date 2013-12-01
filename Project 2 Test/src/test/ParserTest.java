@@ -27,6 +27,9 @@ public class ParserTest extends TestCase {
 		assertEquals("1", arc.getData());
 		end = graph.getVertex("32");
 		assertEquals(null,graph.getArc(start, end));
+		
+		System.out.println("num of vertices:  " + graph.numVertices());
+		System.out.println("num of arcs:  " + graph.numArcs());
 	}
 	protected void tearDown() throws Exception {
 		super.tearDown();
