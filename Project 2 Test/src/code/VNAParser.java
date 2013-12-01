@@ -21,100 +21,49 @@ public class VNAParser {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			//read file in line by line
 			Scanner fileReader = new Scanner(br);
-			fileReader.useDelimiter(Pattern.compile("[\\r\\n;]+"));
+			fileReader.useDelimiter(Pattern.compile("[\\r\\n]+"));
 			while(fileReader.hasNext()) {
 				String next = fileReader.next();
-				//need the (?s) to match the newline caused by the delimiter
-				if (next.matches("(?s).*ode.*")) {
-					System.out.println("create!");
+				if (next.contains("*node") || next.contains("*Node")) {
 					create = true;
 					continue;
 				}
-				if (next.matches("(?s).*ie.*")){
-					System.out.println("tie!");
+				if (next.contains("*tie") || next.contains("*Tie")){
 					create = false;
 					tie = true;
 					continue;
 				}
-				System.out.println("next:  " + next);
 				if (create) {
 					if (!next.matches(".*ID.*")) {
-						//System.out.println("I MATCH");
 						String[] words = next.split(" ");
-						//System.out.println("length:  " + words[0].length());
 						graph.insertVertex(words[0]);
-						//Vertex vertex = graph.getVertex(words[0]);
-						//System.out.println("vertex:  " + vertex);
-						//first column is always the id
-						if (words.length > 1) {
-							for(int i = 1; i < words.length; i++) {
-								graph.getVertex(words[0]).addData(words[i]);
-							}
-						}
 					}
 				}
 				if (tie) {
 					if (!next.matches("from.*")) {
-						System.out.println("tie dye!");
 						String[] info = next.split(" ");
-						for (int i = 0; i < info.length; i++) {
-							System.out.println(info[i]);
-							System.out.println("length:  " + info[i].length());
-						}
-						//System.out.println("info:  " + info[0].getClass());
-						Vertex start = graph.getVertex(info[0].toString());
-						Vertex end = graph.getVertex(info[1]);
-						//System.out.println("vertex start:  " + start);
-						//System.out.println("vertex end:  " + end);
-						if (info.length == 2) {
-							graph.insertArc(start, end);
-						}
-						else {//add weight
-							graph.insertArc(start, end,info[2]);
-						}
-					}
-				}
-/*				if(create) {
-					//create the nodes;
-					if (!next.matches("(?s).*ID.*")) {
-						//get data attributes
-						String[] words = next.split(" ");
-						//sanitize array.  \r is a carriage return
-						for(int i = 0; i < words.length; i++) {
-							words[i] = words[i].replaceAll("\\r|\\n", "");
-						}
-						graph.insertVertex(words[0]);
-						//first column is always the id
-						if (words.length == 1) {			
-							graph.insertVertex(words[0]);
-						}
-						else {
-							graph.insertVertex(words[0], words[1]);
-							for(int i = 2; i < words.length; i++) {
-								graph.getVertex(words[0]).addData(words[i]);
+						Vertex start = graph.getVertex(info[0]);
+						String endVertex = "";
+						//get the correct info for end
+						for (int i = 1; i < info.length; i++) {
+							if (endVertex.isEmpty()) {
+								if (!info[i].isEmpty()) {
+									endVertex = info[i];
+									break;
+								}
 							}
 						}
+						Vertex end = graph.getVertex(endVertex);
+						graph.insertArc(start, end);
+/*						File fileBAH = new File("out.txt");
+						FileOutputStream fos = new FileOutputStream(fileBAH);
+						PrintStream ps = new PrintStream(fos);
+						System.setOut(ps);
+						Arc arc = graph.getArc(start, end);
+						System.out.println("arc:  " + arc.getFullArc());
+						System.out.println("data:  " + arc.getData());;*/
 					}
 				}
-				if (tie) {
-					//create the edges
-					if (!next.matches("(?s).*from.*")) {
-						String[] info = next.split(" ");
-						for(int i = 0; i < info.length; i++) {
-							info[i] = info[i].replaceAll("\\r|\\n", "");
-						}
-						Vertex start = graph.getVertex(info[0]);
-						Vertex end = graph.getVertex(info[1]);
-						if (info.length == 2) {
-							graph.insertArc(start, end);
-						}
-						else {//add weight
-							graph.insertArc(start, end,info[2]);
-						}
-					}
-				}*/
-				//System.out.println(next);
-				System.out.println("");
 			}
 			fileReader.close();
 		} catch (FileNotFoundException e) {

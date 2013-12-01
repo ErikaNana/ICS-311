@@ -143,12 +143,12 @@ public class Utils<Type> {
 		System.out.printf("%15s", "inDegree");
 		System.out.printf("%10d", inDegreeStats[0]);
 		System.out.printf("%15.3f", inDegreeStats[2]);
-		System.out.printf("%5d", inDegreeStats[1]);
+		System.out.printf("%7d", inDegreeStats[1]);
 		System.out.println("");
 		System.out.printf("%16s", "outDegree");
 		System.out.printf("%9d", outDegreeStats[0]);
 		System.out.printf("%15.3f", outDegreeStats[2]);
-		System.out.printf("%5d", outDegreeStats[1]);
+		System.out.printf("%7d", outDegreeStats[1]);
 		System.out.println("");
 		System.out.printf("%-20s", "Number of Strongly Connected Components:");
 		System.out.printf("%5d",sccStats[0]);

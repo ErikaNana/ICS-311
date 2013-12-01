@@ -47,8 +47,10 @@ public class Arc {
 		return dataList.getData();
 	}
 	//overloaded so that when inserted into BTree, it will store by end value
+	//idk why this works
 	public String toString() {
-		return endVertex.toString();
+		//return endVertex.toString();
+		return getFullArc();
 	}
 	public String getFullArc() {
 		return startVertex.toString() + " to " + endVertex.toString();

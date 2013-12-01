@@ -141,6 +141,11 @@ public class BTree<Type> implements DynamicSet<Type>{
 		@SuppressWarnings("unchecked")
 		BNode<Type> node = (BNode<Type>) this.search(key);
 		if (node == null) {
+/*			System.out.println("searching for:  " + key);
+			System.out.println("length:  " + key.toString().length());
+			System.out.println("type:  " + key.getClass());*/
+			Arc thing = (Arc) key;
+			System.out.println(thing.getFullArc());
 			System.out.println("Can't delete from a node that doesn't exist!");
 			return;
 		}
@@ -173,7 +178,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 	public Object search(Type key) {
 		//matches at the root
 		BNode<Type> current = root;
-		
 		while (true) {
 			int compare = Utils.compareValue(key.toString(), current.getKey().toString());
 			if (compare == Utils.LESSER) {

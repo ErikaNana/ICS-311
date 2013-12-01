@@ -227,6 +227,7 @@ public class DirectedGraph {
 					Arc arc = new Arc(dummy,v);
 					Arc foundArc = (Arc) tree.searchForValue(arc);
 					if (foundArc != null) {
+						System.out.println("in remove vertex");
 						tree.delete(foundArc);
 						map.put(v, tree);
 					}
@@ -234,6 +235,7 @@ public class DirectedGraph {
 			}
 			map.remove(v);
 			//remove from aList
+			System.out.println("in aList");
 			aList.deleteVertex(v);
 			return v;
 		}
@@ -251,9 +253,11 @@ public class DirectedGraph {
 			Vertex currentKey = i.next();
 			if (Utils.compareValue(currentKey.toString(), key.toString()) == Utils.EQUAL){
 				BTree<Arc> tree = map.get(currentKey);
+				System.out.println("in remove arc deleting a from the tree");
 				tree.delete(a);
 				Vertex start = a.getStartVertex();
 				Vertex end = a.getEndVertex();
+				System.out.println("in remove arc deleting edge");
 				aList.deleteEdge(start, end);
 				return a;
 			}
@@ -274,11 +278,13 @@ public class DirectedGraph {
 		
 		//update BTrees
 		BTree<Arc> tree = map.get(start);
+		//System.out.println("in reverse direction");
 		tree.delete(a);
 		map.put(start, tree);
 		tree = map.get(end);
 		Object data = a.getData();
 		Arc arc;
+		arc = new Arc(end,start);
 		if (a.getData() != null) {
 			arc = new Arc(end, start,data);
 		}

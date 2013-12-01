@@ -55,6 +55,13 @@ public class MetricsTest extends TestCase {
 		}
 		assertEquals(one, graph.getArc(two, one).getEndVertex());
 		assertEquals("three", graph.getArc(two, one).getData());
+		assertNotNull(graph.getArc(three, two));
+		assertEquals(1, graph.inDegree(one));
+		assertEquals(1, graph.inDegree(two));
+		assertEquals(1, graph.inDegree(two));
+		assertEquals(1, graph.outDegree(one));
+		assertEquals(1, graph.outDegree(two));
+		assertEquals(1, graph.outDegree(two));
 	}
 	@SuppressWarnings("unchecked")
 	public void testSCC() {

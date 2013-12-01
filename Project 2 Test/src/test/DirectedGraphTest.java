@@ -84,6 +84,7 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(3,graph.numVertices());
 	}
 	public void testReverseArc() {
+		System.out.println("test reverse arc");
 		graph.reverseDirection(arcOne);
 		assertEquals(2, graph.outDegree(two));
 		assertEquals(2, graph.inDegree(one));
@@ -92,6 +93,23 @@ public class DirectedGraphTest extends TestCase {
 		graph.reverseDirection(arcFour);
 		assertEquals("what",graph.getArc(four, three).getData());
 		assertEquals(4, graph.numArcs());
+/*		HashMap<Vertex, BTree<Arc>> aTree = graph.getATree();
+		Set<Vertex> keys = aTree.keySet();
+		Iterator<Vertex> iterator = keys.iterator();
+		while (iterator.hasNext()) {
+			Vertex next = iterator.next();
+			System.out.println("vertex:  " + next);
+			BTree<Arc> tree = aTree.get(next);
+			tree.inorderTreeWalk(tree.getRoot());
+		}*/
+		assertEquals(2, graph.inDegree(one));
+		assertEquals(2, graph.inDegree(three));
+		assertEquals(0, graph.inDegree(two));
+		assertEquals(0, graph.inDegree(four));
+		assertEquals(0, graph.outDegree(one));
+		assertEquals(2, graph.outDegree(two));
+		assertEquals(1, graph.outDegree(three));
+		assertEquals(1, graph.outDegree(four));
 	}
 	public void testVertexIterators() {
 		Iterator<Vertex> allVertices = graph.vertices();

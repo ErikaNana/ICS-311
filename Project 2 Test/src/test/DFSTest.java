@@ -49,11 +49,11 @@ public class DFSTest extends TestCase {
 		Iterator<Vertex> iterator = newGraph.vertices();
 		while(iterator.hasNext()) {
 			Vertex next = iterator.next();
-			System.out.println("vertex:  " + next);
+/*			System.out.println("vertex:  " + next);
 			System.out.println("     color: " + graph.getAnnotation(next, "color"));
 			System.out.println("     parent: " + graph.getAnnotation(next, "parent"));
 			System.out.println("     discover: " + graph.getAnnotation(next, "discover"));
-			System.out.println("     finish: " + graph.getAnnotation(next, "finish"));
+			System.out.println("     finish: " + graph.getAnnotation(next, "finish"));*/
 		}
 	}
 	
