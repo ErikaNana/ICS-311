@@ -43,7 +43,7 @@ public class Utils<Type> {
 	 * The Enum Command: used to emulate a switch on the inputs.
 	 */
 	public enum Command{
-		analyzeGraph, quit, runSCC;
+		analyzeGraph, quit;
 	}
 	
 	/*used for the compareValue method*/
@@ -143,19 +143,18 @@ public class Utils<Type> {
 		System.out.printf("%15s", "inDegree");
 		System.out.printf("%10d", inDegreeStats[0]);
 		System.out.printf("%15.3f", inDegreeStats[2]);
-		System.out.printf("%7d", inDegreeStats[1]);
+		System.out.printf("%10d", inDegreeStats[1]);
 		System.out.println("");
 		System.out.printf("%16s", "outDegree");
 		System.out.printf("%9d", outDegreeStats[0]);
 		System.out.printf("%15.3f", outDegreeStats[2]);
-		System.out.printf("%7d", outDegreeStats[1]);
+		System.out.printf("%10d", outDegreeStats[1]);
 		System.out.println("");
 		System.out.printf("%-20s", "Number of Strongly Connected Components:");
 		System.out.printf("%5d",sccStats[0]);
 		System.out.println("");
 		System.out.printf("%-20s", "Perecent Vertices in Largest Strongly Connected Component:");
 		System.out.printf("%8.3f",sccStats[1]);
-		System.out.println("\n");
 	}
 	
 	public static void printSCCTable(DirectedGraph graph, String name) {

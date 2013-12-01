@@ -34,10 +34,8 @@ public class Driver {
 				}
 				if (Utils.Command.valueOf(choice).equals(Utils.Command.analyzeGraph)) {
 					Utils.printTable(graph, fileName);
-					graph = null;
-				}
-				if (Utils.Command.valueOf(choice).equals(Utils.Command.runSCC)) {
-					Utils.printSCCTable(graph, fileName);
+					System.out.println("");
+					System.out.println("");
 					graph = null;
 				}
 			}

@@ -37,14 +37,10 @@ public class Metrics {
 			}
 			runningTotal = runningTotal + inDegree;
 		}		
-		double answer = (double) runningTotal / graph.numVertices();
-		BigDecimal bd = new BigDecimal(Double.toString(answer));
-		//round to 3 decimal places
-		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
 		
 		array[0] = min;
 		array[1] = max;
-		array[2] = Double.valueOf(bd.doubleValue());
+		array[2] = (double) runningTotal / graph.numVertices();
 		return array;
 	}
 	//[min, max, ave]
@@ -65,14 +61,10 @@ public class Metrics {
 			}
 			runningTotal = runningTotal + outDegree;
 		}
-		double answer = (double) runningTotal / graph.numVertices();
-		BigDecimal bd = new BigDecimal(Double.toString(answer));
-		//round to 3 decimal places
-		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
 		
 		array[0] = min;
 		array[1] = max;
-		array[2] = Double.valueOf(bd.doubleValue());
+		array[2] = (double) runningTotal / graph.numVertices();
 		return array;
 	}
 	public static void createTranspose(DirectedGraph graph) {
@@ -124,19 +116,12 @@ public class Metrics {
 			 }
 		}
 		
-		//get the percentage of the largest SCC
-		double answer = (double) max.size()/graph.numVertices();
-		BigDecimal bd = new BigDecimal(Double.toString(answer));
-		//round to 3 decimal places
-		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
-		double percentage = Double.valueOf(bd.doubleValue()*100);
-		
 		//create a list of sortedSCC
 		List<ArrayList<Vertex>> vertices = new ArrayList<ArrayList<Vertex>>(list.values());
 		Collections.sort(vertices, new VertexListComparable());
 		
 		sCCStats[0] = totalSCC;
-		sCCStats[1] = percentage;
+		sCCStats[1] = ((double) max.size()/graph.numVertices()) * 100;
 		sCCStats[2] = vertices;
 		return sCCStats;
 	}
