@@ -43,7 +43,7 @@ public class Utils<Type> {
 	 * The Enum Command: used to emulate a switch on the inputs.
 	 */
 	public enum Command{
-		runtest, insert, search, delete, pred, succ, min, max, loadNew, quit;
+		analyzeGraph, quit, runSCC;
 	}
 	
 	/*used for the compareValue method*/
@@ -93,65 +93,6 @@ public class Utils<Type> {
 	}
 	
 	/**
-	 * Outputs the minimum, maximum and average times of the operations on a set.
-	 *
-	 * @param set The set that is operated on
-	 * @param input The array to be used as input
-	 * @param operation The operation to be performed
-	 * @return An array of times
-	 */
-	public static double[] testSet(DynamicSet<String> set, String[] input, int operation) {
-		double [] outputArray = new double [3];
-		double sum = 0;
-		double min = 1000000000000000000000000000.0;
-		double max = 0;
-		
-		for (String word: input) {
-			double start = System.nanoTime();
-			//operation is based on input
-			switch (operation) {
-				case INSERT: set.insert(word,null); break; 
-				case SEARCH: set.search(word); break;
-				case SUCCESSOR: set.successor(word); break;
-				case PREDECESSOR: set.predecessor(word); break;
-			}
-			
-			double end = System.nanoTime();
-			double time = end - start;
-			if (time < min) {
-				min = time;
-			}
-			if (time > max) {
-				max = time;
-			}
-			sum = sum + time;
-		}
-		outputArray[0] = min;
-		outputArray[1] = max;
-		outputArray[2] = sum/input.length;
-		return outputArray;
-	}
-	
-	/**
-	 * Tests the the time it takes to get the minimum or the maximum value of a set
-	 *
-	 * @param set The set to be operated on
-	 * @param operation The operation to be performed
-	 * @return The time it takes for the operation to be completed
-	 */
-	public static double testMinMax(DynamicSet<String> set, int operation) {
-		double start = System.nanoTime();
-		if (operation == MINIMUM) {
-			set.minimum();
-		}
-		if (operation == MAXIMUM) {
-			set.maximum();
-		}
-		double end = System.nanoTime();
-		return end - start;
-	}
-	
-	/**
 	 * Checks to see if a command is valid.
 	 *
 	 * @param test The input to be tested
@@ -171,12 +112,55 @@ public class Utils<Type> {
 	 * Prints the divider for the runtest table.
 	 */
 	public static void printDivider() {
-		for(int i = 0; i < 154; i++) {
+		for(int i = 0; i < 72; i++) {
 			System.out.print("-");
 		}
 		System.out.println("");
 	}
 	
+	public static void printTable(DirectedGraph graph, String name) {
+		int vertices = graph.numVertices();
+		int arcs = graph.numArcs();
+		Object[] inDegreeStats = Metrics.getInDegreeStats(graph);
+		Object[] outDegreeStats = Metrics.getOutDegreeStats(graph);
+		Object [] sccStats = Metrics.runSCC(graph);
+		double density = Metrics.getDensity(graph);
+		System.out.println("");
+		printDivider();
+		System.out.printf("%-10s",name + "\n"); //left justified
+		printDivider();
+		System.out.printf("%-10s", "|V| = " + vertices);
+		System.out.println("");
+		System.out.printf("%-10s", "|A| = " + arcs);
+		System.out.println();
+		System.out.printf("%-10s", "Density = " + density);
+		System.out.println("");
+		System.out.printf("%-20s", "Degree Distribution: ");
+		System.out.printf("%10s", "minimum");
+		System.out.printf("%10s", "average");
+		System.out.printf("%10s", "maximum");
+		System.out.println("");
+		System.out.printf("%15s", "inDegree");
+		System.out.printf("%10d", inDegreeStats[0]);
+		System.out.printf("%15.3f", inDegreeStats[2]);
+		System.out.printf("%5d", inDegreeStats[1]);
+		System.out.println("");
+		System.out.printf("%16s", "outDegree");
+		System.out.printf("%9d", outDegreeStats[0]);
+		System.out.printf("%15.3f", outDegreeStats[2]);
+		System.out.printf("%5d", outDegreeStats[1]);
+		System.out.println("");
+		System.out.printf("%-20s", "Number of Strongly Connected Components:");
+		System.out.printf("%5d",sccStats[0]);
+		System.out.println("");
+		System.out.printf("%-20s", "Perecent Vertices in Largest Strongly Connected Component:");
+		System.out.printf("%8.3f",sccStats[1]);
+		System.out.println("\n");
+	}
+	
+	public static void printSCCTable(DirectedGraph graph, String name) {
+		
+	}
 	/**
 	 * Prints a cell of the runtest table.
 	 *
@@ -194,7 +178,7 @@ public class Utils<Type> {
 	 * @param randomValues the random values
 	 */
 	public static void printRow(DynamicSet<String> set, String[] array, String[] randomValues) {
-		double[] insert = testSet(set, array, Utils.INSERT);
+/*		double[] insert = testSet(set, array, Utils.INSERT);
 		double[] search = testSet(set, randomValues, Utils.SEARCH);
 		double[] pred = testSet(set, randomValues, Utils.PREDECESSOR);
 		double[] succ = testSet(set, randomValues, Utils.SUCCESSOR);
@@ -212,7 +196,7 @@ public class Utils<Type> {
 		System.out.printf("%-4.2e", min);
 		System.out.print(" | ");
 		System.out.printf("%-4.2e", max);
-		System.out.print(" | \n");
+		System.out.print(" | \n");*/
 		printDivider();
 	}
 }

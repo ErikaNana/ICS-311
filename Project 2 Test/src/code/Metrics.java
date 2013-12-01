@@ -9,9 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Metrics {
-	static double percentage;
-	static long totalSCC;
-	static HashMap<Long, ArrayList<Vertex>>  list; //list of SCC and their components
 	
 	public static double getDensity(DirectedGraph graph) {
 		double arcs = (double) graph.numArcs();
@@ -22,8 +19,12 @@ public class Metrics {
 		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
 		return Double.valueOf(bd.doubleValue());
 	}
-	public static long getMinInDegree(DirectedGraph graph) {
+	//[min, max, ave]
+	public static Object[] getInDegreeStats(DirectedGraph graph) {
+		Object[] array = new Object [3];
 		long min = 1000000000; //biggest long possible
+		long max = 0;
+		long runningTotal = 0;
 		Iterator<Vertex> iterator = graph.vertices();
 		while (iterator.hasNext()) {
 			Vertex next = iterator.next();
@@ -31,23 +32,27 @@ public class Metrics {
 			if (inDegree < min) {
 				min = inDegree;
 			}
-		}
-		return min;
-	}
-	public static long getMaxInDegree(DirectedGraph graph) {
-		Iterator<Vertex> iterator = graph.vertices();
-		long max = 0;
-		while(iterator.hasNext()){
-			Vertex next = iterator.next();
-			int inDegree = graph.inDegree(next);
 			if (inDegree > max) {
 				max = inDegree;
 			}
-		}
-		return max;
+			runningTotal = runningTotal + inDegree;
+		}		
+		double answer = (double) runningTotal / graph.numVertices();
+		BigDecimal bd = new BigDecimal(Double.toString(answer));
+		//round to 3 decimal places
+		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
+		
+		array[0] = min;
+		array[1] = max;
+		array[2] = Double.valueOf(bd.doubleValue());
+		return array;
 	}
-	public static long getMinOutDegree(DirectedGraph graph) {
+	//[min, max, ave]
+	public static Object[] getOutDegreeStats(DirectedGraph graph) {
+		Object[] array = new Object[3];
 		long min = 1000000000; //biggest long possible
+		long max = 0;
+		long runningTotal = 0;
 		Iterator<Vertex> iterator = graph.vertices();
 		while (iterator.hasNext()) {
 			Vertex next = iterator.next();
@@ -55,20 +60,20 @@ public class Metrics {
 			if (outDegree < min) {
 				min = outDegree;
 			}
-		}
-		return min;
-	}
-	public static long getMaxOutDegree(DirectedGraph graph) {
-		Iterator<Vertex> iterator = graph.vertices();
-		long max = 0;
-		while(iterator.hasNext()){
-			Vertex next = iterator.next();
-			int outDegree = graph.outDegree(next);
 			if (outDegree > max) {
 				max = outDegree;
 			}
+			runningTotal = runningTotal + outDegree;
 		}
-		return max;
+		double answer = (double) runningTotal / graph.numVertices();
+		BigDecimal bd = new BigDecimal(Double.toString(answer));
+		//round to 3 decimal places
+		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
+		
+		array[0] = min;
+		array[1] = max;
+		array[2] = Double.valueOf(bd.doubleValue());
+		return array;
 	}
 	public static void createTranspose(DirectedGraph graph) {
 		Iterator<Arc> iterator = graph.arcs();
@@ -78,15 +83,18 @@ public class Metrics {
 		}
 	}
 	//gets everything SCC in this run
-	public static void runSCC(DirectedGraph graph) {
+	//[number of SCC, percent vertices in largest SCC, list of sorted SCC]
+	public static Object[] runSCC(DirectedGraph graph) {
+		Object[] sCCStats = new Object[3];
+		HashMap<Long, ArrayList<Vertex>> list = new HashMap<Long, ArrayList<Vertex>>();
+		long scc = 0;
+		long totalSCC;
 		DirectedGraph newGraph = DFS.runDFS(graph);
 		Metrics.createTranspose(newGraph);
 		DirectedGraph sccGraph = DFS.runDFSWithSCC(newGraph);
-		list = new HashMap<Long, ArrayList<Vertex>>();
 		Iterator<Vertex> iterator = sccGraph.vertices();
 		
-		long scc = 0;
-		
+		//create a hash of SCC to size
 		while(iterator.hasNext()){
 			Vertex vertex = iterator.next();
 			long currentSCC = (long) sccGraph.getAnnotation(vertex, "scc");
@@ -104,6 +112,8 @@ public class Metrics {
 			}
 		}
 		totalSCC = scc;
+		
+		//get the max SCC size
 		Collection<ArrayList<Vertex>> listOfVertices = list.values();
 		Iterator<ArrayList<Vertex>> listIterator = listOfVertices.iterator();
 		ArrayList<Vertex> max = new ArrayList<Vertex>();
@@ -113,25 +123,21 @@ public class Metrics {
 				 max = nextList;
 			 }
 		}
+		
+		//get the percentage of the largest SCC
 		double answer = (double) max.size()/graph.numVertices();
 		BigDecimal bd = new BigDecimal(Double.toString(answer));
 		//round to 3 decimal places
 		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
-		percentage = Double.valueOf(bd.doubleValue()*100);
+		double percentage = Double.valueOf(bd.doubleValue()*100);
 		
-	}
-	
-	//these three methods only return correct values if runSCC is run first
-	public static long getNumberOfSCC() {
-		return totalSCC;
-	}
-	public static double getPercentLargestSCC() {
-		return percentage;
-	}
-	public static List<ArrayList<Vertex>> sortedSCC() {
+		//create a list of sortedSCC
 		List<ArrayList<Vertex>> vertices = new ArrayList<ArrayList<Vertex>>(list.values());
 		Collections.sort(vertices, new VertexListComparable());
-		//give each SCC an arbitrary number
-		return vertices;
+		
+		sCCStats[0] = totalSCC;
+		sCCStats[1] = percentage;
+		sCCStats[2] = vertices;
+		return sCCStats;
 	}
 }

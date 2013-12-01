@@ -6,19 +6,22 @@ public class Arc {
 
 	private Vertex startVertex;
 	private Vertex endVertex;
-	private Object data;
+	private Data dataList;
 	private HashMap<Object,Object> annotations;
 	
 	public Arc(Vertex start, Vertex end) {
 		this.startVertex = start;
 		this.endVertex = end;
-		this.data = null;
+		this.dataList = new Data();
 		this.annotations = new HashMap<Object,Object>();
 	}
 	public Arc(Vertex start, Vertex end, Object data) {
 		this.startVertex = start;
 		this.endVertex = end;
-		this.data = data;
+		if (dataList == null) {
+			this.dataList = new Data();
+		}
+		this.dataList.addData((String)data);
 		this.annotations = new HashMap<Object,Object>();
 	}
 	public Vertex getStartVertex() {
@@ -35,10 +38,13 @@ public class Arc {
 		this.endVertex = vertex;
 	}
 	public void setData(Object data) {
-		this.data = data;
+		if (dataList == null) {
+			dataList = new Data();
+		}
+		this.dataList.addData((String) data);
 	}
 	public Object getData() {
-		return data;
+		return dataList.getData();
 	}
 	//overloaded so that when inserted into BTree, it will store by end value
 	public String toString() {

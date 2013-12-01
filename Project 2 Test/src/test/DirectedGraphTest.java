@@ -50,7 +50,7 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals("ho", graph.getVertexData(another));
 		graph.setArcData(arc, "hola");
 		graph.setVertexData(another, "bonjour");
-		assertEquals("hola", graph.getArcData(arc));
+		assertEquals("hi, hola", graph.getArcData(arc));
 		assertEquals("ho, bonjour", graph.getVertexData(another));
 		assertEquals(null, graph.getVertexData(one));
 	}

@@ -32,4 +32,8 @@ public class Data {
 	public String toString() {
 		return getData();
 	}
+	
+	public boolean isEmpty() {
+		return data.isEmpty();
+	}
 }

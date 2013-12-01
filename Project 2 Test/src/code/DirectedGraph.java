@@ -53,12 +53,14 @@ public class DirectedGraph {
 		return new ArcIterator(list);
 	}
 	
-	//getVertex
+	//getVertex, get getVertex associated with String key
 	public Vertex getVertex(Object key) {
 		Set<Vertex> keys = map.keySet();
+		//System.out.println("key:  " + key);
+		//System.out.println("key type:  " + key.getClass());
 		for (Iterator<Vertex> i = keys.iterator(); i.hasNext();) {
 			Vertex currentKey = i.next();
-			if (Utils.compareValue(currentKey.toString(), key.toString()) == Utils.EQUAL){
+			if (currentKey.getKey().equals(key.toString())){
 				return currentKey;
 			}
 		}
@@ -70,8 +72,8 @@ public class DirectedGraph {
 	//getArc
 	//source and target will be strings
 	public Arc getArc(Object source, Object target) {
-		Vertex start = getVertex(source);
-		Vertex end = getVertex(target);
+		Vertex start = getVertex(source.toString());
+		Vertex end = getVertex(target.toString());
 		if (start != null && end != null) {
 			BTree<Arc> tree = map.get(start);
 			//dummy: just using it to check variables
@@ -84,7 +86,8 @@ public class DirectedGraph {
 	
 	//getVertexData
 	public Object getVertexData(Vertex v) {
-		Vertex vertex = getVertex(v);
+		Vertex vertex = getVertex(v.toString());
+		System.out.println("vertex:  " + vertex);
 		return vertex.getData();
 	}
 	    //Returns the client data Object associated with Vertex v.
@@ -201,7 +204,7 @@ public class DirectedGraph {
 	
 	//setVertexData
 	public void setVertexData(Vertex v, String data) {
-		Vertex vertex = getVertex(v);
+		Vertex vertex = getVertex(v.toString());
 		vertex.addData(data);
 	}
 	    //Changes the data Object associated with Vertex v to data.
@@ -234,6 +237,7 @@ public class DirectedGraph {
 			aList.deleteVertex(v);
 			return v;
 		}
+		System.out.println("The vertex you want to remove does not exist.");
 		return null;
 	}
 	//Deletes a vertex and all its incident arcs (and edges under the undirected extension);.
@@ -254,6 +258,7 @@ public class DirectedGraph {
 				return a;
 			}
 		}
+		System.out.println("The arc you want to remove does not exist");
 		return null;
 	}
 	    //Removes an arc.
