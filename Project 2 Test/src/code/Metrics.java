@@ -89,7 +89,7 @@ public class Metrics {
 		//create a hash of SCC to size
 		while(iterator.hasNext()){
 			Vertex vertex = iterator.next();
-			long currentSCC = (long) sccGraph.getAnnotation(vertex, "scc");
+			long currentSCC = (Long) sccGraph.getAnnotation(vertex, "scc");
 			if (currentSCC > scc) {
 				scc = currentSCC;
 			}

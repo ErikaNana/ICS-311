@@ -34,8 +34,7 @@ public class Driver {
 				}
 				if (Utils.Command.valueOf(choice).equals(Utils.Command.analyzeGraph)) {
 					Utils.printTable(graph, fileName);
-					System.out.println("");
-					System.out.println("");
+					System.out.println("\n");
 					graph = null;
 				}
 			}

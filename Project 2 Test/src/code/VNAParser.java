@@ -18,10 +18,6 @@ public class VNAParser {
 		File file = new File(fileName);
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
-/*			File fileBAH = new File("outThere.txt");
-			FileOutputStream fos = new FileOutputStream(fileBAH);
-			PrintStream ps = new PrintStream(fos);
-			System.setOut(ps);*/
 			//read file in line by line
 			Scanner fileReader = new Scanner(br);
 			fileReader.useDelimiter(Pattern.compile("[\\r\\n]+"));
@@ -36,12 +32,10 @@ public class VNAParser {
 					tie = true;
 					continue;
 				}
-				System.out.println("nex:  " + next);
 				if (create) {
 					if (!next.matches("^ID.*")) { //match beginning of the line
 						String[] words = next.split("\\s+");
 						graph.insertVertex(words[0]);
-						System.out.println("vertex:  " + words[0]);
 					}
 				}
 				if (tie) {

@@ -355,7 +355,6 @@ public class DirectedGraph {
 		public ArcIterator(ArrayList<Arc>list) {
 			this.list = list;
 		}
-		@Override
 		public boolean hasNext() {
 			if (currentIndex >= list.size()) {
 				return false;
@@ -363,12 +362,10 @@ public class DirectedGraph {
 			return true;
 		}
 
-		@Override
 		public Arc next() {
 			return list.get(currentIndex++);
 		}
 
-		@Override
 		public void remove() {
 			list.remove(--currentIndex);
 		}
@@ -380,8 +377,6 @@ public class DirectedGraph {
 		public VertexIterator(ArrayList<Vertex> list) {
 			this.list = list;
 		}
-		@Override
-		
 		public boolean hasNext() {
 			if (currentIndex >= list.size()) {
 				return false;
@@ -391,13 +386,9 @@ public class DirectedGraph {
 			}
 		}
 
-		@Override
 		public Vertex next() {
 			return list.get(currentIndex++);		
 		}
-		
-
-		@Override
 		public void remove() {
 			list.remove(--currentIndex);
 		}

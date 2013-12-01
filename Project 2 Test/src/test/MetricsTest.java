@@ -27,13 +27,14 @@ public class MetricsTest extends TestCase {
 	}
 	public void testInDegree() {
 		Object[] array = Metrics.getInDegreeStats(graph);
-		assertEquals(0, (long) array[0]);
-		assertEquals(4, (long) array[1]);
+		//cast the wrapper class, then cast it to primitive
+		assertEquals((long) 0, (long) (Long) array[0]);
+		assertEquals((long) 4, (long) (Long) array[1]);
 	}
 	public void testOutDegree() {
 		Object[] array = Metrics.getOutDegreeStats(graph);
-		assertEquals(4, (long) array[1]);
-		assertEquals(0, (long) array[0]);
+		assertEquals((long) 0, (long) (Long) array[0]);
+		assertEquals((long) 4, (long) (Long) array[1]);
 	}
 	public void testTranspose() {
 		System.out.println("Transpose test");
@@ -67,8 +68,8 @@ public class MetricsTest extends TestCase {
 	public void testSCC() {
 		System.out.println("SCC test");
 		Object array[] = Metrics.runSCC(graph);
-		assertEquals(12, (long) array[0]);
-		System.out.println("percentage:  " + (double) array[1]);
+		assertEquals((long) 12, (long) (Long) array[0]);
+		System.out.println("percentage:  " + array[1]);
 		List<ArrayList<Vertex>> list = (List<ArrayList<Vertex>>) array[2];
 		long counter = 0;
 		for (ArrayList<Vertex> vertexList: list) {
