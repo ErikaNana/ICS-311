@@ -3,7 +3,9 @@ package code;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -19,12 +21,16 @@ public class VNAParser {
 		//System.out.println("file:  " + file);
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
+/*			File fileBAH = new File("outThere.txt");
+			FileOutputStream fos = new FileOutputStream(fileBAH);
+			PrintStream ps = new PrintStream(fos);
+			System.setOut(ps);*/
 			//read file in line by line
 			Scanner fileReader = new Scanner(br);
 			fileReader.useDelimiter(Pattern.compile("[\\r\\n]+"));
 			while(fileReader.hasNext()) {
 				String next = fileReader.next();
-				if (next.contains("*node") || next.contains("*Node")) {
+				if (next.contains("properties") || next.contains("*Node")) {
 					create = true;
 					continue;
 				}
@@ -34,7 +40,7 @@ public class VNAParser {
 					continue;
 				}
 				if (create) {
-					if (!next.matches(".*ID.*")) {
+					if (!next.matches("^ID")) { //match beginning of the line
 						String[] words = next.split(" ");
 						graph.insertVertex(words[0]);
 					}
