@@ -16,7 +16,6 @@ public class VNAParser {
 		
 		DirectedGraph graph = new DirectedGraph();
 		File file = new File(fileName);
-		//System.out.println("file:  " + file);
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 /*			File fileBAH = new File("outThere.txt");
@@ -40,7 +39,7 @@ public class VNAParser {
 				System.out.println("nex:  " + next);
 				if (create) {
 					if (!next.matches("^ID.*")) { //match beginning of the line
-						String[] words = next.split(" ");
+						String[] words = next.split("\\s+");
 						graph.insertVertex(words[0]);
 						System.out.println("vertex:  " + words[0]);
 					}
