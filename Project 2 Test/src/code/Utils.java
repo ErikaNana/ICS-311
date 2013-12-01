@@ -1,4 +1,6 @@
 package code;
+
+
 /*
  * Copyright (c) 2013, Erika Nana
  * All rights reserved.
@@ -37,6 +39,8 @@ package code;
  * @author Erika Nana
  * @param <Type> the generic type
  */
+import java.util.ArrayList;
+import java.util.List;
 public class Utils<Type> {
 	
 	/**
@@ -117,14 +121,16 @@ public class Utils<Type> {
 		}
 		System.out.println("");
 	}
-	
+	@SuppressWarnings("unchecked")
 	public static void printTable(DirectedGraph graph, String name) {
 		int vertices = graph.numVertices();
 		int arcs = graph.numArcs();
 		Object[] inDegreeStats = Metrics.getInDegreeStats(graph);
 		Object[] outDegreeStats = Metrics.getOutDegreeStats(graph);
 		Object [] sccStats = Metrics.runSCC(graph);
+		List<ArrayList<Vertex>> verticesMaxList = (List<ArrayList<Vertex>>) sccStats[2];
 		double density = Metrics.getDensity(graph);
+		
 		System.out.println("");
 		printDivider();
 		System.out.printf("%-10s",name + "\n"); //left justified
@@ -153,7 +159,27 @@ public class Utils<Type> {
 		System.out.printf("%-20s", "Number of Strongly Connected Components:");
 		System.out.printf("%5d",sccStats[0]);
 		System.out.println("");
-		System.out.printf("%-20s", "Perecent Vertices in Largest Strongly Connected Component:");
+		if (name.equals("celegansneural.vna") || name.equals("SCC-Test.vna")) {
+			System.out.printf("%-10s", "SCC");
+			System.out.printf("%-10s", "Size");
+			System.out.printf("%-10s", "Members");
+			System.out.println();
+			for (int i = 1; i < verticesMaxList.size()+1; i++) {
+				ArrayList<Vertex> list = (ArrayList<Vertex>) verticesMaxList.get(i-1);
+				String verticesList = "";
+				for (int j = 0; j < list.size(); j++) {
+					if (j == list.size()-1) {
+						verticesList = verticesList + list.get(j);
+					}
+					else {
+						verticesList = verticesList + list.get(j) + ",";
+					}
+				}
+				System.out.printf("%-10d %-10d %-10s",i, list.size(),verticesList);
+				System.out.println("");
+			}
+		}
+		System.out.printf("%-20s", "Percent Vertices in Largest Strongly Connected Component:");
 		System.out.printf("%8.3f",sccStats[1]);
 	}
 	

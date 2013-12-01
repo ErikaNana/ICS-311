@@ -13,7 +13,7 @@ public class Driver {
 		DirectedGraph graph;
 		while (true) {
 			System.out.println("What would you like to do?");
-			System.out.println("Options available: analyzeGraph, runSCC quit");
+			System.out.println("Options available: analyzeGraph, quit");
 			String choice = inputReader.nextLine();
 			if (!Utils.isEnum(choice)) {
 				System.out.println("That command is not recognized\n");
