@@ -56,14 +56,6 @@ public class Utils<Type> {
 	public static final int LESSER = 2;
 	public static final int EQUAL = 3;
 	
-	//These are used to determine the operations for runtest
-	public static final int INSERT = 4;
-	public static final int SUCCESSOR = 5;
-	public static final int PREDECESSOR = 6;
-	public static final int SEARCH = 7;
-	public static final int MINIMUM = 8;
-	public static final int MAXIMUM = 9;
-	
 	/**
 	 * Helper method that compares strings
 	 *
@@ -181,47 +173,5 @@ public class Utils<Type> {
 		}
 		System.out.printf("%-20s", "Percent Vertices in Largest Strongly Connected Component:");
 		System.out.printf("%8.3f",sccStats[1]);
-	}
-	
-	public static void printSCCTable(DirectedGraph graph, String name) {
-		
-	}
-	/**
-	 * Prints a cell of the runtest table.
-	 *
-	 * @param input The array of values to be printed.
-	 */
-	public static void printCell(double[] input) {
-		System.out.printf("%-4.2e/%-4.2e/%-4.2e", input[0], input[1], input[2]);
-	}
-	
-	/**
-	 * Prints the row of the runtest table.
-	 *
-	 * @param set the set
-	 * @param array the array
-	 * @param randomValues the random values
-	 */
-	public static void printRow(DynamicSet<String> set, String[] array, String[] randomValues) {
-/*		double[] insert = testSet(set, array, Utils.INSERT);
-		double[] search = testSet(set, randomValues, Utils.SEARCH);
-		double[] pred = testSet(set, randomValues, Utils.PREDECESSOR);
-		double[] succ = testSet(set, randomValues, Utils.SUCCESSOR);
-		double min = testMinMax(set, Utils.MINIMUM);
-		double max = testMinMax(set, Utils.MAXIMUM);
-		
-		printCell(insert);
-		System.out.print(" | ");
-		printCell(search);
-		System.out.print(" | ");
-		printCell(pred);
-		System.out.print(" | ");
-		printCell(succ);
-		System.out.print(" | ");
-		System.out.printf("%-4.2e", min);
-		System.out.print(" | ");
-		System.out.printf("%-4.2e", max);
-		System.out.print(" | \n");*/
-		printDivider();
 	}
 }
