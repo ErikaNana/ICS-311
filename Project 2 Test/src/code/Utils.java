@@ -1,6 +1,5 @@
 package code;
 
-
 /*
  * Copyright (c) 2013, Erika Nana
  * All rights reserved.
@@ -27,37 +26,41 @@ package code;
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/** 
- * Allows the user to run tests on the three data structures at one time.
- * Also supports individual operations on the data structures.
- * 
- * @author Erika Nana
- */
-/**
- * Includes static helper methods.
- *
- * @author Erika Nana
- * @param <Type> the generic type
- */
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Provides helper methods for output.
+ *
+ * @param <Type> the generic type
+ * @author Erika Nana
+ */
 public class Utils<Type> {
 	
 	/**
 	 * The Enum Command: used to emulate a switch on the inputs.
 	 */
 	public enum Command{
-		analyzeGraph, quit;
+		
+		/** The analyze graph. */
+		analyzeGraph, 
+ /** The quit. */
+ quit;
 	}
 	
 	/*used for the compareValue method*/
 	
+	/** The Constant GREATER. */
 	public static final int GREATER = 1;
+	
+	/** The Constant LESSER. */
 	public static final int LESSER = 2;
+	
+	/** The Constant EQUAL. */
 	public static final int EQUAL = 3;
 	
 	/**
-	 * Helper method that compares strings
+	 * Helper method that compares strings.
 	 *
 	 * @param value The string
 	 * @param nodeValue The node value to be compared
@@ -113,6 +116,13 @@ public class Utils<Type> {
 		}
 		System.out.println("");
 	}
+	
+	/**
+	 * Prints the table.
+	 *
+	 * @param graph the graph
+	 * @param name the name
+	 */
 	@SuppressWarnings("unchecked")
 	public static void printTable(DirectedGraph graph, String name) {
 		int vertices = graph.numVertices();

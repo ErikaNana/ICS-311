@@ -1,6 +1,31 @@
 package code;
 
-import java.math.BigDecimal;
+/*
+ * Copyright (c) 2013, Erika Nana
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of Project 1 nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY Erika Nana ''AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL Erika Nana BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,18 +33,30 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Computes all of the output required for graphs.
+ *  @author Erika Nana
+ */
 public class Metrics {
 	
+	/**
+	 * Gets the density of the graph.
+	 *
+	 * @param graph the graph
+	 * @return the density
+	 */
 	public static double getDensity(DirectedGraph graph) {
 		double arcs = (double) graph.numArcs();
 		int denominator = graph.numVertices() * (graph.numVertices() - 1);
-		double answer = arcs/denominator;
-		BigDecimal bd = new BigDecimal(Double.toString(answer));
-		//round to 3 decimal places
-		bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
-		return Double.valueOf(bd.doubleValue());
+		return arcs/denominator;
 	}
-	//[min, max, ave]
+	
+	/**
+	 * Gets the in degree statistics [min, max, ave].
+	 *
+	 * @param graph the graph
+	 * @return the in degree statistics
+	 */
 	public static Object[] getInDegreeStats(DirectedGraph graph) {
 		Object[] array = new Object [3];
 		long min = 1000000000; //biggest long possible
@@ -43,7 +80,12 @@ public class Metrics {
 		array[2] = (double) runningTotal / graph.numVertices();
 		return array;
 	}
-	//[min, max, ave]
+	/**
+	 * Gets the out degree statistics [min, max, ave].
+	 *
+	 * @param graph the graph
+	 * @return the out degree statistics
+	 */
 	public static Object[] getOutDegreeStats(DirectedGraph graph) {
 		Object[] array = new Object[3];
 		long min = 1000000000; //biggest long possible
@@ -67,6 +109,12 @@ public class Metrics {
 		array[2] = (double) runningTotal / graph.numVertices();
 		return array;
 	}
+	
+	/**
+	 * Creates the transpose of the graph.
+	 *
+	 * @param graph the graph
+	 */
 	public static void createTranspose(DirectedGraph graph) {
 		Iterator<Arc> iterator = graph.arcs();
 		while (iterator.hasNext()) {
@@ -74,8 +122,13 @@ public class Metrics {
 			graph.reverseDirection(next);
 		}
 	}
-	//gets everything SCC in this run
-	//[number of SCC, percent vertices in largest SCC, list of sorted SCC]
+	/**
+	 * Gets all SCC related output [number of SCC, percent 
+	 * vertices in largest SCC, list of sorted SCC].
+	 *
+	 * @param graph the graph
+	 * @return the object[]
+	 */
 	public static Object[] runSCC(DirectedGraph graph) {
 		Object[] sCCStats = new Object[3];
 		HashMap<Long, ArrayList<Vertex>> list = new HashMap<Long, ArrayList<Vertex>>();

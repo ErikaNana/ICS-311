@@ -1,8 +1,7 @@
 package code;
-
-import java.util.ArrayList;
-
-
+/*
+ * 
+ */
 
 /*
  * Copyright (c) 2013, Erika Nana
@@ -35,9 +34,10 @@ import java.util.ArrayList;
  * Based on the psuedocode found in Introduction to Algorithms Third Edition
  * by Cormen et al.
  *
- * @author Erika Nana
  * @param <Type> the generic type
+ * @author Erika Nana
  */
+import java.util.ArrayList;
 
 public class BTree<Type> implements DynamicSet<Type>{
 	
@@ -51,6 +51,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 	private BNode<Type> empty = null;
 	
 	/*Used for the iterators*/
+	/** The list. */
 	private ArrayList<Type> list;
 	/**
 	 * Instantiates a new b tree.
@@ -141,11 +142,6 @@ public class BTree<Type> implements DynamicSet<Type>{
 		@SuppressWarnings("unchecked")
 		BNode<Type> node = (BNode<Type>) this.search(key);
 		if (node == null) {
-/*			System.out.println("searching for:  " + key);
-			System.out.println("length:  " + key.toString().length());
-			System.out.println("type:  " + key.getClass());*/
-			Arc thing = (Arc) key;
-			System.out.println(thing.getFullArc());
 			System.out.println("Can't delete from a node that doesn't exist!");
 			return;
 		}
@@ -202,6 +198,12 @@ public class BTree<Type> implements DynamicSet<Type>{
 	/*
 	 * Instead of returning the node it returns the actual thing in the node
 	 * */
+	/**
+	 * Search for value.
+	 *
+	 * @param key the key
+	 * @return the object
+	 */
 	public Object searchForValue(Type key) {
 		//matches at the root
 		BNode<Type> current = root;
@@ -329,9 +331,9 @@ public class BTree<Type> implements DynamicSet<Type>{
 	
 
 	/**
-	 * Gets the minimum of the tree
+	 * Gets the minimum of the tree.
 	 *
-	 * @param node The root of the tree 
+	 * @param node The root of the tree
 	 * @return The minimum node of the tree
 	 */
 	public BNode<Type> minimum(BNode<Type> node){
@@ -342,7 +344,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 	}
 	
 	/**
-	 * Gets the maximum of the tree
+	 * Gets the maximum of the tree.
 	 *
 	 * @param node The root of the tree
 	 * @return The maximum node in the tree
@@ -355,7 +357,7 @@ public class BTree<Type> implements DynamicSet<Type>{
 	}
 	
 	/**
-	 * Replaces one subtree as a child of its parent with another subtree
+	 * Replaces one subtree as a child of its parent with another subtree.
 	 *
 	 * @param u The root of a tree
 	 * @param v The root of another tree
@@ -378,6 +380,12 @@ public class BTree<Type> implements DynamicSet<Type>{
 	public void setRoot(BNode<Type> node) {
 		root = node;
 	}
+	
+	/**
+	 * Gets the list of nodes.
+	 *
+	 * @return the list of nodes
+	 */
 	public ArrayList<Type> getListOfNodes(){
 		return list;
 	}

@@ -1,5 +1,30 @@
 package test;
-
+/*
+ * Copyright (c) 2013, Erika Nana
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of Project 1 nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY Erika Nana ''AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL Erika Nana BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 import java.util.Iterator;
 
 import junit.framework.TestCase;
@@ -7,13 +32,31 @@ import code.Arc;
 import code.DirectedGraph;
 import code.Vertex;
 
+/**
+ * Tests the DirectedGraph class
+ * @author Erika Nana
+ */
 public class DirectedGraphTest extends TestCase {
+	
+	/** One vertex. */
 	Vertex one;
+	
+	/** Second vertex. */
 	Vertex two;
+	
+	/** Third vertex. */
 	Vertex three;
+	
+	/** One arc. */
 	Arc arcOne;
+	
+	/** Second arc.  */
 	Arc arcTwo;
+	
+	/** Third arc.  */
 	Arc arcThree;
+	
+	/** The graph. */
 	DirectedGraph graph;
 	
 	protected void setUp() throws Exception {
@@ -31,6 +74,36 @@ public class DirectedGraphTest extends TestCase {
 		super.tearDown();
 	}
 	
+	/**
+	 * Test no edges graph.
+	 */
+	public void testNoEdgesGraph() {
+		graph = new DirectedGraph();
+		one = graph.insertVertex("one");
+		two = graph.insertVertex("two");
+		three = graph.insertVertex("three");
+		assertEquals(0, graph.numArcs());
+		assertEquals(3, graph.numVertices());
+	}
+	
+	/**
+	 * Test disconnected graph.
+	 */
+	public void testDisconnectedGraph() {
+		graph = new DirectedGraph();
+		Vertex four = graph.insertVertex("four");
+		one = graph.insertVertex("one");
+		two = graph.insertVertex("two");
+		three = graph.insertVertex("three");
+		graph.insertArc(one, two);
+		graph.insertArc(three, four);
+		assertEquals(4, graph.numVertices());
+		assertEquals(2, graph.numArcs());
+	}
+	
+	/**
+	 * Test getting and setting.
+	 */
 	public void testGettingAndSetting() {
 		Arc arcFour = graph.insertArc(three,two);
 		assertEquals(one, graph.getVertex(one));
@@ -42,6 +115,9 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(two,graph.destination(arcOne));
 	}
 	
+	/**
+	 * Test get and set data.
+	 */
 	public void testGetAndSetData() {
 		graph.insertArc(three, two, "hi");
 		Arc arc = graph.getArc(three, two);
@@ -55,6 +131,9 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(null, graph.getVertexData(one));
 	}
 	
+	/**
+	 * Test in degree out degree.
+	 */
 	public void testInDegreeOutDegree() {
 		graph.insertArc(three, two, "hi");
 		assertEquals(2,graph.inDegree(two));
@@ -65,6 +144,9 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(2,graph.outDegree(three));
 	}
 	
+	/**
+	 * Test delete vertex.
+	 */
 	public void testDeleteVertex() {
 		//test the alist and graph		
 		Vertex found = (Vertex) graph.removeVertex(one);
@@ -75,6 +157,9 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(one, found);
 	}
 	
+	/**
+	 * Test delete arc.
+	 */
 	public void testDeleteArc() {
 		Arc arc = (Arc) graph.removeArc(arcOne);
 		assertEquals(arc,arcOne);
@@ -83,8 +168,11 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(3, graph.getAList().getNumOfVertices());
 		assertEquals(3,graph.numVertices());
 	}
+	
+	/**
+	 * Test reverse arc.
+	 */
 	public void testReverseArc() {
-		System.out.println("test reverse arc");
 		graph.reverseDirection(arcOne);
 		assertEquals(2, graph.outDegree(two));
 		assertEquals(2, graph.inDegree(one));
@@ -93,15 +181,6 @@ public class DirectedGraphTest extends TestCase {
 		graph.reverseDirection(arcFour);
 		assertEquals("what",graph.getArc(four, three).getData());
 		assertEquals(4, graph.numArcs());
-/*		HashMap<Vertex, BTree<Arc>> aTree = graph.getATree();
-		Set<Vertex> keys = aTree.keySet();
-		Iterator<Vertex> iterator = keys.iterator();
-		while (iterator.hasNext()) {
-			Vertex next = iterator.next();
-			System.out.println("vertex:  " + next);
-			BTree<Arc> tree = aTree.get(next);
-			tree.inorderTreeWalk(tree.getRoot());
-		}*/
 		assertEquals(2, graph.inDegree(one));
 		assertEquals(2, graph.inDegree(three));
 		assertEquals(0, graph.inDegree(two));
@@ -111,13 +190,16 @@ public class DirectedGraphTest extends TestCase {
 		assertEquals(1, graph.outDegree(three));
 		assertEquals(1, graph.outDegree(four));
 	}
+	
+	/**
+	 * Test vertex iterators.
+	 */
 	public void testVertexIterators() {
 		Iterator<Vertex> allVertices = graph.vertices();
 		int counter = 0;
 		//test all vertices
 		while (allVertices.hasNext()){
 			Vertex currentKey = allVertices.next();
-/*			System.out.println("current key:  " + currentKey);*/
 			assertNotNull(graph.getVertex(currentKey));
 			counter++;
 		}
@@ -160,6 +242,10 @@ public class DirectedGraphTest extends TestCase {
 		}
 		assertEquals(1, counter);
 	}
+	
+	/**
+	 * Test annotations.
+	 */
 	public void testAnnotations() {
 		//test set annotations
 		graph.setAnnotation(one, "Parent", "two");

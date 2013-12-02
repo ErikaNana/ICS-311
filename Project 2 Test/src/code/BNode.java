@@ -1,4 +1,7 @@
 package code;
+/*
+ * 
+ */
 
 /*
  * Copyright (c) 2013, Erika Nana
@@ -29,8 +32,8 @@ package code;
 /**
  * Creates a node for the binary-search tree.
  *
- * @author Erika Nana
  * @param <Type> the generic type
+ * @author Erika Nana
  */
 public class BNode<Type>{
 	
@@ -55,6 +58,9 @@ public class BNode<Type>{
 		this.key = key;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return key.toString();
 	}

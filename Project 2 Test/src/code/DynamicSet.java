@@ -1,4 +1,5 @@
 package code;
+
 /*
  * Copyright (c) 2013, Erika Nana
  * All rights reserved.
@@ -28,14 +29,17 @@ package code;
 /**
  * The Interface DynamicSet.  Simulates an ADT.
  *
+ * @param <Type> the generic type
  * @author Original Author      Daniel Suthers
  * @author Derivative Author    Erika Nana
- * @param <Type> the generic type
  */
 public interface DynamicSet<Type> {
+    
     /**
-  	 * @return The size of the set.
-  	 */
+     * Size.
+     *
+     * @return The size of the set.
+     */
   	public int size();
 
     /**
