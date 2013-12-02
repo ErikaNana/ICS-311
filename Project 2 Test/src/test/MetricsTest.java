@@ -25,6 +25,7 @@ package test;
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -67,7 +68,11 @@ public class MetricsTest extends TestCase {
 	 * Test density.
 	 */
 	public void testDensity() {
-		assertEquals(0.041, Metrics.getDensity(graph));
+		double answer = Metrics.getDensity(graph);
+		BigDecimal bd = new BigDecimal(Double.toString(answer));
+        //round to 3 decimal places
+        bd = bd.setScale(3, BigDecimal.ROUND_CEILING);
+		assertEquals(0.041, Double.valueOf(bd.doubleValue()));
 	}
 	
 	/**
