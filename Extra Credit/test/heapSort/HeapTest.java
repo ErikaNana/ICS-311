@@ -34,19 +34,72 @@ public class HeapTest extends TestCase {
 		super.tearDown();
 	}
 	
-	public void createHeapTest() {
-		
-	}
-	public void emptyHeapTest() {
-		
-	}
-	public void buildMaxHeapTest() {
-	}
-	
-	//use example from the notes
-	public void maxHeapifyTest() {
+	//uses example from the notes
+	public void testBuildMaxHeap() {
 		ArrayList<String> test = new ArrayList<String>();
 		String placeholder = new String("");
+		test.add(placeholder);
+		test.add("4");
+		test.add("1");
+		test.add("3");
+		test.add("2");
+		test.add("16");
+		test.add("9");
+		test.add("10");
+		test.add("14");
+		test.add("8");
+		test.add("7");
+		heap = new Heap(test);
+		heap.buildMaxHeap();
+		assertNull(heap.getParent(1));
+		assertEquals("14", heap.getLeftChild(1));
+		assertEquals("10", heap.getRightChild(1));
+		assertEquals("8", heap.getLeftChild(2));
+		assertEquals("7", heap.getRightChild(2));
+		assertEquals("9", heap.getLeftChild(3));
+		assertEquals("3", heap.getRightChild(3));
+		assertEquals("2", heap.getLeftChild(4));
+		assertEquals("4", heap.getRightChild(4));
+		assertEquals("1", heap.getLeftChild(5));
+		assertNull(heap.getRightChild(5));
+		assertNull(heap.getLeftChild(6));
+		assertNull(heap.getRightChild(6));
+		assertNull(heap.getLeftChild(7));
+		assertNull(heap.getRightChild(7));
+	}
+	
+	//uses example from the notes
+	public void testMaxHeapify() {
+		ArrayList<String> test = new ArrayList<String>();
+		String placeholder = new String("");
+		test.add(placeholder);
+		test.add("16");
+		test.add("4");
+		test.add("10");
+		test.add("14");
+		test.add("7");
+		test.add("9");
+		test.add("3");
+		test.add("2");
+		test.add("8");
+		test.add("1");
+		heap = new Heap(test);
+		heap.maxHeapify(2);
+		assertNull(heap.getParent(1));
+		assertEquals("14", heap.getLeftChild(1));
+		assertEquals("10", heap.getRightChild(1));
+		assertEquals("8", heap.getLeftChild(2));
+		assertEquals("7", heap.getRightChild(2));
+		assertEquals("9", heap.getLeftChild(3));
+		assertEquals("3", heap.getRightChild(3));
+		assertEquals("2", heap.getLeftChild(4));
+		assertEquals("4", heap.getRightChild(4));
+		assertEquals("1", heap.getLeftChild(5));
+		assertNull(heap.getRightChild(5));
+		assertNull(heap.getLeftChild(6));
+		assertNull(heap.getRightChild(6));
+		assertNull(heap.getLeftChild(7));
+		assertNull(heap.getRightChild(7));
 	}
 	
 	public void testParentLeftRight() {
