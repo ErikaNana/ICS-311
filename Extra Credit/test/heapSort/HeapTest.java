@@ -8,26 +8,17 @@ import junit.framework.TestCase;
 
 public class HeapTest extends TestCase {
 	Heap heap;
-	String a = "a";
-	String b = "b";
-	String c = "c";
-	String d = "d";
+	ArrayList<String> test;
 	
 	public HeapTest(String name) {
 		super(name);
 	}
 
 	protected void setUp() throws Exception {
-		super.setUp();
-
-		ArrayList<String> test = new ArrayList<String>();
+		test = new ArrayList<String>();
 		String placeholder = "";
 		test.add(placeholder);
-		test.add(a);
-		test.add(b);
-		test.add(c);
-		test.add(d);
-		heap = new Heap(test);
+		super.setUp();
 	}
 	
 	protected void tearDown() throws Exception {
@@ -36,9 +27,6 @@ public class HeapTest extends TestCase {
 	
 	//uses example from the notes
 	public void testBuildMaxHeap() {
-		ArrayList<String> test = new ArrayList<String>();
-		String placeholder = new String("");
-		test.add(placeholder);
 		test.add("4");
 		test.add("1");
 		test.add("3");
@@ -70,9 +58,6 @@ public class HeapTest extends TestCase {
 	
 	//uses example from the notes
 	public void testMaxHeapify() {
-		ArrayList<String> test = new ArrayList<String>();
-		String placeholder = new String("");
-		test.add(placeholder);
 		test.add("16");
 		test.add("4");
 		test.add("10");
@@ -103,6 +88,16 @@ public class HeapTest extends TestCase {
 	}
 	
 	public void testParentLeftRight() {
+		String a = "a";
+		String b = "b";
+		String c = "c";
+		String d = "d";
+	
+		test.add(a);
+		test.add(b);
+		test.add(c);
+		test.add(d);
+		heap = new Heap(test);
 		assertNull(heap.getParent(1));
 		assertEquals(b, heap.getLeftChild(1));
 		assertEquals(c, heap.getRightChild(1));
