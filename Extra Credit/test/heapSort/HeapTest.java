@@ -1,7 +1,6 @@
 package heapSort;
 
 import heap.Heap;
-import heap.Node;
 
 import java.util.ArrayList;
 
@@ -9,10 +8,10 @@ import junit.framework.TestCase;
 
 public class HeapTest extends TestCase {
 	Heap heap;
-	Node a = new Node("a");
-	Node b = new Node("b");
-	Node c = new Node("c");
-	Node d = new Node("d");
+	String a = "a";
+	String b = "b";
+	String c = "c";
+	String d = "d";
 	
 	public HeapTest(String name) {
 		super(name);
@@ -21,8 +20,8 @@ public class HeapTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		ArrayList<Node> test = new ArrayList<Node>();
-		Node placeholder = new Node("");
+		ArrayList<String> test = new ArrayList<String>();
+		String placeholder = "";
 		test.add(placeholder);
 		test.add(a);
 		test.add(b);
@@ -44,8 +43,10 @@ public class HeapTest extends TestCase {
 	public void buildMaxHeapTest() {
 	}
 	
+	//use example from the notes
 	public void maxHeapifyTest() {
-		
+		ArrayList<String> test = new ArrayList<String>();
+		String placeholder = new String("");
 	}
 	
 	public void testParentLeftRight() {
@@ -56,5 +57,6 @@ public class HeapTest extends TestCase {
 		assertNull(heap.getRightChild(2));
 		assertNull(heap.getLeftChild(3));
 		assertNull(heap.getLeftChild(3));
+		heap.printHeap();
 	}
 }
