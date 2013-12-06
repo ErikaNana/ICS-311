@@ -108,6 +108,35 @@ public class HeapTest extends TestCase {
 		heap.printHeap();
 	}
 	
+	public void testSortTwo() {
+		test.add("16");
+		test.add("4");
+		test.add("10");
+		test.add("14");
+		test.add("7");
+		test.add("9");
+		test.add("3");
+		test.add("2");
+		test.add("8");
+		test.add("1");
+		heap = new Heap(test);
+		heap.sort();
+		assertNull(heap.getParent(1));
+		assertEquals("2", heap.getLeftChild(1));
+		assertEquals("3", heap.getRightChild(1));
+		assertEquals("4", heap.getLeftChild(2));
+		assertEquals("7", heap.getRightChild(2));
+		assertEquals("8", heap.getLeftChild(3));
+		assertEquals("9", heap.getRightChild(3));
+		assertEquals("10", heap.getLeftChild(4));
+		assertEquals("14", heap.getRightChild(4));
+		assertEquals("16", heap.getLeftChild(5));
+		assertNull(heap.getRightChild(5));
+		assertNull(heap.getLeftChild(6));
+		assertNull(heap.getRightChild(6));
+		assertNull(heap.getLeftChild(7));
+		assertNull(heap.getRightChild(7));
+	}
 	public void testSort() {
 		test.add("7");
 		test.add("4");
