@@ -34,45 +34,51 @@ public class Heap {
 		return array.get(2*index + 1);
 	}
 
-	public void maxHeapify(int index) {
+	public void maxHeapify(int index, int size) {
+		System.out.println("max heapifying at:  " + index);
 		int left = 2*index;
 		int right = 2*index + 1;
 
 		//adjust for placeholder in array
-		if (left <= array.size()-1) {
-			if (right >= array.size()-1) { //no right child
-				if (Utils.compare(array.get(index), array.get(left)) == 1) {
-					largest = index;
-				}
-				else {
-					largest = left;
-				}
-			}
-			else {
-				if (Utils.compare(array.get(left), array.get(right)) == 1) {
-					largest = left;
-				}
-			}
+		if ((left <= size) && (Utils.compare(array.get(left), array.get(index))) == 1){
+			largest = left;
 		}
 		else {
 			largest = index;
 		}
-		if ((right <= array.size()-1) && (Utils.compare(array.get(right), array.get(left))) == 1){
+		if ((right <= size) && (Utils.compare(array.get(right), array.get(largest))) == 1){
 			largest = right;
 		}
+		System.out.println("     largest:  " + largest);
 		if (largest != index) {
 			String temp = array.get(index);
 			//swaps
 			array.set(index, array.get(largest));
 			array.set(largest, temp);
-			this.maxHeapify(largest);		
+			System.out.println("--------------");
+			this.maxHeapify(largest, size);		
 		}
 	}
 	public void buildMaxHeap() {
 		//take placeholder into account
 		int size = array.size() - 1;
 		for (int i = (int)Math.floor((double)size/2); i > 0; i--) {
-			this.maxHeapify(i);
+			System.out.println("building on:  " + i);
+			this.maxHeapify(i,size);
+		}
+	}
+	public void sort() {
+		this.buildMaxHeap();
+		System.out.println("max heap");
+		this.printHeap();
+		int size = array.size() - 1;
+		for (int i = size; i > 1; i--) {
+			//swap
+			String temp = array.get(i);
+			array.set(i,array.get(1));
+			array.set(1, temp);
+			size = size - 1;
+			this.maxHeapify(1,size);
 		}
 	}
 	public void printHeap() {
