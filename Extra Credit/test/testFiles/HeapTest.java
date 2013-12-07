@@ -1,8 +1,10 @@
-package heapSort;
+package testFiles;
 
-import heap.Heap;
+
 
 import java.util.ArrayList;
+
+import code.Heap;
 
 import junit.framework.TestCase;
 

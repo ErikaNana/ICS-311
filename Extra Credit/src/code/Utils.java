@@ -1,4 +1,4 @@
-package heap;
+package code;
 
 public class Utils {
 
@@ -15,8 +15,16 @@ public class Utils {
 			}
 			return 0;
 		}
+		if (one.equals("inf")) {
+			return 1;
+		}
+		if (two.equals("inf")) {
+			return -1;
+		}
+		if (one.equals("inf") && two.equals("inf")){
+			return 0;
+		}
 		//else compares strings and as lower case
-		return one.compareToIgnoreCase(two);
-		
+		return one.compareToIgnoreCase(two);	
 	}
 }

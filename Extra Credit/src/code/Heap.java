@@ -1,6 +1,8 @@
-package heap;
+package code;
+
 
 import java.util.ArrayList;
+
 
 //this starts at 1 not 0
 public class Heap {
