@@ -39,8 +39,10 @@ public class MergeTest extends TestCase {
 		test.add("80");
 		test.add("40");
 		test.add("25");
+		test.add("30");
+		test.add("60");
 		Merge merge = new Merge(test);
-		merge.sort(1, 4);
+		merge.sort(1, 6);
 		ArrayList<String> array = merge.returnSortedArray();
 		assertEquals("20", array.get(0));
 		assertEquals("25", array.get(1));

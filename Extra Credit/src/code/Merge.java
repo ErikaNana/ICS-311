@@ -1,17 +1,12 @@
 package code;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 
 public class Merge {
 	ArrayList<String> array;
-	ArrayList<String> result;
 	
 	public Merge(ArrayList<String> array) {
 		this.array = array;
-		//initialize results array so can set in merge
-		result = new ArrayList<String>(Collections.nCopies(array.size(), ""));
 	}
 
 	public void merge(int p, int q, int r) {
@@ -28,18 +23,18 @@ public class Merge {
 			right.add(j, array.get(q+j));
 		}
 		left.add(n1,"inf");
-		right.add(n1,"inf");
+		right.add(n2,"inf");
 		
+		//changed from psuedocode to start from 0
 		int i = 0;
 		int j = 0;
-		
 		for (int k = p-1; k < r; k++) {
 			if ((Utils.compare(left.get(i), right.get(j)) == -1) || (Utils.compare(left.get(i), right.get(j)) == 0)) {
-				result.set(k, left.get(i));
+				array.set(k, left.get(i));
 				i = i + 1;
 			}
 			else {
-				result.set(k, right.get(j));
+				array.set(k, right.get(j));
 				j = j + 1;
 			}
 		}
@@ -54,6 +49,6 @@ public class Merge {
 	}
 	
 	public ArrayList<String> returnSortedArray(){
-		return result;
+		return array;
 	}
 }
