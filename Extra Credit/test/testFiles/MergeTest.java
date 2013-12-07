@@ -6,13 +6,15 @@ import junit.framework.TestCase;
 import code.Merge;
 
 public class MergeTest extends TestCase {
-
+	ArrayList<String> test;
+	
 	public MergeTest(String name) {
 		super(name);
 	}
 
 	protected void setUp() throws Exception {
 		super.setUp();
+		test = new ArrayList<String>();
 	}
 
 	protected void tearDown() throws Exception {
@@ -20,7 +22,6 @@ public class MergeTest extends TestCase {
 	}
 	
 	public void testMergeSortOrdered() {
-		ArrayList<String> test = new ArrayList<String>();
 		test.add("1");
 		test.add("2");
 		test.add("3");
@@ -34,8 +35,6 @@ public class MergeTest extends TestCase {
 		assertEquals("4", array.get(3));
 	}
 	public void testMergeSort() {
-		System.out.println("TESTING");
-		ArrayList<String> test = new ArrayList<String>();
 		test.add("20");
 		test.add("80");
 		test.add("40");
