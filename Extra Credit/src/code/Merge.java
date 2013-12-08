@@ -48,6 +48,7 @@ public class Merge {
 		}
 	}
 	
+	//returns sorted array only if sort is called first
 	public ArrayList<String> returnSortedArray(){
 		return array;
 	}

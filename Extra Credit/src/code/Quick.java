@@ -36,6 +36,7 @@ public class Quick {
 		array.set(second, temp);
 	}
 	
+	//only returns sorted array if sort is called first
 	public ArrayList<String> getSortedArray(){
 		return array;
 	}
