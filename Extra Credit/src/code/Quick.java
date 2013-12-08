@@ -19,7 +19,7 @@ public class Quick {
 	
 	public int partition(int p, int r) {
 		String value = array.get(r-1);
-		int i = p - 2;
+		int i = p - 2; //adjust for indexing at 0
 		for (int j = p-1; j < r-1; j++) {
 			if ((Utils.compare(array.get(j), value) == -1) || (Utils.compare(array.get(j), value) == -1)) {
 				i = i + 1;
@@ -27,7 +27,7 @@ public class Quick {
 			}
 		}
 		exchange(i+1,r-1);
-		return i + 2;
+		return i + 2; //adjust for indexing at 0
 	}
 	
 	public void exchange(int first, int second) {
