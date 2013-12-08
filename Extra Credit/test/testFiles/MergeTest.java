@@ -53,8 +53,6 @@ public class MergeTest extends TestCase {
 		assertEquals("80", array.get(5));
 		assertEquals("20", merge.getFirstValue());
 		assertEquals("80", merge.getLastValue());
-		System.out.println("printing for merge test");
-		System.out.println(Utils.testRunTime(merge, 1, 6, Utils.MERGE_SORT));
 	}
 
 }

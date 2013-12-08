@@ -45,7 +45,7 @@ public class Quick implements Sort {
 		return array.get(0);
 	}
 	
-	public String getlastValue() {
+	public String getLastValue() {
 		return array.get(array.size()-1);
 	}
 	

@@ -4,4 +4,6 @@ public interface Sort{
 
 	public void sort();
 	public void sort(int p, int r);
+	public String getFirstValue();
+	public String getLastValue();
 }

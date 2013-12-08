@@ -31,12 +31,30 @@ public class Utils {
 			return 0;
 		}
 		//else compares strings and as lower case
-		return one.compareToIgnoreCase(two);	
+		else {
+			if (one.compareToIgnoreCase(two) < 0) {
+				return -1;
+			}
+			if (one.compareToIgnoreCase(two) > 0) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
 	}
 	
+	public void printLine() {
+		for (int i = 0; i < 54; i++) {
+			System.out.print("-");
+		}
+		System.out.println("");
+	}
 	//run the sort 10 times, and return an array of all the times
-	public static double testRunTime(Sort sort, int p, int r, int type) {
+	public void printResults(Sort sort, int p, int r, int type) {
+		Object [] results = new Object [3];
 		double runningTotal = 0;
+		//sort and get output data
 		for (int i = 0; i < 10; i++) {
 			double start = System.nanoTime();
 			switch (type) {
@@ -56,6 +74,11 @@ public class Utils {
 			double end = System.nanoTime();
 			runningTotal = runningTotal + (end - start);
 		}
-		return runningTotal/10;
+		results[0] = runningTotal/10;
+		results[1] = sort.getFirstValue();
+		results[2] = sort.getLastValue();
+		
+		//build output
+		printLine();
 	}
 }

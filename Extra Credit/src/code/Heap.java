@@ -98,6 +98,9 @@ public class Heap implements Sort {
 		}
 	}
 	
+	public ArrayList<String> getArray(){
+		return array;
+	}
 	//these methods only return correct values after sort is called
 	public String getFirstValue() {
 		return array.get(1);

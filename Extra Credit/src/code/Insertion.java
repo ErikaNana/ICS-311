@@ -28,12 +28,11 @@ public class Insertion implements Sort {
 	public ArrayList<String> returnSortedArray(){
 		return array;
 	}
-	
 	public String getFirstValue() {
 		return array.get(0);
 	}
 	
-	public String getlastValue() {
+	public String getLastValue() {
 		return array.get(array.size()-1);
 	}
 	

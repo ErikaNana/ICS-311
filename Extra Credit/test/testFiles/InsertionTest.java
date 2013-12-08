@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 import code.Insertion;
-import code.Utils;
 
 public class InsertionTest extends TestCase {
 	ArrayList<String> test;
@@ -59,8 +58,6 @@ public class InsertionTest extends TestCase {
 		assertEquals("7", array.get(6));
 		assertEquals("8", array.get(7));
 		assertEquals("1", insertion.getFirstValue());
-		assertEquals("8", insertion.getlastValue());
-		System.out.println("printing for insertion test");
-		System.out.println(Utils.testRunTime(insertion, 0, 0, Utils.INSERTION_SORT));
+		assertEquals("8", insertion.getLastValue());
 	}
 }

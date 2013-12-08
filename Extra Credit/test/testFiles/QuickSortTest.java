@@ -67,8 +67,6 @@ public class QuickSortTest extends TestCase {
 		assertEquals("7", array.get(6));
 		assertEquals("8", array.get(7));
 		assertEquals("1", sort.getFirstValue());
-		assertEquals("8", sort.getlastValue());
-		System.out.println("printing for quicksort test");
-		System.out.println(Utils.testRunTime(sort, 1, 8, Utils.QUICK_SORT));
+		assertEquals("8", sort.getLastValue());
 	}
 }
