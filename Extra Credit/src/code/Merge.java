@@ -2,7 +2,7 @@ package code;
 
 import java.util.ArrayList;
 
-public class Merge {
+public class Merge implements Sort {
 	ArrayList<String> array;
 	
 	public Merge(ArrayList<String> array) {
@@ -48,8 +48,20 @@ public class Merge {
 		}
 	}
 	
-	//returns sorted array only if sort is called first
+	//returns correct values only if sort is called first
 	public ArrayList<String> returnSortedArray(){
 		return array;
+	}
+	
+	public String getFirstValue() {
+		return array.get(0);
+	}
+	
+	public String getLastValue() {
+		return array.get(array.size()-1);
+	}
+	
+	//unused, just here for the interface
+	public void sort() {
 	}
 }

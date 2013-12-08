@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 //this starts at 1 not 0
-public class Heap {
+public class Heap implements Sort {
 	ArrayList<String> array;
 	int largest;
 	
@@ -67,7 +67,6 @@ public class Heap {
 	}
 	public void sort() {
 		this.buildMaxHeap();
-		this.printHeap();
 		int size = array.size() - 1;
 		for (int i = size; i > 1; i--) {
 			//swap
@@ -97,5 +96,18 @@ public class Heap {
 				}
 			
 		}
+	}
+	
+	//these methods only return correct values after sort is called
+	public String getFirstValue() {
+		return array.get(1);
+	}
+	
+	public String getLastValue() {
+		return array.get(array.size()-1);
+	}
+	
+	//unused method from interface
+	public void sort(int p, int r) {		
 	}
 }

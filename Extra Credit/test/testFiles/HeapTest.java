@@ -5,6 +5,7 @@ package testFiles;
 import java.util.ArrayList;
 
 import code.Heap;
+import code.Utils;
 
 import junit.framework.TestCase;
 
@@ -107,7 +108,6 @@ public class HeapTest extends TestCase {
 		assertNull(heap.getRightChild(2));
 		assertNull(heap.getLeftChild(3));
 		assertNull(heap.getLeftChild(3));
-		heap.printHeap();
 	}
 	
 	public void testSortTwo() {
@@ -138,6 +138,8 @@ public class HeapTest extends TestCase {
 		assertNull(heap.getRightChild(6));
 		assertNull(heap.getLeftChild(7));
 		assertNull(heap.getRightChild(7));
+		System.out.println("printing for heap test");
+		System.out.println(Utils.testRunTime(heap, 0, 0, Utils.HEAP_SORT));
 	}
 	public void testSort() {
 		test.add("7");
@@ -152,5 +154,7 @@ public class HeapTest extends TestCase {
 		assertEquals("3", heap.getRightChild(1));
 		assertEquals("4", heap.getLeftChild(2));
 		assertEquals("7", heap.getRightChild(2));
+		assertEquals("7", heap.getLastValue());
+		assertEquals("1", heap.getFirstValue());
 	}
 }

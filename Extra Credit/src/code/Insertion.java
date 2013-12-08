@@ -2,7 +2,7 @@ package code;
 
 import java.util.ArrayList;
 
-public class Insertion {
+public class Insertion implements Sort {
 
 	ArrayList<String> array;
 	
@@ -24,8 +24,20 @@ public class Insertion {
 		}
 	}
 	
-	//returns sorted array only after sort is called
+	//these methods only returns correct values if sort is called first
 	public ArrayList<String> returnSortedArray(){
 		return array;
+	}
+	
+	public String getFirstValue() {
+		return array.get(0);
+	}
+	
+	public String getlastValue() {
+		return array.get(array.size()-1);
+	}
+	
+	//unused method from interface
+	public void sort(int p, int r) {
 	}
 }

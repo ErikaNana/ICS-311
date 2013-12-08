@@ -2,7 +2,7 @@ package code;
 
 import java.util.ArrayList;
 
-public class Quick {
+public class Quick implements Sort {
 	ArrayList<String> array;
 	
 	public Quick(ArrayList<String> array) {
@@ -36,8 +36,20 @@ public class Quick {
 		array.set(second, temp);
 	}
 	
-	//only returns sorted array if sort is called first
+	//only returns correct values if sort is called first
 	public ArrayList<String> getSortedArray(){
 		return array;
+	}
+	
+	public String getFirstValue() {
+		return array.get(0);
+	}
+	
+	public String getlastValue() {
+		return array.get(array.size()-1);
+	}
+	
+	//unused sort from interface
+	public void sort() {
 	}
 }
