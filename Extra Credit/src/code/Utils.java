@@ -54,7 +54,7 @@ public class Utils {
             System.out.println("");
     }
 	//run the sort 10 times, and return an array of all the times
-	public static void sortAndPrint(Sort sort, int p, int r, int type) {
+	public static void sortAndPrint(Sort sort, int p, int r, int type, String title) {
 		Object [] results = new Object [3];
 		double runningTotal = 0;
 		for (int i = 0; i < 10; i++) {
@@ -81,12 +81,11 @@ public class Utils {
 		results[2] = sort.getLastValue();
 		
 		//print the results
-		System.out.print(" Heap Sort:  ");
-		System.out.printf("%10.2f", (Double) results[0]);
-		System.out.print(" ns; First Key: ");
-		System.out.printf("%9s", (String) results[1]);
+		String leftAlignFormat = "%-10s: %13.2f ns; First Key: ";
+		System.out.println();
+		System.out.format(leftAlignFormat,title, (Double) results[0]);
+		System.out.printf("%-13s", (String) results[1]);
 		System.out.print("; Last Key: ");
-		System.out.printf("%9s", (String) results[2]);
-		System.out.println("");
+		System.out.printf("%-13s", (String) results[2]);
 	}
 }
