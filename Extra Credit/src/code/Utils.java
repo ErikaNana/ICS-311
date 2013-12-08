@@ -81,11 +81,11 @@ public class Utils {
 		results[2] = sort.getLastValue();
 		
 		//print the results
-		String leftAlignFormat = "%-10s: %13.2f ns; First Key: ";
+		String leftAlignFormat = "%-9s: %14.2f ns; First Key: ";
 		System.out.println();
 		System.out.format(leftAlignFormat,title, (Double) results[0]);
-		System.out.printf("%-13s", (String) results[1]);
+		System.out.printf("%-7s", (String) results[1]);
 		System.out.print("; Last Key: ");
-		System.out.printf("%-13s", (String) results[2]);
+		System.out.printf("%-7s", (String) results[2]);
 	}
 }
