@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 import code.Merge;
-import code.Utils;
 
 public class MergeTest extends TestCase {
 	ArrayList<String> test;

@@ -17,8 +17,6 @@ public class HeapTest extends TestCase {
 
 	protected void setUp() throws Exception {
 		test = new ArrayList<String>();
-		String placeholder = "";
-		test.add(placeholder);
 		super.setUp();
 	}
 	
@@ -70,7 +68,7 @@ public class HeapTest extends TestCase {
 		test.add("8");
 		test.add("1");
 		heap = new Heap(test);
-		heap.maxHeapify(2,test.size()-1);
+		heap.maxHeapify(2,test.size());
 		assertNull(heap.getParent(1));
 		assertEquals("14", heap.getLeftChild(1));
 		assertEquals("10", heap.getRightChild(1));

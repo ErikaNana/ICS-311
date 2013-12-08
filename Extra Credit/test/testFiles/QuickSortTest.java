@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 import code.Quick;
-import code.Utils;
 
 public class QuickSortTest extends TestCase {
 	ArrayList<String> test;

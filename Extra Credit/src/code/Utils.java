@@ -44,17 +44,19 @@ public class Utils {
 		}
 	}
 	
-	public void printLine() {
-		for (int i = 0; i < 54; i++) {
-			System.out.print("-");
-		}
-		System.out.println("");
-	}
+    /**
+     * Prints the divider
+     */
+    public static void printDivider() {
+            for(int i = 0; i < 80; i++) {
+                    System.out.print("-");
+            }
+            System.out.println("");
+    }
 	//run the sort 10 times, and return an array of all the times
-	public void printResults(Sort sort, int p, int r, int type) {
+	public static void sortAndPrint(Sort sort, int p, int r, int type) {
 		Object [] results = new Object [3];
 		double runningTotal = 0;
-		//sort and get output data
 		for (int i = 0; i < 10; i++) {
 			double start = System.nanoTime();
 			switch (type) {
@@ -78,7 +80,13 @@ public class Utils {
 		results[1] = sort.getFirstValue();
 		results[2] = sort.getLastValue();
 		
-		//build output
-		printLine();
+		//print the results
+		System.out.print(" Heap Sort:  ");
+		System.out.printf("%10.2f", (Double) results[0]);
+		System.out.print(" ns; First Key: ");
+		System.out.printf("%9s", (String) results[1]);
+		System.out.print("; Last Key: ");
+		System.out.printf("%9s", (String) results[2]);
+		System.out.println("");
 	}
 }
