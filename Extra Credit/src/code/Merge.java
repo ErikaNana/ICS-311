@@ -60,8 +60,4 @@ public class Merge implements Sort {
 	public String getLastValue() {
 		return array.get(array.size()-1);
 	}
-	
-	//unused, just here for the interface
-	public void sort() {
-	}
 }

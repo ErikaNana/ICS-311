@@ -64,18 +64,6 @@ public class Heap implements Sort {
 			this.maxHeapify(i,size);
 		}
 	}
-	public void sort() {
-		this.buildMaxHeap();
-		int size = array.size();
-		for (int i = size; i > 1; i--) {
-			//swap
-			String temp = array.get(i-1);
-			array.set(i-1,array.get(0));
-			array.set(0, temp);
-			size = size - 1;
-			this.maxHeapify(1,size);
-		}
-	}
 	public void printHeap() {
 		for (int i = 1; i < array.size(); i++) {
 			System.out.println("node:  " + array.get(i));
@@ -110,6 +98,16 @@ public class Heap implements Sort {
 	}
 	
 	//unused method from interface
-	public void sort(int p, int r) {		
+	public void sort(int p, int r) {
+		this.buildMaxHeap();
+		int size = array.size();
+		for (int i = size; i > 1; i--) {
+			//swap
+			String temp = array.get(i-1);
+			array.set(i-1,array.get(0));
+			array.set(0, temp);
+			size = size - 1;
+			this.maxHeapify(1,size);
+		}
 	}
 }

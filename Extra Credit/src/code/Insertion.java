@@ -5,25 +5,10 @@ import java.util.ArrayList;
 public class Insertion implements Sort {
 
 	ArrayList<String> array;
-	
+
 	public Insertion(ArrayList<String> array) {
 		this.array = array;
 	}
-	
-	public void sort() {
-		for (int j = 1; j < array.size(); j++) {
-			int i = 0;
-			String key = "";
-			key = array.get(j);
-			i = j -1;
-			while ((i >= 0) && (Utils.compare(array.get(i), key) == 1)) {
-				array.set(i+1, array.get(i));
-				i = i - 1;
-			}
-			array.set(i+1, key);
-		}
-	}
-	
 	//these methods only returns correct values if sort is called first
 	public ArrayList<String> returnSortedArray(){
 		return array;
@@ -36,7 +21,17 @@ public class Insertion implements Sort {
 		return array.get(array.size()-1);
 	}
 	
-	//unused method from interface
 	public void sort(int p, int r) {
+		for (int j = 1; j < array.size(); j++) {
+			int i = 0;
+			String key = "";
+			key = array.get(j);
+			i = j -1;
+			while ((i >= 0) && (Utils.compare(array.get(i), key) == 1)) {
+				array.set(i+1, array.get(i));
+				i = i - 1;
+			}
+			array.set(i+1, key);
+		}
 	}
 }

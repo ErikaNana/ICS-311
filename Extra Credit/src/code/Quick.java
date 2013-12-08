@@ -48,8 +48,4 @@ public class Quick implements Sort {
 	public String getLastValue() {
 		return array.get(array.size()-1);
 	}
-	
-	//unused sort from interface
-	public void sort() {
-	}
 }

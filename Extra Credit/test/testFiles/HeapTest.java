@@ -134,7 +134,7 @@ public class HeapTest extends TestCase {
 		test.add("8");
 		test.add("1");
 		heap = new Heap(test);
-		heap.sort();
+		heap.sort(0,0);
 		assertNull(heap.getParent(1));
 		assertEquals("2", heap.getLeftChild(1));
 		assertEquals("3", heap.getRightChild(1));
@@ -158,7 +158,7 @@ public class HeapTest extends TestCase {
 		test.add("1");
 		test.add("2");
 		heap = new Heap(test);
-		heap.sort();
+		heap.sort(0,0);
 		assertNull(heap.getParent(1));
 		assertEquals("2", heap.getLeftChild(1));
 		assertEquals("3", heap.getRightChild(1));

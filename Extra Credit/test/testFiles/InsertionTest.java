@@ -28,7 +28,7 @@ public class InsertionTest extends TestCase {
 		test.add("4");
 		test.add("5");
 		Insertion insertion = new Insertion(test);
-		insertion.sort();
+		insertion.sort(0,0);
 		ArrayList<String> array = insertion.returnSortedArray();
 		assertEquals("1", array.get(0));
 		assertEquals("2", array.get(1));
@@ -47,7 +47,7 @@ public class InsertionTest extends TestCase {
 		test.add("5");
 		test.add("7");
 		Insertion insertion = new Insertion(test);
-		insertion.sort();
+		insertion.sort(0,0);
 		ArrayList<String> array = insertion.returnSortedArray();
 		assertEquals("1", array.get(0));
 		assertEquals("2", array.get(1));

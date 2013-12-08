@@ -85,19 +85,19 @@ public class Driver {
 	public static void runSorts(ArrayList<String> input, int p, int r, int type) {
 		printHeader(type,r);
 		Insertion insertion = new Insertion(input);
-		Utils.sortAndPrint(insertion, 0, 0, Utils.INSERTION_SORT, "Insertion");
+		Utils.sortAndPrint(insertion, 0, 0,"Insertion");
 		insertion = null;
 		
 		Heap heap = new Heap(input);
-		Utils.sortAndPrint(heap, 0, 0, Utils.HEAP_SORT, "Heap");
+		Utils.sortAndPrint(heap, 0, 0,"Heap");
 		heap = null;
 		
 		Merge merge = new Merge(input);
-		Utils.sortAndPrint(merge, p, r, Utils.MERGE_SORT, "Merge");
+		Utils.sortAndPrint(merge, p, r, "Merge");
 		merge = null;
 		
 		Quick quick = new Quick(input);
-		Utils.sortAndPrint(quick, 1, 100, Utils.QUICK_SORT, "Quick");
+		Utils.sortAndPrint(quick, p, r, "Quick");
 		quick = null;
 		System.out.println("");
 		Utils.printDivider();
