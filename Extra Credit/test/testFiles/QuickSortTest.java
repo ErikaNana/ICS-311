@@ -25,7 +25,7 @@ public class QuickSortTest extends TestCase {
 		test.add("2");
 		test.add("3");
 		Quick sort = new Quick(test);
-		sort.sort(1, 3);
+		sort.sort(0, 2);
 		ArrayList<String> array = sort.getSortedArray();
 		assertEquals("1", array.get(0));
 		assertEquals("2", array.get(1));
@@ -37,7 +37,7 @@ public class QuickSortTest extends TestCase {
 		test.add("5");
 		test.add("3");
 		Quick sort = new Quick(test);
-		sort.sort(1, 3);
+		sort.sort(0, 2);
 		ArrayList<String> array = sort.getSortedArray();
 		assertEquals("1", array.get(0));
 		assertEquals("3", array.get(1));
@@ -55,7 +55,7 @@ public class QuickSortTest extends TestCase {
 		test.add("6");
 		test.add("4");
 		Quick sort = new Quick(test);
-		sort.sort(1, 8);
+		sort.sort(0, 7);
 		ArrayList<String> array = sort.getSortedArray();
 		assertEquals("1", array.get(0));
 		assertEquals("2", array.get(1));

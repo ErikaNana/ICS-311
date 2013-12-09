@@ -49,6 +49,15 @@ public class Driver {
 		input = loadFile("sorted-100000.txt");
 		runSorts(input,1,100000,SORTED);
 		input = null;
+		
+		//run the 1,000,000 file
+		input = loadFile("unsorted-1000000.txt");
+		runSorts(input, 1, 1000000, UNSORTED);
+		input = null;
+		
+		input = loadFile("sorted-1000000.txt");
+		runSorts(input,1,1000000,SORTED);
+		input = null;
 	}
 	
 	public static ArrayList<String> loadFile(String fileName){
@@ -96,11 +105,9 @@ public class Driver {
 		Utils.sortAndPrint(merge, p, r, "Merge");
 		merge = null;
 		
-		if (r < 1000000) {
-			Quick quick = new Quick(input);
-			Utils.sortAndPrint(quick, p, r, "Quick");
-			quick = null;
-		}
+		Quick quick = new Quick(input);
+		Utils.sortAndPrint(quick, p, r, "Quick");
+		quick = null;
 		
 		System.out.println("");
 		Utils.printDivider();

@@ -1,44 +1,66 @@
 package code;
 
 import java.util.ArrayList;
-
-public class Quick implements Sort {
+	
+public class Quick implements Sort{
+	//private int[] array;
+	private int size;
 	ArrayList<String> array;
 	
-	public Quick(ArrayList<String> array) {
-		this.array = array;
+	public Quick (ArrayList<String> values) {
+	  // check for empty or null array
+	  if (values ==null || values.size() == 0){
+	    return;
+	  }
+	  this.array = values;
+	  size = values.size();
+	}
+	
+	private void quicksort(int low, int high) {
+	  int i = low, j = high;
+	  
+	  // Get the pivot element from the middle of the list
+	  String pivot = array.get(low + (high-low)/2);
+	
+	  // Divide into two lists
+	  while (i <= j) {
+	    // If the current value from the left list is smaller then the pivot
+	    // element then get the next element from the left list
+		  while (array.get(i).compareTo(pivot) < 0) {
+	      i++;
+	    }
+	    // If the current value from the right list is larger then the pivot
+	    // element then get the next element from the right list
+		  while (array.get(j).compareTo(pivot) > 0) {
+	      j--;
+	    }
+	
+	    // If we have found a values in the left list which is larger then
+	    // the pivot element and if we have found a value in the right list
+	    // which is smaller then the pivot element then we exchange the
+	    // values.
+	    // As we are done we can increase i and j
+	    if (i <= j) {
+	      exchange(i, j);
+	      i++;
+	      j--;
+	    }
+	  }
+	  // Recursion
+	  if (low < j)
+	    quicksort(low, j);
+	  if (i < high)
+	    quicksort(i, high);
+	}
+	
+	private void exchange(int i, int j) {
+		String temp = array.get(i);
+		array.set(i, array.get(j));
+		array.set(j, temp);
 	}
 	
 	public void sort(int p, int r) {
-		if (p < r) {
-			int q = partition(p,r);
-			sort(p,q-1);
-			sort(q+1,r);
-		}
-	}
-	
-	public int partition(int p, int r) {
-		String value = array.get(r-1);
-		int i = p - 2; //adjust for indexing at 0
-		for (int j = p-1; j < r-1; j++) {
-			if (array.get(j).compareTo(value) <= 0) {
-				i = i + 1;
-				exchange(i,j);
-			}
-		}
-		exchange(i+1,r-1);
-		return i + 2; //adjust for indexing at 0
-	}
-	
-	public void exchange(int first, int second) {
-		String temp = array.get(first);
-		array.set(first, array.get(second));
-		array.set(second, temp);
-	}
-	
-	//only returns correct values if sort is called first
-	public ArrayList<String> getSortedArray(){
-		return array;
+		quicksort(0, size - 1);
 	}
 	
 	public String getFirstValue() {
@@ -47,5 +69,9 @@ public class Quick implements Sort {
 	
 	public String getLastValue() {
 		return array.get(array.size()-1);
+	}
+	
+	public ArrayList<String> getSortedArray(){
+		return array;
 	}
 }
