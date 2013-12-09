@@ -82,13 +82,13 @@ public class Driver {
 		input = null;
 		
 		//run the 1,000,000 file
-		input = loadFile("unsorted-1000000.txt");
+/*		input = loadFile("unsorted-1000000.txt");
 		runSorts(input, 1, 1000000, UNSORTED);
 		input = null;
 		
 		input = loadFile("sorted-1000000.txt");
 		runSorts(input,1,1000000,SORTED);
-		input = null;
+		input = null;*/
 	}
 	
 	public static ArrayList<String> loadFile(String fileName){
