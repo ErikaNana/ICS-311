@@ -39,15 +39,21 @@ public class Heap implements Sort {
 	public void maxHeapify(int index, int size) {
 		int left = 2*index;
 		int right = 2*index + 1;
-
-		if ((left <= size) && (Utils.compare(array.get(left-1), array.get(index-1))) == 1){
+		if ((left <= size) && (array.get(left-1).compareTo(array.get(index-1)) > 0)){
+/*		if ((left <= size) && (Utils.compare(array.get(left-1), array.get(index-1))) == 1){*/
+/*			System.out.println("left:  " + array.get(left-1));
+			System.out.println("index:  " + array.get(index-1));
+			System.out.println("    left is bigger than index");*/
 			largest = left;
 		}
 		else {
 			largest = index;
 		}
-		if ((right <= size) && (Utils.compare(array.get(right-1), array.get(largest-1))) == 1){
+		if ((right <= size) && (array.get(right -1).compareTo(array.get(largest-1)) > 0))
+/*		if ((right <= size) && (Utils.compare(array.get(right-1), array.get(largest-1))) == 1)*/{
 			largest = right;
+/*			System.out.println("right is:  " + array.get(right-1));
+			System.out.println("    right is bigger than largest");*/
 		}
 		if (largest != index) {
 			String temp = array.get(index-1);

@@ -21,7 +21,7 @@ public class Quick implements Sort {
 		String value = array.get(r-1);
 		int i = p - 2; //adjust for indexing at 0
 		for (int j = p-1; j < r-1; j++) {
-			if ((Utils.compare(array.get(j), value) == -1) || (Utils.compare(array.get(j), value) == -1)) {
+			if (array.get(j).compareTo(value) <= 0) {
 				i = i + 1;
 				exchange(i,j);
 			}

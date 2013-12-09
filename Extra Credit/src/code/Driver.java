@@ -96,9 +96,12 @@ public class Driver {
 		Utils.sortAndPrint(merge, p, r, "Merge");
 		merge = null;
 		
-		Quick quick = new Quick(input);
-		Utils.sortAndPrint(quick, p, r, "Quick");
-		quick = null;
+		if (r < 1000000) {
+			Quick quick = new Quick(input);
+			Utils.sortAndPrint(quick, p, r, "Quick");
+			quick = null;
+		}
+		
 		System.out.println("");
 		Utils.printDivider();
 		System.out.println("");

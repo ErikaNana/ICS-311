@@ -27,7 +27,8 @@ public class Insertion implements Sort {
 			String key = "";
 			key = array.get(j);
 			i = j -1;
-			while ((i >= 0) && (Utils.compare(array.get(i), key) == 1)) {
+			while ((i >= 0) && (array.get(i).compareToIgnoreCase(key) > 0)){
+/*			while ((i >= 0) && (Utils.compare(array.get(i), key) == 1)) {*/
 				array.set(i+1, array.get(i));
 				i = i - 1;
 			}

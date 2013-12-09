@@ -1,43 +1,6 @@
 package code;
 
-public class Utils {
-		
-	public static int compare (String one, String two) {
-		//if string is a number, convert to number
-		if (one.matches("\\d+") && two.matches("\\d+")) {
-			int uno = Integer.parseInt(one);
-			int dos = Integer.parseInt(two);
-			if (uno > dos) {
-				return 1;
-			}
-			if (uno < dos) {
-				return -1;
-			}
-			return 0;
-		}
-		if (one.equals("inf")) {
-			return 1;
-		}
-		if (two.equals("inf")) {
-			return -1;
-		}
-		if (one.equals("inf") && two.equals("inf")){
-			return 0;
-		}
-		//else compares strings and as lower case
-		else {
-			if (one.compareToIgnoreCase(two) < 0) {
-				return -1;
-			}
-			if (one.compareToIgnoreCase(two) > 0) {
-				return 1;
-			}
-			else {
-				return 0;
-			}
-		}
-	}
-	
+public class Utils {	
     /**
      * Prints the divider
      */
@@ -53,14 +16,17 @@ public class Utils {
 		double runningTotal = 0;
 		for (int i = 0; i < 10; i++) {
 			double start = System.nanoTime();
-			sort.sort(p,r);
+			Sort inputSort = sort;
+			inputSort.sort(p, r);
+			if (i == 0) { //do this only once
+				results[1] = inputSort.getFirstValue();
+				results[2] = inputSort.getLastValue();
+			}
+			inputSort = null;
 			double end = System.nanoTime();
 			runningTotal = runningTotal + (end - start);
 		}
 		results[0] = runningTotal/10;
-		results[1] = sort.getFirstValue();
-		results[2] = sort.getLastValue();
-		
 		//print the results
 		String leftAlignFormat = "%-9s: %14.2f ns; First Key: ";
 		System.out.println();

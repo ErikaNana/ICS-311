@@ -29,7 +29,7 @@ public class Merge implements Sort {
 		int i = 0;
 		int j = 0;
 		for (int k = p-1; k < r; k++) {
-			if ((Utils.compare(left.get(i), right.get(j)) == -1) || (Utils.compare(left.get(i), right.get(j)) == 0)) {
+			if (left.get(i).compareTo(right.get(j)) <=0) {
 				array.set(k, left.get(i));
 				i = i + 1;
 			}
