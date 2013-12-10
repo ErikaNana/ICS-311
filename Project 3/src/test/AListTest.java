@@ -59,6 +59,12 @@ public class AListTest extends TestCase {
 	/** The four. */
 	code.Vertex four = new code.Vertex("4");
 	
+	/**Vertices for testing project 3 methods*/
+	Vertex a;
+	Vertex b;
+	Vertex c;
+	Vertex d;
+	
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
@@ -172,11 +178,11 @@ public class AListTest extends TestCase {
 		assertEquals(2,aList.getNumOfEdges());
 	}
 	
-	public void testReciprocity() {
-		Vertex a = new Vertex("a");
-		Vertex b = new Vertex("b");
-		Vertex c = new Vertex("c");
-		Vertex d = new Vertex("d");
+	public void createSmallGraph() {
+		a = new Vertex("a");
+		b = new Vertex("b");
+		c = new Vertex("c");
+		d = new Vertex("d");
 		aList.addVertex(a);
 		aList.addVertex(b);
 		aList.addVertex(c);
@@ -188,7 +194,27 @@ public class AListTest extends TestCase {
 		aList.addEdge(d, c);
 		aList.addEdge(c, a);
 		aList.addEdge(b, d);
+	}
+	public void testReciprocity() {
+		createSmallGraph();
 		assertEquals((double) 4/6, aList.getReciprocity());
 	}
 
+	public void testUndirectedDegree() {
+		createSmallGraph();
+		assertEquals(1, aList.getUndirectedDegree(a));
+		assertEquals(1, aList.getUndirectedDegree(b));
+		assertEquals(1, aList.getUndirectedDegree(c));
+		assertEquals(1, aList.getUndirectedDegree(d));
+	}
+	
+	public void testUndirectedDegreeTwo() {
+		createSmallGraph();
+		aList.addEdge(a,c);
+		aList.addEdge(c,a);
+		assertEquals(2, aList.getUndirectedDegree(a));
+		assertEquals(1, aList.getUndirectedDegree(b));
+		assertEquals(2, aList.getUndirectedDegree(c));
+		assertEquals(1, aList.getUndirectedDegree(d));
+	}
 }

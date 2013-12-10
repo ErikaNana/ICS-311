@@ -201,4 +201,20 @@ public class AList {
 		}
 		return (double) counter/numOfEdges;
 	}
+	
+	//also inefficient
+	public int getUndirectedDegree(Vertex vertex) {
+		HashSet<Vertex> endpoints = outVertices.get(vertex);
+		//check if there's an edge from endpoint to vertex
+		Iterator<Vertex> iterator = endpoints.iterator();
+		int counter = 0;
+		while (iterator.hasNext()) {
+			Vertex endPoint = iterator.next();
+			HashSet<Vertex> endPointsOfEndPoint = outVertices.get(endPoint);
+			if (endPointsOfEndPoint.contains(vertex)) {
+				counter++;
+			}
+		}
+		return counter++;
+	}
 }
