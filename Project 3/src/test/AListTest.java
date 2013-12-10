@@ -211,7 +211,6 @@ public class AListTest extends TestCase {
 	public void testUndirectedDegreeTwo() {
 		createSmallGraph();
 		aList.addEdge(a,c);
-		aList.addEdge(c,a);
 		assertEquals(2, aList.getUndirectedDegree(a));
 		assertEquals(1, aList.getUndirectedDegree(b));
 		assertEquals(2, aList.getUndirectedDegree(c));

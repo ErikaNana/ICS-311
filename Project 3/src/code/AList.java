@@ -40,6 +40,9 @@ public class AList {
 	/** The out vertices. */
 	HashMap<Vertex,HashSet<Vertex>> outVertices;
 	
+	/** Map of degrees for undirected graph */
+	HashMap<Vertex, Integer> unDirectedDeg;
+	
 	/** The num of edges. */
 	int numOfEdges;
 	
@@ -48,6 +51,7 @@ public class AList {
 	 */
 	public AList() {
 		outVertices = new HashMap<Vertex,HashSet<Vertex>>();
+		unDirectedDeg = new HashMap<Vertex,Integer>();
 	}
 	
 	/**
@@ -60,22 +64,34 @@ public class AList {
 		if (!outVertices.containsKey(vertex)) {
 			HashSet<Vertex> tree = new HashSet<Vertex>();
 			outVertices.put(vertex,tree);
+			//also use this to initialize undirectedDeg
+			unDirectedDeg.put(vertex, 0);
 		}
 	}
 	
 	/**
-	 * Adds the edge.
+	 * Adds the edge.  Assumes that each edge is unique.
 	 *
 	 * @param start the start vertex
 	 * @param end the end vertex
 	 */
 	public void addEdge(Vertex start, Vertex end) {
+		//check if an edge exists in reverse direction.  won't work if the same edges
+		//are added more than once
+		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
+		if (endPointsOfEndpoint.contains(start)) {
+			//there is an undirected edge between the two
+			unDirectedDeg.put(start, unDirectedDeg.get(start) + 1);
+			unDirectedDeg.put(end, unDirectedDeg.get(end) + 1);
+		}
 		//this assumes that vertices to be connected already exist in the adj. tree
-
 		if (outVertices.containsKey(start)) {
 			HashSet<Vertex>set = outVertices.get(start);
-			set.add(end);
-			numOfEdges++;
+			//only add edge if it doesn't exist
+			if (!set.contains(end)) {
+				set.add(end);
+				numOfEdges++;
+			}
 		}
 	}
 	
@@ -201,20 +217,8 @@ public class AList {
 		}
 		return (double) counter/numOfEdges;
 	}
-	
-	//also inefficient
+
 	public int getUndirectedDegree(Vertex vertex) {
-		HashSet<Vertex> endpoints = outVertices.get(vertex);
-		//check if there's an edge from endpoint to vertex
-		Iterator<Vertex> iterator = endpoints.iterator();
-		int counter = 0;
-		while (iterator.hasNext()) {
-			Vertex endPoint = iterator.next();
-			HashSet<Vertex> endPointsOfEndPoint = outVertices.get(endPoint);
-			if (endPointsOfEndPoint.contains(vertex)) {
-				counter++;
-			}
-		}
-		return counter++;
+		return unDirectedDeg.get(vertex);
 	}
 }
