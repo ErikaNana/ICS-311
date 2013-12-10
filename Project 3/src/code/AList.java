@@ -26,6 +26,7 @@ package code;
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -39,9 +40,9 @@ public class AList {
 	
 	/** The out vertices. */
 	HashMap<Vertex,HashSet<Vertex>> outVertices;
-	
-	/** Map of degrees for undirected graph */
-	HashMap<Vertex, Integer> unDirectedDeg;
+		
+	/**Edges for undirected graph*/
+	ArrayList<Arc> undirectedEdges;
 	
 	/** The num of edges. */
 	int numOfEdges;
@@ -51,7 +52,7 @@ public class AList {
 	 */
 	public AList() {
 		outVertices = new HashMap<Vertex,HashSet<Vertex>>();
-		unDirectedDeg = new HashMap<Vertex,Integer>();
+		undirectedEdges = new ArrayList<Arc>();
 	}
 	
 	/**
@@ -64,8 +65,6 @@ public class AList {
 		if (!outVertices.containsKey(vertex)) {
 			HashSet<Vertex> tree = new HashSet<Vertex>();
 			outVertices.put(vertex,tree);
-			//also use this to initialize undirectedDeg
-			unDirectedDeg.put(vertex, 0);
 		}
 	}
 	
@@ -81,8 +80,8 @@ public class AList {
 		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
 		if (endPointsOfEndpoint.contains(start)) {
 			//there is an undirected edge between the two
-			unDirectedDeg.put(start, unDirectedDeg.get(start) + 1);
-			unDirectedDeg.put(end, unDirectedDeg.get(end) + 1);
+			Arc edge = new Arc(start,end);
+			undirectedEdges.add(edge);
 		}
 		//this assumes that vertices to be connected already exist in the adj. tree
 		if (outVertices.containsKey(start)) {
@@ -219,6 +218,56 @@ public class AList {
 	}
 
 	public int getUndirectedDegree(Vertex vertex) {
-		return unDirectedDeg.get(vertex);
+/*		return unDirectedDeg.get(vertex);*/
+		int counter = 0;
+		for (Arc edge: undirectedEdges) {
+			//order doesn't matter
+			if (edge.getStartVertex().equals(vertex) || edge.getEndVertex().equals(vertex)) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+	
+	public double getDegreeCorrelation() {
+		//get the s1 summation
+		int s1 = 0;
+		Set<Vertex> vertices = outVertices.keySet();
+		Iterator<Vertex> iterator = vertices.iterator();
+		while (iterator.hasNext()) {
+			Vertex currentVertex = iterator.next();
+			s1 = s1 + getUndirectedDegree(currentVertex);
+		}
+		
+		//get the s2 summation
+		int s2 = 0;
+		iterator = vertices.iterator();
+		while (iterator.hasNext()) {
+			Vertex currentVertex = iterator.next();
+			s2 = (int) (s2 + Math.pow(getUndirectedDegree(currentVertex), 2));
+		}
+
+		//get the s3 summation
+		int s3 = 0;
+		iterator = vertices.iterator();
+		while(iterator.hasNext()) {
+			Vertex currentVertex = iterator.next();
+			s3 = (int) (s3 + Math.pow(getUndirectedDegree(currentVertex), 3));
+		}
+
+		//get the se summation (sum over all distinct (unordered) pairs of vertices)
+		int se = 0;
+		for (Arc edge: undirectedEdges) {
+			int startDegree = getUndirectedDegree(edge.getStartVertex());
+			int endDegree = getUndirectedDegree(edge.getEndVertex());
+			int product = startDegree * endDegree;
+			se = se + product;
+		}
+		se = 2*se;
+
+		//calculate r
+		double numerator = (s1*se) - (Math.pow(s2, 2));
+		double denominator = ((s1 * s3) - (Math.pow(s2, 2)));
+		return numerator/denominator;
 	}
 }

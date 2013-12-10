@@ -215,5 +215,6 @@ public class AListTest extends TestCase {
 		assertEquals(1, aList.getUndirectedDegree(b));
 		assertEquals(2, aList.getUndirectedDegree(c));
 		assertEquals(1, aList.getUndirectedDegree(d));
+		assertEquals(-0.5, aList.getDegreeCorrelation());
 	}
 }
