@@ -180,4 +180,25 @@ public class AList {
 		HashSet<Vertex> updated = outVertices.get(endVertex);
 		updated.add(startVertex);
 	}
+	
+	//inefficient
+	public double getReciprocity() {
+		Set<Vertex> keys = outVertices.keySet();
+		Iterator<Vertex> iterator = keys.iterator();
+		int counter = 0;
+		while(iterator.hasNext()) {
+			Vertex key = iterator.next();
+			HashSet<Vertex> endpoints = outVertices.get(key);
+			Iterator<Vertex> endIterator = endpoints.iterator();
+			//check if endpoints of current vertex are reciprocated
+			while (endIterator.hasNext()) {
+				Vertex endPoint = endIterator.next();
+				HashSet<Vertex> endPointsOfEndpoints = outVertices.get(endPoint);
+				if (endPointsOfEndpoints.contains(key)) {
+					counter++;
+				}
+			}
+		}
+		return (double) counter/numOfEdges;
+	}
 }

@@ -171,5 +171,24 @@ public class AListTest extends TestCase {
 		assertTrue(checkMap.get(two).isEmpty());
 		assertEquals(2,aList.getNumOfEdges());
 	}
+	
+	public void testReciprocity() {
+		Vertex a = new Vertex("a");
+		Vertex b = new Vertex("b");
+		Vertex c = new Vertex("c");
+		Vertex d = new Vertex("d");
+		aList.addVertex(a);
+		aList.addVertex(b);
+		aList.addVertex(c);
+		aList.addVertex(d);
+		
+		aList.addEdge(a, b);
+		aList.addEdge(b, a);
+		aList.addEdge(c, d);
+		aList.addEdge(d, c);
+		aList.addEdge(c, a);
+		aList.addEdge(b, d);
+		assertEquals((double) 4/6, aList.getReciprocity());
+	}
 
 }

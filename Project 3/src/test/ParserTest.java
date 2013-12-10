@@ -79,12 +79,12 @@ public class ParserTest extends TestCase {
 	/**
 	 * Test wikipedia input file.
 	 */
-	public void testWikipedia() {
+/*	public void testWikipedia() {
 		fileName = "wiki-Vote.vna";
 		DirectedGraph graph = VNAParser.generateGraph(fileName);
 		assertEquals(7115, graph.numVertices());
 		assertEquals(103689, graph.numArcs());
-	}
+	}*/
 	
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#tearDown()
