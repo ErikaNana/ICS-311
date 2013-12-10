@@ -196,29 +196,12 @@ public class AList {
 		updated.add(startVertex);
 	}
 	
-	//inefficient
 	public double getReciprocity() {
-		Set<Vertex> keys = outVertices.keySet();
-		Iterator<Vertex> iterator = keys.iterator();
-		int counter = 0;
-		while(iterator.hasNext()) {
-			Vertex key = iterator.next();
-			HashSet<Vertex> endpoints = outVertices.get(key);
-			Iterator<Vertex> endIterator = endpoints.iterator();
-			//check if endpoints of current vertex are reciprocated
-			while (endIterator.hasNext()) {
-				Vertex endPoint = endIterator.next();
-				HashSet<Vertex> endPointsOfEndpoints = outVertices.get(endPoint);
-				if (endPointsOfEndpoints.contains(key)) {
-					counter++;
-				}
-			}
-		}
-		return (double) counter/numOfEdges;
+		double recEdges = undirectedEdges.size() * 2;
+		return recEdges/numOfEdges;
 	}
 
 	public int getUndirectedDegree(Vertex vertex) {
-/*		return unDirectedDeg.get(vertex);*/
 		int counter = 0;
 		for (Arc edge: undirectedEdges) {
 			//order doesn't matter
@@ -255,7 +238,7 @@ public class AList {
 			s3 = (int) (s3 + Math.pow(getUndirectedDegree(currentVertex), 3));
 		}
 
-		//get the se summation (sum over all distinct (unordered) pairs of vertices)
+		//get the se summation
 		int se = 0;
 		for (Arc edge: undirectedEdges) {
 			int startDegree = getUndirectedDegree(edge.getStartVertex());
