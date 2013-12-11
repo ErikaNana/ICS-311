@@ -42,7 +42,7 @@ public class AList {
 	HashMap<Vertex,HashSet<Vertex>> outVertices;
 		
 	/**Edges for undirected graph*/
-	ArrayList<Arc> undirectedEdges;
+	ArrayList<Arc> undirectedEdges; //inefficient space wise
 	
 	/** The num of edges. */
 	int numOfEdges;
@@ -64,6 +64,8 @@ public class AList {
 		//add start vertex to the HashMaps
 		if (!outVertices.containsKey(vertex)) {
 			HashSet<Vertex> tree = new HashSet<Vertex>();
+			//initialize the degree
+			vertex.setAnnotation("undirectedDegree", 0);
 			outVertices.put(vertex,tree);
 		}
 	}
@@ -82,6 +84,9 @@ public class AList {
 			//there is an undirected edge between the two
 			Arc edge = new Arc(start,end);
 			undirectedEdges.add(edge);
+			//update degree
+			start.setAnnotation("undirectedDegree", (Integer) start.getAnnotation("undirectedDegree") + 1);
+			end.setAnnotation("undirectedDegree", (Integer) end.getAnnotation("undirectedDegree") + 1);
 		}
 		//this assumes that vertices to be connected already exist in the adj. tree
 		if (outVertices.containsKey(start)) {
@@ -197,19 +202,18 @@ public class AList {
 	}
 	
 	public double getReciprocity() {
-		double recEdges = undirectedEdges.size() * 2;
-		return recEdges/numOfEdges;
+		Set<Vertex> vertices = outVertices.keySet();
+		Iterator<Vertex> iterator = vertices.iterator();
+		int counter = 0;
+		while (iterator.hasNext()) {
+			Vertex vertex = iterator.next();
+			counter = counter + getUndirectedDegree(vertex);
+		}
+		return (double) counter/numOfEdges;
 	}
 
 	public int getUndirectedDegree(Vertex vertex) {
-		int counter = 0;
-		for (Arc edge: undirectedEdges) {
-			//order doesn't matter
-			if (edge.getStartVertex().equals(vertex) || edge.getEndVertex().equals(vertex)) {
-				counter++;
-			}
-		}
-		return counter;
+		return (Integer) vertex.getAnnotation("undirectedDegree");
 	}
 	
 	public double getDegreeCorrelation() {
