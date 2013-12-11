@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -256,5 +257,44 @@ public class AList {
 		double numerator = (s1*se) - (Math.pow(s2, 2));
 		double denominator = ((s1 * s3) - (Math.pow(s2, 2)));
 		return numerator/denominator;
+	}
+	
+	public double getClusteringCoefficient() {
+		Set<Vertex> vertices = outVertices.keySet();
+		Iterator<Vertex> iterator = vertices.iterator();
+		int counter = 0;
+		int pathsOfLengthTwo = 0;
+		while (iterator.hasNext()) {
+			Vertex currentVertex = iterator.next();
+			pathsOfLengthTwo = pathsOfLengthTwo + getUndirectedDegree(currentVertex)/2;
+			HashSet<Vertex> neighbors = outVertices.get(currentVertex);
+			ArrayList<Vertex> endpoints = new ArrayList<Vertex>();
+			endpoints.addAll(neighbors);
+			//check for each neighbor j, if theres an edge for neighbor l > j
+			int first;
+			int second;
+			for (int i = 0; i < endpoints.size(); i++) {
+				first = i;
+				second = i+1;
+				//check if edge for neighbor l > j
+				while (second < endpoints.size()) {
+					//compare first and second
+					Vertex secondVertex = endpoints.get(second);
+					Vertex firstVertex = endpoints.get(first);
+					if (outVertices.get(secondVertex).contains(firstVertex) ||
+							outVertices.get(firstVertex).contains(secondVertex)) {
+						System.out.println(firstVertex + " is found in " + secondVertex);
+						counter++;
+					}
+					second++;
+				}
+			}
+		}
+		System.out.println("counter: "  + counter);
+		pathsOfLengthTwo = 2 * pathsOfLengthTwo;
+		double numberOfTriads = counter / 3;
+		System.out.println("number of paths:  " + pathsOfLengthTwo);
+		System.out.println("number of triads:  " + numberOfTriads);
+		return numberOfTriads/pathsOfLengthTwo;
 	}
 }

@@ -217,4 +217,26 @@ public class AListTest extends TestCase {
 		assertEquals(1, aList.getUndirectedDegree(d));
 		assertEquals(-0.5, aList.getDegreeCorrelation());
 	}
+	
+	public void testClusteringCoefficient() {
+		a = new Vertex("a");
+		b = new Vertex("b");
+		c = new Vertex("c");
+		d = new Vertex("d");
+		aList.addVertex(a);
+		aList.addVertex(b);
+		aList.addVertex(c);
+		aList.addVertex(d);
+		aList.addEdge(a, b);
+		aList.addEdge(b, a);
+		aList.addEdge(a, c);
+		aList.addEdge(c, a);
+		aList.addEdge(c, b);
+		aList.addEdge(b, c);
+		aList.addEdge(c, d);
+		aList.addEdge(d, c);
+		aList.addEdge(b, d);
+		aList.addEdge(d, b);
+		assertEquals(0.25, aList.getClusteringCoefficient());
+	}
 }
