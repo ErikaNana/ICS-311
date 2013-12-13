@@ -42,7 +42,7 @@ public class Vertex {
 	
 	/** The annotations. */
 	private HashMap<Object,Object> annotations;
-	
+	private int unDirectedDegree;
 	/**
 	 * Instantiates a new vertex.
 	 *
@@ -52,6 +52,7 @@ public class Vertex {
 		this.key = key;
 		this.annotations = new HashMap<Object,Object>();
 		this.dataList = new Data();
+		this.unDirectedDegree = 0;
 	}
 	
 	/**
@@ -148,5 +149,12 @@ public class Vertex {
 	 */
 	public void clearAnnotations() {
 		annotations.clear();
+	}
+	public void updateUndirectedDegree() {
+		unDirectedDegree++;
+	}
+	
+	public int getUndirectedDegree() {
+		return unDirectedDegree;
 	}
 }

@@ -27,12 +27,14 @@ package test;
  */
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
 import code.Arc;
+import code.BFS;
 import code.DirectedGraph;
 import code.Metrics;
 import code.VNAParser;
@@ -146,6 +148,35 @@ public class MetricsTest extends TestCase {
 		}
 	}
 	
+	public void testMetrics3() {
+		System.out.println("Metric 3 test");
+		graph = VNAParser.generateGraph("celegansneural.vna");
+		System.out.println("clustering coeff:  " + graph.getClusteringCoefficient());
+		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
+		System.out.println("Reciprocity:  " + graph.getRecip());
+		System.out.println("Num of Undirected Edges:  " + graph.numOfUndirectedArcs());
+		System.out.println("vertices:  " + graph.numVertices());
+		System.out.println("arcs:  " + graph.numArcs());
+		graph.printAList();
+	}
+	
+	public void testMetrics2() {
+		graph = new DirectedGraph();
+		Vertex one = graph.insertVertex("one");
+		Vertex two = graph.insertVertex("two");
+		Vertex three = graph.insertVertex("three");
+		Vertex four = graph.insertVertex("three");
+
+		graph.insertArc(one, two);
+		graph.insertArc(one, three);
+		graph.insertArc(three,four);
+		
+		graph.insertArc(two, one);
+		graph.insertArc(three, one);
+		graph.insertArc(four,three);
+		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
+		System.out.println("Reciprocity:  " + graph.getRecip());
+	}
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#tearDown()
 	 */
@@ -153,5 +184,21 @@ public class MetricsTest extends TestCase {
 		System.out.println("-----------------------------");
 		super.tearDown();
 	}
-	
+	public void testBFS() {
+		graph = new DirectedGraph();
+		Vertex a = graph.insertVertex("a");
+		Vertex b = graph.insertVertex("b");
+		Vertex c = graph.insertVertex("c");
+		Vertex d = graph.insertVertex("d");
+		graph.insertArc(a, b);
+		graph.insertArc(a, c);
+		graph.insertArc(b, d);
+		HashMap<Vertex, Integer> distances = new HashMap<Vertex,Integer>();
+		distances = BFS.runBFS(graph, a);
+		Iterator<Vertex> iterator = distances.keySet().iterator();
+		while (iterator.hasNext()) {
+			Vertex next = iterator.next();
+			System.out.println("vertex:  " + next + "  distance:  " + distances.get(next));
+		}
+	}
 }

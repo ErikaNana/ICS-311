@@ -615,4 +615,21 @@ public class DirectedGraph {
 	public HashMap<Vertex,BTree<Arc>> getATree(){
 		return map;
 	}
+	
+	public double getDegreeCorrelation() {
+		return aList.getDegreeCorrelation();
+	}
+	public double getClusteringCoefficient() {
+		return aList.getClusteringCoefficient();
+	}
+	
+	public double getRecip() {
+		return aList.getReciprocity();
+	}
+	public int numOfUndirectedArcs() {
+		return aList.numberOfUndirectedEdges();
+	}
+	public void printAList() {
+		aList.printAList();
+	}
 }

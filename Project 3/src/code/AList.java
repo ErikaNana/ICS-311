@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -86,8 +85,11 @@ public class AList {
 			Arc edge = new Arc(start,end);
 			undirectedEdges.add(edge);
 			//update degree
-			start.setAnnotation("undirectedDegree", (Integer) start.getAnnotation("undirectedDegree") + 1);
-			end.setAnnotation("undirectedDegree", (Integer) end.getAnnotation("undirectedDegree") + 1);
+			//System.out.println("start is:  " + start);
+			//System.out.println("end is:  " + end);
+			start.updateUndirectedDegree();
+			end.updateUndirectedDegree();
+
 		}
 		//this assumes that vertices to be connected already exist in the adj. tree
 		if (outVertices.containsKey(start)) {
@@ -214,51 +216,63 @@ public class AList {
 	}
 
 	public int getUndirectedDegree(Vertex vertex) {
-		return (Integer) vertex.getAnnotation("undirectedDegree");
+		return vertex.getUndirectedDegree();
 	}
 	
 	public double getDegreeCorrelation() {
 		//get the s1 summation
-		int s1 = 0;
+		double s1 = 0;
+		double s2 = 0;
+		double s3 = 0;
 		Set<Vertex> vertices = outVertices.keySet();
 		Iterator<Vertex> iterator = vertices.iterator();
+		int counter = 0;
 		while (iterator.hasNext()) {
 			Vertex currentVertex = iterator.next();
 			s1 = s1 + getUndirectedDegree(currentVertex);
-		}
-		
-		//get the s2 summation
-		int s2 = 0;
-		iterator = vertices.iterator();
-		while (iterator.hasNext()) {
-			Vertex currentVertex = iterator.next();
-			s2 = (int) (s2 + Math.pow(getUndirectedDegree(currentVertex), 2));
-		}
-
-		//get the s3 summation
-		int s3 = 0;
-		iterator = vertices.iterator();
-		while(iterator.hasNext()) {
-			Vertex currentVertex = iterator.next();
-			s3 = (int) (s3 + Math.pow(getUndirectedDegree(currentVertex), 3));
+			s2 = s2 + Math.pow(getUndirectedDegree(currentVertex), 2);
+			s3 = s3 + Math.pow(getUndirectedDegree(currentVertex), 3);
+			counter++;
 		}
 
 		//get the se summation
-		int se = 0;
+		double se = 0;
+		counter = 0;
 		for (Arc edge: undirectedEdges) {
-			int startDegree = getUndirectedDegree(edge.getStartVertex());
-			int endDegree = getUndirectedDegree(edge.getEndVertex());
-			int product = startDegree * endDegree;
+			counter++;
+			double startDegree = getUndirectedDegree(edge.getStartVertex());
+			double endDegree = getUndirectedDegree(edge.getEndVertex());
+			System.out.println("start vertex:  " + edge.getStartVertex());
+			System.out.println("end vertex:  " + edge.getEndVertex());
+			System.out.println("     start degree:  " + startDegree);
+			System.out.println("     end degree:  " + endDegree);
+			double product = startDegree * endDegree;
+			System.out.println("        product:  " + product);
 			se = se + product;
+			System.out.println("        se now:  " + se);
 		}
+		System.out.println("counter from undirected edges:  " + counter);
 		se = 2*se;
-
+		System.out.println("se:  " + se);
 		//calculate r
 		double numerator = (s1*se) - (Math.pow(s2, 2));
-		double denominator = ((s1 * s3) - (Math.pow(s2, 2)));
+		double denominator = (s1 * s3) - Math.pow(s2, 2);
 		return numerator/denominator;
 	}
 	
+/*	public int getUndirectedDegreeTwo(Vertex vertex) {
+		int degree = 0;
+		HashSet<Vertex> endpoints = outVertices.get(vertex);
+		Iterator<Vertex> epIterator = endpoints.iterator();
+		while (epIterator.hasNext()) {
+			Vertex endpoint = epIterator.next();
+			HashSet<Vertex> set = outVertices.get(endpoint);
+			if (set.contains(vertex)) {
+				degree++;
+			}
+		}
+		return degree;
+	}*/
 	public double getClusteringCoefficient() {
 		Set<Vertex> vertices = outVertices.keySet();
 		Iterator<Vertex> iterator = vertices.iterator();
@@ -270,7 +284,7 @@ public class AList {
 			HashSet<Vertex> neighbors = outVertices.get(currentVertex);
 			ArrayList<Vertex> endpoints = new ArrayList<Vertex>();
 			endpoints.addAll(neighbors);
-			//check for each neighbor j, if theres an edge for neighbor l > j
+			//check for each neighbor j, if there's an edge for neighbor l > j
 			int first;
 			int second;
 			for (int i = 0; i < endpoints.size(); i++) {
@@ -281,9 +295,7 @@ public class AList {
 					//compare first and second
 					Vertex secondVertex = endpoints.get(second);
 					Vertex firstVertex = endpoints.get(first);
-					if (outVertices.get(secondVertex).contains(firstVertex) ||
-							outVertices.get(firstVertex).contains(secondVertex)) {
-						System.out.println(firstVertex + " is found in " + secondVertex);
+					if (outVertices.get(secondVertex).contains(firstVertex)) {
 						counter++;
 					}
 					second++;
@@ -296,5 +308,38 @@ public class AList {
 		System.out.println("number of paths:  " + pathsOfLengthTwo);
 		System.out.println("number of triads:  " + numberOfTriads);
 		return numberOfTriads/pathsOfLengthTwo;
+	}
+	
+	public double[] getGeodesicDistance() {
+		double [] geoStats = new double [2];
+		//mean geodesic distance 
+/*		average length of the shortest path between each pair of vertices in the graph
+		perform BFS starting at each vertex in network in turn
+			use the better implementation
+		Algorithm: (uses two arrays of n elements)
+		iterative djikstra: VE lg V
+		iterative BFS: 
+			*/
+		return geoStats;
+	}
+	
+	public int numberOfUndirectedEdges() {
+		return undirectedEdges.size();
+	}
+	
+	public void printAList() {
+		Iterator<Vertex> vertices = outVertices.keySet().iterator();
+		while (vertices.hasNext()) {
+			Vertex vertex = vertices.next();
+			System.out.println("vertex:  " + vertex);
+			HashSet<Vertex> endpoints = outVertices.get(vertex);
+			Iterator<Vertex> iterator = endpoints.iterator();
+			while (iterator.hasNext()) {
+				Vertex endpoint = iterator.next();
+				System.out.print("--->" + endpoint);
+			}
+			System.out.println("");
+			System.out.println("");
+		}
 	}
 }
