@@ -178,4 +178,46 @@ public class Metrics {
 		sCCStats[2] = vertices;
 		return sCCStats;
 	}
+	
+	public static double[] getGeoStats(DirectedGraph graph) {
+		double[] stats = new double[2];
+		double averagePath = 0;
+		double maximum = 0;
+		int numOfPaths = 0;
+		int numUnreachable = 0;
+		//get the maximum and average
+		Iterator<Vertex> vertices = graph.vertices();
+		while (vertices.hasNext()) {
+			Vertex vertex = vertices.next();
+			HashMap<Vertex, Integer> distances = BFS.runBFS(graph, vertex);
+			Iterator<Vertex> iterator = distances.keySet().iterator();
+/*			System.out.println("iterating on:  " + vertex);*/
+			while (iterator.hasNext()) {
+				Vertex next = iterator.next();
+/*				System.out.println("    vertex:  " + next + " distance: " + distances.get(next));*/
+				if (distances.get(next) >= 0) {
+					numOfPaths = numOfPaths + 1;
+				}
+				else {
+					numUnreachable++;
+				}
+			}
+			//System.out.println("-----------");
+			double [] output = Utils.getAverageAndMax(distances);
+			averagePath = averagePath + output[0];
+			double outputMax = output[1];
+			//update maximum
+			if (outputMax > maximum) {
+				maximum = outputMax;
+			}
+		}
+		System.out.println("num of paths:  " + numOfPaths);
+		averagePath = averagePath/numOfPaths;
+		stats[0] = averagePath;
+		stats[1] = maximum;
+		System.out.println("average path:  " + stats[0]);
+		System.out.println("maximum path:  " + stats[1]);
+		System.out.println("unreachable:  " + numUnreachable);
+		return stats;
+	}
 }

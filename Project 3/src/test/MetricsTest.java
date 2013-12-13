@@ -157,7 +157,7 @@ public class MetricsTest extends TestCase {
 		System.out.println("Num of Undirected Edges:  " + graph.numOfUndirectedArcs());
 		System.out.println("vertices:  " + graph.numVertices());
 		System.out.println("arcs:  " + graph.numArcs());
-		graph.printAList();
+		Metrics.getGeoStats(graph);
 	}
 	
 	public void testMetrics2() {
@@ -177,13 +177,6 @@ public class MetricsTest extends TestCase {
 		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
 		System.out.println("Reciprocity:  " + graph.getRecip());
 	}
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		System.out.println("-----------------------------");
-		super.tearDown();
-	}
 	public void testBFS() {
 		graph = new DirectedGraph();
 		Vertex a = graph.insertVertex("a");
@@ -198,7 +191,27 @@ public class MetricsTest extends TestCase {
 		Iterator<Vertex> iterator = distances.keySet().iterator();
 		while (iterator.hasNext()) {
 			Vertex next = iterator.next();
-			System.out.println("vertex:  " + next + "  distance:  " + distances.get(next));
+			if (next == a) {
+				assertEquals((Integer)0, (Integer) distances.get(next));
+			}
+			if (next == b) {
+				assertEquals((Integer)1, (Integer) distances.get(next));
+			}
+			if (next == c) {
+				assertEquals((Integer)1, (Integer) distances.get(next));
+			}
+			if (next == d) {
+				assertEquals((Integer)2, (Integer) distances.get(next));
+			}
 		}
+		Metrics.getGeoStats(graph);
+	}
+	
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#tearDown()
+	 */
+	protected void tearDown() throws Exception {
+		System.out.println("-----------------------------");
+		super.tearDown();
 	}
 }

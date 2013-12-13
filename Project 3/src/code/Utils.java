@@ -27,6 +27,8 @@ package code;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -183,5 +185,27 @@ public class Utils<Type> {
 		}
 		System.out.printf("%-20s", "Percent Vertices in Largest Strongly Connected Component:");
 		System.out.printf("%8.3f",sccStats[1]);
+	}
+	
+	//method for geostats just for one run
+	public static double[] getAverageAndMax(HashMap<Vertex,Integer> distances) {
+		double[] stats = new double[2];
+		double sumOfPaths = 0;
+		double maximum = 0;
+
+		Iterator<Vertex> iterator = distances.keySet().iterator();
+		while (iterator.hasNext()) {
+			Vertex next = iterator.next();
+			int distance = distances.get(next);
+			if (distance > 0) {
+				sumOfPaths = sumOfPaths + distance;			
+			}
+			if (distance > maximum) {
+				maximum = distance;
+			}
+		}
+		stats[0] = sumOfPaths;
+		stats[1] = maximum;
+		return stats;
 	}
 }
