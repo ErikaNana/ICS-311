@@ -28,6 +28,7 @@ package code;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -615,21 +616,102 @@ public class DirectedGraph {
 	public HashMap<Vertex,BTree<Arc>> getATree(){
 		return map;
 	}
-	
+	/**
+	 * Get undirected k for each vertex first
+	 * Scan adjacency list once
+	 * When scanning the list for vertex u, for each list
+	 * element with v as the target, increment both ku and kv
+	 * @return
+	 */
 	public double getDegreeCorrelation() {
-		return aList.getDegreeCorrelation();
+		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
+		Iterator<Vertex> vertices = outVertices.keySet().iterator();
+		long s1 = 0;
+		long s2 = 0;
+		long s3 = 0;
+		while (vertices.hasNext()) {
+			Vertex next = vertices.next();
+			HashSet<Vertex> endpoints = outVertices.get(next);
+			Iterator<Vertex> endIterator = endpoints.iterator();
+			while (endIterator.hasNext()) {
+				Vertex endpoint = endIterator.next();
+				next.updateUndirectedDegree();
+				endpoint.updateUndirectedDegree();
+			}
+		}
+		vertices = outVertices.keySet().iterator();
+		while (vertices.hasNext()) {
+			Vertex next = vertices.next();
+			s1 = s1 + next.getUndirectedDegree();
+			s2 = (int) (s2 + Math.pow(next.getUndirectedDegree(), 2));
+			s3 = (int) (s3 + Math.pow(next.getUndirectedDegree(), 3));
+		}
+		System.out.println("s1:  " + s1);
+		System.out.println("s2:  " + s2);
+		System.out.println("s3:  " + s3);
+		long se = 0;
+		Iterator<Arc> arcs = arcs();
+		while (arcs.hasNext()) {
+			Arc arc = arcs.next();
+			int product = arc.getStartVertex().getUndirectedDegree() * arc.getEndVertex().getUndirectedDegree();
+			se = se + product;
+		}
+		se = 2*se;
+		System.out.println("se:  " + se);
+		float s2Squared = (float) Math.pow(s2,2);
+		System.out.println("squared:  " + s2Squared);
+		System.out.println("s1 is:  " + s1);
+		System.out.println("se is:  " + se);
+		long answer = s1 * se;
+		System.out.println("answer:  " + answer);
+		float numerator = (s1*se) - s2Squared;
+		System.out.println("numerator:  " + numerator);
+		float denominator = (float) ((s1 * s3) - Math.pow(s2, 2));
+		System.out.println("denominator:  " + denominator);
+		return numerator/denominator;
 	}
+	
 	public double getClusteringCoefficient() {
 		return aList.getClusteringCoefficient();
 	}
 	
-	public double getRecip() {
-		return aList.getReciprocity();
-	}
 	public int numOfUndirectedArcs() {
-		return aList.numberOfUndirectedEdges();
+		return aList.numOfUndirectedEdges();
 	}
 	public void printAList() {
 		aList.printAList();
+	}
+	public double getReciprocity() {
+		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
+		Iterator<Vertex>vertices = outVertices.keySet().iterator();
+		double counter = 0;
+		while (vertices.hasNext()) {
+			Vertex next = vertices.next();
+			HashSet<Vertex> endpoints = outVertices.get(next);
+			//check endpoints for reciprocated edges 
+			Iterator<Vertex>endIterator = endpoints.iterator();
+			while (endIterator.hasNext()) {
+				Vertex endpoint = endIterator.next();
+				HashSet<Vertex> endpointsOfEndpoint = outVertices.get(endpoint);
+				//if they are not reciprocated, add one for both vertices
+				if (endpointsOfEndpoint.contains(next)) {
+					counter++;
+				}
+			}
+		}
+		return counter/numArcs();
+	}
+	public void setUndirectedDegree() {
+		Iterator<Vertex> vertices = aList.getMap().keySet().iterator();
+		while (vertices.hasNext()) {
+			Vertex vertex = vertices.next();
+			HashSet<Vertex> endpoints = aList.getMap().get(vertex);
+			Iterator<Vertex> iterator = endpoints.iterator();
+			while (iterator.hasNext()) {
+				Vertex endpoint = iterator.next();
+				vertex.updateUndirectedDegree();
+				endpoint.updateUndirectedDegree();
+			}
+		}
 	}
 }

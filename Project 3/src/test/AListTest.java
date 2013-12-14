@@ -200,7 +200,7 @@ public class AListTest extends TestCase {
 		assertEquals((double) 4/6, aList.getReciprocity());
 	}
 
-	public void testUndirectedDegree() {
+/*	public void testUndirectedDegree() {
 		createSmallGraph();
 		assertEquals(1, aList.getUndirectedDegree(a));
 		assertEquals(1, aList.getUndirectedDegree(b));
@@ -216,7 +216,7 @@ public class AListTest extends TestCase {
 		assertEquals(2, aList.getUndirectedDegree(c));
 		assertEquals(1, aList.getUndirectedDegree(d));
 		//assertEquals(-0.5, aList.getDegreeCorrelation());
-	}
+	}*/
 	
 	public void testClusteringCoefficient() {
 		a = new Vertex("a");

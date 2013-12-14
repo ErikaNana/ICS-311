@@ -153,7 +153,7 @@ public class MetricsTest extends TestCase {
 		graph = VNAParser.generateGraph("celegansneural.vna");
 		System.out.println("clustering coeff:  " + graph.getClusteringCoefficient());
 		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
-		System.out.println("Reciprocity:  " + graph.getRecip());
+		System.out.println("Reciprocity:  " + graph.getReciprocity());
 		System.out.println("Num of Undirected Edges:  " + graph.numOfUndirectedArcs());
 		System.out.println("vertices:  " + graph.numVertices());
 		System.out.println("arcs:  " + graph.numArcs());
@@ -174,8 +174,13 @@ public class MetricsTest extends TestCase {
 		graph.insertArc(two, one);
 		graph.insertArc(three, one);
 		graph.insertArc(four,three);
-		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
-		System.out.println("Reciprocity:  " + graph.getRecip());
+		graph.insertArc(four, two);
+		System.out.println("Degree one:  " + one.getUndirectedDegree());
+		System.out.println("Degree two:  " + two.getUndirectedDegree());
+		System.out.println("Degree three:  " + three.getUndirectedDegree());
+		System.out.println("Degree four:  " + four.getUndirectedDegree());
+		graph.getDegreeCorrelation();
+		System.out.println("Reciprocity:  " + graph.getReciprocity());
 	}
 	public void testBFS() {
 		graph = new DirectedGraph();
