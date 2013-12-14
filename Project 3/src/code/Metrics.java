@@ -178,7 +178,8 @@ public class Metrics {
 		sCCStats[2] = vertices;
 		return sCCStats;
 	}
-	
+	//get the average path of the whole graph
+	//get the maximum path for whe whole graph
 	public static double[] getGeoStats(DirectedGraph graph) {
 		double[] stats = new double[2];
 		double averagePath = 0;
@@ -189,19 +190,25 @@ public class Metrics {
 		Iterator<Vertex> vertices = graph.vertices();
 		while (vertices.hasNext()) {
 			Vertex vertex = vertices.next();
+			//get the stats from run on current vertex
 			HashMap<Vertex, Integer> distances = BFS.runBFS(graph, vertex);
 			Iterator<Vertex> iterator = distances.keySet().iterator();
 /*			System.out.println("iterating on:  " + vertex);*/
+			//don't need to count the path from source to itself
+			int possiblePaths = graph.numVertices()-1;
 			while (iterator.hasNext()) {
 				Vertex next = iterator.next();
-/*				System.out.println("    vertex:  " + next + " distance: " + distances.get(next));*/
-				if (distances.get(next) >= 0) {
-					numOfPaths = numOfPaths + 1;
-				}
-				else {
+				//System.out.println("    vertex:  " + next + " distance: " + distances.get(next));
+				//get the number of possible paths
+				if (distances.get(next) < 0) {
+					possiblePaths = possiblePaths - 1;
 					numUnreachable++;
 				}
 			}
+			//update numOfPaths with possiblePaths from that run
+/*			System.out.println("vertex:  " + vertex);
+			System.out.println("possible paths:  " + possiblePaths);*/
+			numOfPaths = numOfPaths + possiblePaths;
 			//System.out.println("-----------");
 			double [] output = Utils.getAverageAndMax(distances);
 			averagePath = averagePath + output[0];

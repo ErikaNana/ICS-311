@@ -6,7 +6,9 @@ import java.util.Iterator;
 
 public class BFS {
 	
-	public static HashMap<Vertex,Integer> runBFS(DirectedGraph graph, Vertex start) {
+	//returns distances from the source to other all vertices, 
+	//-1 if destination vertex is unreachable
+	public static HashMap<Vertex,Integer> runBFS(DirectedGraph graph, Vertex source) {
 		/* When the algorithm is finisehd we are left with an array that 
 		 * contains the distances to every vertex int he component of the 
 		 * network that contains s (and every vertex in every other component
@@ -17,12 +19,12 @@ public class BFS {
 		int write = 1;
 		
 		//initialize
-		queue[0] = start;
+		queue[0] = source;
 		Iterator<Vertex> vertices = graph.vertices();
 		while (vertices.hasNext()) {
 			Vertex vertex = vertices.next();
-			if (vertex == start) {
-				distances.put(start, 0);
+			if (vertex == source) {
+				distances.put(source, 0);
 			}
 			else{
 				distances.put(vertex, -1);

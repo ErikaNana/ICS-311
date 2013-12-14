@@ -188,6 +188,8 @@ public class Utils<Type> {
 	}
 	
 	//method for geostats just for one run
+	//get paths lengths for run
+	//get maximum path length from that run
 	public static double[] getAverageAndMax(HashMap<Vertex,Integer> distances) {
 		double[] stats = new double[2];
 		double sumOfPaths = 0;
@@ -197,7 +199,7 @@ public class Utils<Type> {
 		while (iterator.hasNext()) {
 			Vertex next = iterator.next();
 			int distance = distances.get(next);
-			if (distance > 0) {
+			if (distance > 0) { //only get valid path lengths
 				sumOfPaths = sumOfPaths + distance;			
 			}
 			if (distance > maximum) {

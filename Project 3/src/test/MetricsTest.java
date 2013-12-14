@@ -150,7 +150,7 @@ public class MetricsTest extends TestCase {
 	
 	public void testMetrics3() {
 		System.out.println("Metric 3 test");
-		graph = VNAParser.generateGraph("political-blogs.vna");
+		graph = VNAParser.generateGraph("celegansneural.vna");
 		System.out.println("clustering coeff:  " + graph.getClusteringCoefficient());
 		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
 		System.out.println("Reciprocity:  " + graph.getRecip());
