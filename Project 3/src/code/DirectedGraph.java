@@ -644,10 +644,17 @@ public class DirectedGraph {
 			se = se + product;
 		}
 		se = 2*se;
+		System.out.println("s1:  " + s1);
+		System.out.println("s2:  " + s2);
+		System.out.println("s3:  " + s3);
+		System.out.println("s3:  " + se);
 
 		float s2Squared = (float) Math.pow(s2,2);
 		float numerator = (s1*se) - s2Squared;
 		float denominator = (float) ((s1 * s3) - Math.pow(s2, 2));
+		System.out.println("numerator:  " + numerator);
+		System.out.println("denominator:  " + denominator);
+		System.out.println("r:  " + (numerator/denominator));
 		return numerator/denominator;
 	}
 	
@@ -681,18 +688,19 @@ public class DirectedGraph {
 		}
 		return counter/numArcs();
 	}
-	public void setUndirectedDegree() {
+/*	public void setUndirectedDegree() {
 		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
 		Iterator<Vertex> vertices = outVertices.keySet().iterator();
 		while (vertices.hasNext()) {
-			Vertex next = vertices.next();
-			HashSet<Vertex> endpoints = outVertices.get(next);
-			Iterator<Vertex> endIterator = endpoints.iterator();
-			while (endIterator.hasNext()) {
-				Vertex endpoint = endIterator.next();
-				next.updateUndirectedDegree();
+			Vertex currentVertex = vertices.next();
+			HashSet<Vertex> endpoints = outVertices.get(currentVertex);
+			Iterator<Vertex> endpointIterator = endpoints.iterator();
+			while (endpointIterator.hasNext()) {
+				Vertex endpoint = endpointIterator.next();
+				//check if edge is undirected
+				currentVertex.updateUndirectedDegree();
 				endpoint.updateUndirectedDegree();
 			}
 		}
-	}
+	}*/
 }

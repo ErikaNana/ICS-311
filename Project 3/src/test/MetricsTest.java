@@ -151,7 +151,7 @@ public class MetricsTest extends TestCase {
 	public void testMetrics3() {
 		System.out.println("Metric 3 test");
 		graph = VNAParser.generateGraph("celegansneural.vna");
-		graph.setUndirectedDegree();
+		//graph.setUndirectedDegree();
 		System.out.println("clustering coeff:  " + graph.getClusteringCoefficient());
 		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
 		System.out.println("Reciprocity:  " + graph.getReciprocity());
@@ -166,7 +166,7 @@ public class MetricsTest extends TestCase {
 		Vertex one = graph.insertVertex("one");
 		Vertex two = graph.insertVertex("two");
 		Vertex three = graph.insertVertex("three");
-		Vertex four = graph.insertVertex("three");
+		Vertex four = graph.insertVertex("four");
 
 		graph.insertArc(one, two);
 		graph.insertArc(one, three);
@@ -176,6 +176,7 @@ public class MetricsTest extends TestCase {
 		graph.insertArc(three, one);
 		graph.insertArc(four,three);
 		graph.insertArc(four, two);
+
 		System.out.println("Degree one:  " + one.getUndirectedDegree());
 		System.out.println("Degree two:  " + two.getUndirectedDegree());
 		System.out.println("Degree three:  " + three.getUndirectedDegree());

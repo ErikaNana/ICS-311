@@ -27,6 +27,7 @@ package code;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * The Vertex class.
@@ -40,6 +41,8 @@ public class Vertex {
 	/** The data list. */
 	private Data dataList;
 	
+	private HashSet<Vertex> outgoingVertices;
+	private HashSet<Vertex> incomingVertices;
 	/** The annotations. */
 	private HashMap<Object,Object> annotations;
 	private int unDirectedDegree;
@@ -53,6 +56,8 @@ public class Vertex {
 		this.annotations = new HashMap<Object,Object>();
 		this.dataList = new Data();
 		this.unDirectedDegree = 0;
+		this.outgoingVertices = new HashSet<Vertex>();
+		this.incomingVertices = new HashSet<Vertex>();
 	}
 	
 	/**
@@ -151,10 +156,34 @@ public class Vertex {
 		annotations.clear();
 	}
 	public void updateUndirectedDegree() {
+		System.out.println("	updating degree for " + this.key + " from  " + unDirectedDegree + " to " + (unDirectedDegree + 1));
 		unDirectedDegree++;
 	}
 	
 	public int getUndirectedDegree() {
 		return unDirectedDegree;
 	}
+	public boolean isReciprocated(Vertex vertex) {
+		System.out.println("checking for:  " + vertex + " in " + this.key);
+		if (outgoingVertices.contains(vertex) && incomingVertices.contains(vertex)) {
+			System.out.println("it is reciprocated");
+			return true;
+		}
+		else {
+			System.out.println("it is not reciprocated");
+			return false;
+		}
+	}
+	public void updateIncoming(Vertex vertex) {
+		incomingVertices.add(vertex);
+	}
+	public void updateOutgoing(Vertex vertex) {
+		outgoingVertices.add(vertex);
+	}
+	
+	public void subtractUndirectedDegree() {
+		System.out.println("	updating degree for " + this.key + " from  " + unDirectedDegree + " to " + (unDirectedDegree - 1));
+		unDirectedDegree = unDirectedDegree - 1;
+	}
+	
 }
