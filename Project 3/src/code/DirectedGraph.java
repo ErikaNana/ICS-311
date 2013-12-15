@@ -632,6 +632,7 @@ public class DirectedGraph {
 		
 		while (vertices.hasNext()) {
 			Vertex next = vertices.next();
+			System.out.println("vertex:  " + next + " degree:  " + next.getUndirectedDegree());
 			s1 = s1 + next.getUndirectedDegree();
 			s2 = (int) (s2 + Math.pow(next.getUndirectedDegree(), 2));
 			s3 = (int) (s3 + Math.pow(next.getUndirectedDegree(), 3));
@@ -642,6 +643,7 @@ public class DirectedGraph {
 			int product = arc.getStartVertex().getUndirectedDegree() * arc.getEndVertex().getUndirectedDegree();
 			se = se + product;
 		}
+		System.out.println("iterating over " + arcs.size() + " edges");
 /*		Iterator<Arc> arcs = arcs();
 		while (arcs.hasNext()) {
 			Arc arc = arcs.next();
@@ -653,9 +655,9 @@ public class DirectedGraph {
 		System.out.println("s2:  " + s2);
 		System.out.println("s3:  " + s3);
 		System.out.println("se:  " + se);
-		float s2Squared = (float) Math.pow(s2,2);
-		float numerator = (s1*se) - s2Squared;
-		float denominator = (float) ((s1 * s3) - Math.pow(s2, 2));
+		double s2Squared = (double) Math.pow(s2,2);
+		double numerator = (s1*se) - s2Squared;
+		double denominator = (double) ((s1 * s3) - Math.pow(s2, 2));
 		return numerator/denominator;
 	}
 	
@@ -689,15 +691,18 @@ public class DirectedGraph {
 		}
 		return counter/numArcs();
 	}
-/*	public void setUndirectedDegree() {
+	public void setUndirectedDegree() {
 		ArrayList<Arc> arcs = aList.getUndirectedEdges();
 		for (Arc arc: arcs) {
 			Vertex start = arc.getStartVertex();
 			Vertex end = arc.getEndVertex();
+			if ((start.getKey().equals("110") || end.getKey().equals("110"))) {
+				System.out.println("edge:  " + start + " to " + end);
+			}
 			start.updateUndirectedDegree();
 			end.updateUndirectedDegree();
 		}
-		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
+/*		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
 		Iterator<Vertex> vertices = outVertices.keySet().iterator();
 		while (vertices.hasNext()) {
 			Vertex next = vertices.next();
@@ -708,6 +713,6 @@ public class DirectedGraph {
 				next.updateUndirectedDegree();
 				endpoint.updateUndirectedDegree();
 			}
-		}
-	}*/
+		}*/
+	}
 }

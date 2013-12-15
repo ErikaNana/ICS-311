@@ -83,24 +83,26 @@ public class AList {
 		//are added more than once
 		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
 /*		System.out.println("adding edge:  " + start + " and " + end);*/
-		if (!start.isReciprocated(end)) {
+/*		if (!start.isReciprocated(end)) {
 			end.insertIncoming(start);
-/*			System.out.println("	updating:  " + start + " and " + end);*/
+			System.out.println("	updating:  " + start + " and " + end);
 			start.updateUndirectedDegree();
 			end.updateUndirectedDegree();
-		}
+		}*/			
 /*		if (!endPointsOfEndpoint.contains(start)) {
 			//there is no undirected edge between the two
 			Arc edge = new Arc(start,end);
 			undirectedEdges.add(edge);
-			//update degree
 			//System.out.println("start is:  " + start);
 			//System.out.println("end is:  " + end);
-			start.updateUndirectedDegree();
+			//update degree
+/*			start.updateUndirectedDegree();
 			end.updateUndirectedDegree();
 
 		}*/
-
+		if (start.getKey().equals("122")) {
+			System.out.println("end for 122 is:  " + end);
+		}
 		if (!endPointsOfEndpoint.contains(start)) {
 /*			System.out.println("	" + end + " doesn't contain " + start);*/
 			numOfUndirectedEdges++;

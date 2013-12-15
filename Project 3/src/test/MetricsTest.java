@@ -150,8 +150,9 @@ public class MetricsTest extends TestCase {
 	
 	public void testMetrics3() {
 		System.out.println("Metric 3 test");
-		graph = VNAParser.generateGraph("political-blogs.vna");
-
+		graph = VNAParser.generateGraph("celegansneural.vna");
+		graph.setUndirectedDegree();
+		
 		System.out.println("clustering coeff:  " + graph.getClusteringCoefficient());
 		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
 		System.out.println("Reciprocity:  " + graph.getReciprocity());
@@ -176,7 +177,7 @@ public class MetricsTest extends TestCase {
 		graph.insertArc(three, one);
 		graph.insertArc(four,three);
 		graph.insertArc(four, two);
-
+		graph.setUndirectedDegree();
 		System.out.println("Degree one:  " + one.getUndirectedDegree());
 		System.out.println("Degree two:  " + two.getUndirectedDegree());
 		System.out.println("Degree three:  " + three.getUndirectedDegree());
