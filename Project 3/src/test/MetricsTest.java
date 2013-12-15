@@ -56,7 +56,7 @@ public class MetricsTest extends TestCase {
 	 */
 	public MetricsTest(String name) {
 		super(name);
-		graph = VNAParser.generateGraph("SCC-Test.vna");
+		//graph = VNAParser.generateGraph("SCC-Test.vna");
 	}
 
 	/* (non-Javadoc)
@@ -150,8 +150,8 @@ public class MetricsTest extends TestCase {
 	
 	public void testMetrics3() {
 		System.out.println("Metric 3 test");
-		graph = VNAParser.generateGraph("celegansneural.vna");
-		//graph.setUndirectedDegree();
+		graph = VNAParser.generateGraph("political-blogs.vna");
+
 		System.out.println("clustering coeff:  " + graph.getClusteringCoefficient());
 		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
 		System.out.println("Reciprocity:  " + graph.getReciprocity());
@@ -181,8 +181,14 @@ public class MetricsTest extends TestCase {
 		System.out.println("Degree two:  " + two.getUndirectedDegree());
 		System.out.println("Degree three:  " + three.getUndirectedDegree());
 		System.out.println("Degree four:  " + four.getUndirectedDegree());
-		graph.getDegreeCorrelation();
+		System.out.println("correlation:  " + graph.getDegreeCorrelation());
+		System.out.println("coefficient:  " + graph.getClusteringCoefficient());
 		System.out.println("Reciprocity:  " + graph.getReciprocity());
+		ArrayList<Arc> arcs = graph.getAList().getUndirectedEdges();
+		for (Arc arc: arcs) {
+			System.out.println(arc);
+		}
+		graph.getAList().printUndirectedAList();
 	}
 	public void testBFS() {
 		graph = new DirectedGraph();

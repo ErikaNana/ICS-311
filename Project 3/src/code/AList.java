@@ -40,9 +40,10 @@ public class AList {
 	
 	/** The out vertices. */
 	HashMap<Vertex,HashSet<Vertex>> outVertices;
-		
+	HashMap<Vertex, HashSet<Vertex>> undirectedMap;
+	
 	/**Edges for undirected graph*/
-	static ArrayList<Arc> undirectedEdges; //inefficient space wise
+	ArrayList<Arc> undirectedEdges; //inefficient space wise
 	
 	/** The num of edges. */
 	int numOfEdges;
@@ -53,6 +54,7 @@ public class AList {
 	public AList() {
 		outVertices = new HashMap<Vertex,HashSet<Vertex>>();
 		undirectedEdges = new ArrayList<Arc>();
+		undirectedMap = new HashMap<Vertex,HashSet<Vertex>>();
 	}
 	
 	/**
@@ -65,6 +67,8 @@ public class AList {
 		if (!outVertices.containsKey(vertex)) {
 			HashSet<Vertex> tree = new HashSet<Vertex>();
 			outVertices.put(vertex,tree);
+			tree = new HashSet<Vertex>();
+			undirectedMap.put(vertex, tree);
 		}
 	}
 	
@@ -77,28 +81,36 @@ public class AList {
 	public void addEdge(Vertex start, Vertex end) {
 		//check if an edge exists in reverse direction.  won't work if the same edges
 		//are added more than once
-		System.out.println("adding edge:  " + start + " to " + end);
 		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
-		//check if the edge was already counted
-		start.updateOutgoing(end);
-		end.updateIncoming(start);
-		start.updateUndirectedDegree();
-		end.updateUndirectedDegree();
-		
-		if (end.isReciprocated(start)) {
-			start.subtractUndirectedDegree();
-			end.subtractUndirectedDegree();
+/*		System.out.println("adding edge:  " + start + " and " + end);*/
+		if (!start.isReciprocated(end)) {
+			end.insertIncoming(start);
+/*			System.out.println("	updating:  " + start + " and " + end);*/
+			start.updateUndirectedDegree();
+			end.updateUndirectedDegree();
 		}
-		System.out.println("     degree of " + start + " now is:  " + start.getUndirectedDegree());
-		System.out.println("     degree of " + end + " now is:  " + end.getUndirectedDegree());
-		System.out.println("");
-		if (!endPointsOfEndpoint.contains(start)) {
+/*		if (!endPointsOfEndpoint.contains(start)) {
 			//there is no undirected edge between the two
 			Arc edge = new Arc(start,end);
 			undirectedEdges.add(edge);
-		}
+			//update degree
+			//System.out.println("start is:  " + start);
+			//System.out.println("end is:  " + end);
+			start.updateUndirectedDegree();
+			end.updateUndirectedDegree();
+
+		}*/
+
 		if (!endPointsOfEndpoint.contains(start)) {
+/*			System.out.println("	" + end + " doesn't contain " + start);*/
 			numOfUndirectedEdges++;
+			Arc edge = new Arc(start,end);
+			HashSet<Vertex> endpoints = undirectedMap.get(start);
+			endpoints.add(end); 
+/*			System.out.println("	adding " + end + " to " + start);*/
+			undirectedEdges.add(edge);
+/*			System.out.println("aList now:  ");
+			printUndirectedAList();*/
 		}
 		//this assumes that vertices to be connected already exist in the adj. tree
 		if (outVertices.containsKey(start)) {
@@ -271,7 +283,23 @@ public class AList {
 	public ArrayList<Arc> getUndirectedEdges() {
 		return undirectedEdges;
 	}
-	public void printAList() {
+	public void printUndirectedAList() {
+		Iterator<Vertex> vertices = undirectedMap.keySet().iterator();
+		while (vertices.hasNext()) {
+			Vertex vertex = vertices.next();
+			System.out.println("vertex:  " + vertex);
+			HashSet<Vertex> endpoints = undirectedMap.get(vertex);
+			Iterator<Vertex> iterator = endpoints.iterator();
+			while (iterator.hasNext()) {
+				Vertex endpoint = iterator.next();
+				System.out.print("--->" + endpoint);
+			}
+			System.out.println("");
+			System.out.println("");
+		}
+
+	}
+/*	public void printAList() {
 		Iterator<Vertex> vertices = outVertices.keySet().iterator();
 		while (vertices.hasNext()) {
 			Vertex vertex = vertices.next();
@@ -285,18 +313,6 @@ public class AList {
 			System.out.println("");
 			System.out.println("");
 		}
-	}
-	public static boolean isEdgeUndirected(Vertex start, Vertex end) {
-		System.out.println("is " + start + " and " + end + " undirected?");
-		for (Arc edge: undirectedEdges) {
-			Vertex startPoint = edge.getStartVertex();
-			Vertex endPoint = edge.getEndVertex();
-			System.out.println("checking:  " + startPoint + ", " + endPoint);
-			if ((start == startPoint) && (end == endPoint)) {
-				return true;
-			}
-		}
-		return false;
-	}
+	}*/
 
 }
