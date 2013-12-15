@@ -629,26 +629,13 @@ public class DirectedGraph {
 		long s1 = 0;
 		long s2 = 0;
 		long s3 = 0;
-		while (vertices.hasNext()) {
-			Vertex next = vertices.next();
-			HashSet<Vertex> endpoints = outVertices.get(next);
-			Iterator<Vertex> endIterator = endpoints.iterator();
-			while (endIterator.hasNext()) {
-				Vertex endpoint = endIterator.next();
-				next.updateUndirectedDegree();
-				endpoint.updateUndirectedDegree();
-			}
-		}
-		vertices = outVertices.keySet().iterator();
+		
 		while (vertices.hasNext()) {
 			Vertex next = vertices.next();
 			s1 = s1 + next.getUndirectedDegree();
 			s2 = (int) (s2 + Math.pow(next.getUndirectedDegree(), 2));
 			s3 = (int) (s3 + Math.pow(next.getUndirectedDegree(), 3));
 		}
-		System.out.println("s1:  " + s1);
-		System.out.println("s2:  " + s2);
-		System.out.println("s3:  " + s3);
 		long se = 0;
 		Iterator<Arc> arcs = arcs();
 		while (arcs.hasNext()) {
@@ -657,17 +644,10 @@ public class DirectedGraph {
 			se = se + product;
 		}
 		se = 2*se;
-		System.out.println("se:  " + se);
+
 		float s2Squared = (float) Math.pow(s2,2);
-		System.out.println("squared:  " + s2Squared);
-		System.out.println("s1 is:  " + s1);
-		System.out.println("se is:  " + se);
-		long answer = s1 * se;
-		System.out.println("answer:  " + answer);
 		float numerator = (s1*se) - s2Squared;
-		System.out.println("numerator:  " + numerator);
 		float denominator = (float) ((s1 * s3) - Math.pow(s2, 2));
-		System.out.println("denominator:  " + denominator);
 		return numerator/denominator;
 	}
 	
@@ -702,14 +682,15 @@ public class DirectedGraph {
 		return counter/numArcs();
 	}
 	public void setUndirectedDegree() {
-		Iterator<Vertex> vertices = aList.getMap().keySet().iterator();
+		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
+		Iterator<Vertex> vertices = outVertices.keySet().iterator();
 		while (vertices.hasNext()) {
-			Vertex vertex = vertices.next();
-			HashSet<Vertex> endpoints = aList.getMap().get(vertex);
-			Iterator<Vertex> iterator = endpoints.iterator();
-			while (iterator.hasNext()) {
-				Vertex endpoint = iterator.next();
-				vertex.updateUndirectedDegree();
+			Vertex next = vertices.next();
+			HashSet<Vertex> endpoints = outVertices.get(next);
+			Iterator<Vertex> endIterator = endpoints.iterator();
+			while (endIterator.hasNext()) {
+				Vertex endpoint = endIterator.next();
+				next.updateUndirectedDegree();
 				endpoint.updateUndirectedDegree();
 			}
 		}
