@@ -42,6 +42,8 @@ public class Vertex {
 	private Data dataList;
 	
 	private HashSet<Vertex> incomingVertices;
+	private HashSet<Vertex> neighbors;
+	
 	/** The annotations. */
 	private HashMap<Object,Object> annotations;
 	private int unDirectedDegree;
@@ -56,6 +58,7 @@ public class Vertex {
 		this.dataList = new Data();
 		this.unDirectedDegree = 0;
 		this.incomingVertices = new HashSet<Vertex>();
+		this.neighbors = new HashSet<Vertex>();
 	}
 	
 	/**
@@ -175,5 +178,17 @@ public class Vertex {
 	}
 	public int getUndirectedDegree() {
 		return unDirectedDegree;
+	}
+	public void addNeighbor(Vertex vertex) {
+		neighbors.add(vertex);
+	}
+	public HashSet<Vertex> getNeighbors(){
+		return neighbors;
+	}
+	public boolean hasNeighbor(Vertex vertex) {
+		if (neighbors.contains(vertex)) {
+			return true;
+		}
+		return false;
 	}
 }

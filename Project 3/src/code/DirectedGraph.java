@@ -632,7 +632,7 @@ public class DirectedGraph {
 		
 		while (vertices.hasNext()) {
 			Vertex next = vertices.next();
-			System.out.println("vertex:  " + next + " degree:  " + next.getUndirectedDegree());
+			//System.out.println("vertex:  " + next + " degree:  " + next.getUndirectedDegree());
 			s1 = s1 + next.getUndirectedDegree();
 			s2 = (int) (s2 + Math.pow(next.getUndirectedDegree(), 2));
 			s3 = (int) (s3 + Math.pow(next.getUndirectedDegree(), 3));
@@ -643,13 +643,6 @@ public class DirectedGraph {
 			int product = arc.getStartVertex().getUndirectedDegree() * arc.getEndVertex().getUndirectedDegree();
 			se = se + product;
 		}
-		System.out.println("iterating over " + arcs.size() + " edges");
-/*		Iterator<Arc> arcs = arcs();
-		while (arcs.hasNext()) {
-			Arc arc = arcs.next();
-			int product = arc.getStartVertex().getUndirectedDegree() * arc.getEndVertex().getUndirectedDegree();
-			se = se + product;
-		}*/
 		se = 2*se;
 		System.out.println("s1:  " + s1);
 		System.out.println("s2:  " + s2);
@@ -660,9 +653,65 @@ public class DirectedGraph {
 		double denominator = (double) ((s1 * s3) - Math.pow(s2, 2));
 		return numerator/denominator;
 	}
-	
+	/* We consider for every vertex each pair of neighbors (j,l) with j < l and find
+	 * whether they are connected by an edge.  Add up the total number of edges over
+	 * all vertices and then divide by the number of connected triples, which is
+	 * summation over i (1/2 ki(ki - 1) */
 	public double getClusteringCoefficient() {
-		return aList.getClusteringCoefficient();
+		double answer = 0;
+		//get number of triangles
+		//get neighbors of all vertices and check if edge exists between them
+		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
+		HashSet<Vertex> checkedVertices = new HashSet<Vertex>();
+		Iterator<Vertex> vertices = vertices();
+		double triangles = 0;
+		while (vertices.hasNext()) {
+			Vertex currentVertex = vertices.next();
+			System.out.println("current vertex is:  " + currentVertex);
+			HashSet<Vertex> neighbors = currentVertex.getNeighbors();
+			ArrayList<Vertex> allNeighbors = new ArrayList<Vertex>();
+			allNeighbors.addAll(neighbors);
+			//check if there are edges between the neighbors
+			int first = 0;
+			int second = 0;
+			for (int i = 0; i < allNeighbors.size(); i++) {
+				first = i;
+				Vertex firstVertex = allNeighbors.get(first);
+				System.out.println("    first vertex is:  " + firstVertex);
+				second = i + 1;
+				for (int j = second; j < allNeighbors.size(); j++) {
+					if (!checkedVertices.contains(firstVertex)) {
+						Vertex secondVertex = allNeighbors.get(j);
+						System.out.println("        second vertex is:  " + secondVertex);
+						//check if edge exists
+						if (outVertices.get(secondVertex).contains(firstVertex) ||
+							outVertices.get(firstVertex).contains(secondVertex)) {
+							System.out.println("         updating triangles");
+							triangles++;
+						}
+					}					
+				}
+			}
+			System.out.println("   adding current vertex to checked:  " + currentVertex);
+			checkedVertices.add(currentVertex);
+/*			System.out.println("current vertex:  " + currentVertex);
+			System.out.println("     neighbors");
+			while (allNeighbors.hasNext()) {
+				System.out.println("     " + allNeighbors.next());
+			}*/
+		}
+		triangles = 3 * triangles;
+		System.out.println("number of triangles:  " + (3*triangles));
+		//get the denominator
+		vertices = vertices();
+		long sum = 0;
+		while (vertices.hasNext()) {
+			Vertex vertex = vertices.next();
+			long product = (vertex.getUndirectedDegree() * (vertex.getUndirectedDegree() - 1))/2;
+			sum = sum + product;
+		}
+		System.out.println("sum is:  " + sum);
+		return triangles/sum;
 	}
 	
 	public int numOfUndirectedArcs() {
@@ -696,23 +745,8 @@ public class DirectedGraph {
 		for (Arc arc: arcs) {
 			Vertex start = arc.getStartVertex();
 			Vertex end = arc.getEndVertex();
-			if ((start.getKey().equals("110") || end.getKey().equals("110"))) {
-				System.out.println("edge:  " + start + " to " + end);
-			}
 			start.updateUndirectedDegree();
 			end.updateUndirectedDegree();
 		}
-/*		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
-		Iterator<Vertex> vertices = outVertices.keySet().iterator();
-		while (vertices.hasNext()) {
-			Vertex next = vertices.next();
-			HashSet<Vertex> endpoints = outVertices.get(next);
-			Iterator<Vertex> endIterator = endpoints.iterator();
-			while (endIterator.hasNext()) {
-				Vertex endpoint = endIterator.next();
-				next.updateUndirectedDegree();
-				endpoint.updateUndirectedDegree();
-			}
-		}*/
 	}
 }

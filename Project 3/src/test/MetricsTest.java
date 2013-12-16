@@ -177,6 +177,7 @@ public class MetricsTest extends TestCase {
 		graph.insertArc(three, one);
 		graph.insertArc(four,three);
 		graph.insertArc(four, two);
+		graph.insertArc(two, three);
 		graph.setUndirectedDegree();
 		System.out.println("Degree one:  " + one.getUndirectedDegree());
 		System.out.println("Degree two:  " + two.getUndirectedDegree());

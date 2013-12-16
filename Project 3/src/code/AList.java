@@ -81,28 +81,14 @@ public class AList {
 	public void addEdge(Vertex start, Vertex end) {
 		//check if an edge exists in reverse direction.  won't work if the same edges
 		//are added more than once
-		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
-/*		System.out.println("adding edge:  " + start + " and " + end);*/
-/*		if (!start.isReciprocated(end)) {
-			end.insertIncoming(start);
-			System.out.println("	updating:  " + start + " and " + end);
-			start.updateUndirectedDegree();
-			end.updateUndirectedDegree();
-		}*/			
-/*		if (!endPointsOfEndpoint.contains(start)) {
-			//there is no undirected edge between the two
-			Arc edge = new Arc(start,end);
-			undirectedEdges.add(edge);
-			//System.out.println("start is:  " + start);
-			//System.out.println("end is:  " + end);
-			//update degree
-/*			start.updateUndirectedDegree();
-			end.updateUndirectedDegree();
-
-		}*/
-		if (start.getKey().equals("122")) {
-			System.out.println("end for 122 is:  " + end);
+		//update neighbors
+		if (!start.hasNeighbor(end)) {
+			start.addNeighbor(end);
 		}
+		if (!end.hasNeighbor(start)) {
+			end.addNeighbor(start);
+		}
+		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
 		if (!endPointsOfEndpoint.contains(start)) {
 /*			System.out.println("	" + end + " doesn't contain " + start);*/
 			numOfUndirectedEdges++;
@@ -237,47 +223,6 @@ public class AList {
 		}
 		return (double) counter/numOfEdges;
 	}
-
-	/* We consider for every vertex each pair of neighbors (j,l) with j < l and find
-	 * whether they are connected by an edge.  Add up the total number of edges over
-	 * all vertices and then divide by the number of connected triples, which is
-	 * summation over i (1/2 ki(ki - 1) */
-	public double getClusteringCoefficient() {
-		Set<Vertex> vertices = outVertices.keySet();
-		Iterator<Vertex> iterator = vertices.iterator();
-		int counter = 0;
-		int pathsOfLengthTwo = 0;
-		while (iterator.hasNext()) {
-			Vertex currentVertex = iterator.next();
-			pathsOfLengthTwo = pathsOfLengthTwo + currentVertex.getUndirectedDegree()/2;
-			HashSet<Vertex> neighbors = outVertices.get(currentVertex);
-			ArrayList<Vertex> endpoints = new ArrayList<Vertex>();
-			endpoints.addAll(neighbors);
-			//check for each neighbor j, if there's an edge for neighbor l > j
-			int first;
-			int second;
-			for (int i = 0; i < endpoints.size(); i++) {
-				first = i;
-				second = i+1;
-				//check if edge for neighbor l > j
-				while (second < endpoints.size()) {
-					//compare first and second
-					Vertex secondVertex = endpoints.get(second);
-					Vertex firstVertex = endpoints.get(first);
-					if (outVertices.get(secondVertex).contains(firstVertex)) {
-						counter++;
-					}
-					second++;
-				}
-			}
-		}
-		System.out.println("counter: "  + counter);
-		pathsOfLengthTwo = 2 * pathsOfLengthTwo;
-		double numberOfTriads = counter / 3;
-		System.out.println("number of paths:  " + pathsOfLengthTwo);
-		System.out.println("number of triads:  " + numberOfTriads);
-		return numberOfTriads/pathsOfLengthTwo;
-	}	
 	public int numOfUndirectedEdges() {
 		return numOfUndirectedEdges;
 	}
@@ -301,7 +246,7 @@ public class AList {
 		}
 
 	}
-/*	public void printAList() {
+	public void printAList() {
 		Iterator<Vertex> vertices = outVertices.keySet().iterator();
 		while (vertices.hasNext()) {
 			Vertex vertex = vertices.next();
@@ -315,6 +260,6 @@ public class AList {
 			System.out.println("");
 			System.out.println("");
 		}
-	}*/
+	}
 
 }
