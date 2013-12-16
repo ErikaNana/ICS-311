@@ -129,12 +129,7 @@ public class Utils<Type> {
 		int arcs = graph.numArcs();
 		Object[] inDegreeStats = Metrics.getInDegreeStats(graph);
 		Object[] outDegreeStats = Metrics.getOutDegreeStats(graph);
-		double reciprocity = Metrics.getReciprocity(graph);
-		double degCorr = Metrics.getDegreeCorrelation(graph);
-		double clustCoeff = Metrics.getClusteringCoefficient(graph);
-		double [] geoStats = Metrics.getGeoStats(graph);
 		double density = Metrics.getDensity(graph);
-		
 		System.out.println("");
 		printDivider();
 		System.out.printf("%-10s",name + "\n"); //left justified
@@ -160,6 +155,11 @@ public class Utils<Type> {
 		System.out.printf("%15.3f", outDegreeStats[2]);
 		System.out.printf("%10d", outDegreeStats[1]);
 		System.out.println("");
+		
+		double reciprocity = Metrics.getReciprocity(graph);
+		double degCorr = Metrics.getDegreeCorrelation(graph);
+		double clustCoeff = Metrics.getClusteringCoefficient(graph);
+		double [] geoStats = Metrics.getGeoStats(graph);
 		System.out.printf("%-15s %5.4f", "Reciprocity: ", reciprocity);
 		System.out.println("");
 		System.out.printf("%-15s %5.4f", "Degree Correlation: ", degCorr);
@@ -169,6 +169,7 @@ public class Utils<Type> {
 		System.out.printf("%-15s %5.4f", "Mean Geodesic Distance ", geoStats[0]);
 		System.out.println("");
 		System.out.printf("%-10s %5.4f", "Diameter: ", geoStats[1]);
+		System.out.println("");
 	}
 	
 	//method for geostats just for one run

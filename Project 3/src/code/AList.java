@@ -82,12 +82,6 @@ public class AList {
 		//check if an edge exists in reverse direction.  won't work if the same edges
 		//are added more than once
 		//update neighbors
-		if (!start.hasNeighbor(end)) {
-			start.addNeighbor(end);
-		}
-		if (!end.hasNeighbor(start)) {
-			end.addNeighbor(start);
-		}
 		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
 		if (!endPointsOfEndpoint.contains(start)) {
 /*			System.out.println("	" + end + " doesn't contain " + start);*/
