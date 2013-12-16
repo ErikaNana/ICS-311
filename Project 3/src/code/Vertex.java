@@ -163,12 +163,6 @@ public class Vertex {
 		incomingVertices.add(vertex);
 	}
 	public boolean isReciprocated(Vertex vertex) {
-/*		System.out.println("	incoming for " + this.key);*/
-/*		Iterator<Vertex> incoming = incomingVertices.iterator();
-		while (incoming.hasNext()) {
-			Vertex next = incoming.next();
-			System.out.println("	" + next);
-		}*/
 		if (incomingVertices.contains(vertex)) {
 			return true;
 		}

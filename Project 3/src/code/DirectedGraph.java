@@ -653,65 +653,31 @@ public class DirectedGraph {
 		double denominator = (double) ((s1 * s3) - Math.pow(s2, 2));
 		return numerator/denominator;
 	}
-	/* We consider for every vertex each pair of neighbors (j,l) with j < l and find
-	 * whether they are connected by an edge.  Add up the total number of edges over
-	 * all vertices and then divide by the number of connected triples, which is
-	 * summation over i (1/2 ki(ki - 1) */
+	/* Used # of possible triangles / # of triangles */
 	public double getClusteringCoefficient() {
-		double answer = 0;
-		//get number of triangles
-		//get neighbors of all vertices and check if edge exists between them
-		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
-		HashSet<Vertex> checkedVertices = new HashSet<Vertex>();
-		Iterator<Vertex> vertices = vertices();
 		double triangles = 0;
-		while (vertices.hasNext()) {
-			Vertex currentVertex = vertices.next();
-			System.out.println("current vertex is:  " + currentVertex);
-			HashSet<Vertex> neighbors = currentVertex.getNeighbors();
-			ArrayList<Vertex> allNeighbors = new ArrayList<Vertex>();
-			allNeighbors.addAll(neighbors);
-			//check if there are edges between the neighbors
-			int first = 0;
-			int second = 0;
-			for (int i = 0; i < allNeighbors.size(); i++) {
-				first = i;
-				Vertex firstVertex = allNeighbors.get(first);
-				System.out.println("    first vertex is:  " + firstVertex);
-				second = i + 1;
-				for (int j = second; j < allNeighbors.size(); j++) {
-					if (!checkedVertices.contains(firstVertex)) {
-						Vertex secondVertex = allNeighbors.get(j);
-						System.out.println("        second vertex is:  " + secondVertex);
-						//check if edge exists
-						if (outVertices.get(secondVertex).contains(firstVertex) ||
-							outVertices.get(firstVertex).contains(secondVertex)) {
-							System.out.println("         updating triangles");
-							triangles++;
-						}
-					}					
-				}
-			}
-			System.out.println("   adding current vertex to checked:  " + currentVertex);
-			checkedVertices.add(currentVertex);
-/*			System.out.println("current vertex:  " + currentVertex);
-			System.out.println("     neighbors");
-			while (allNeighbors.hasNext()) {
-				System.out.println("     " + allNeighbors.next());
-			}*/
-		}
-		triangles = 3 * triangles;
-		System.out.println("number of triangles:  " + (3*triangles));
-		//get the denominator
-		vertices = vertices();
-		long sum = 0;
+		double possibleTriangles = 0;
+		//iterate through all vertices
+		Iterator<Vertex> vertices = vertices();
 		while (vertices.hasNext()) {
 			Vertex vertex = vertices.next();
-			long product = (vertex.getUndirectedDegree() * (vertex.getUndirectedDegree() - 1))/2;
-			sum = sum + product;
+			//get adjacency list for current vertex
+			 ArrayList<Vertex> adjVertices = getUndirectedAdjVertices(vertex);
+			 for (Vertex adj: adjVertices) {
+				 ArrayList<Vertex> adjToSecondPoint = getUndirectedAdjVertices(adj);
+				 //remove self loop
+				 adjToSecondPoint.remove(vertex);
+				 for (Vertex thirdPoint: adjToSecondPoint) {
+					 possibleTriangles++;
+					 if (adjVertices.contains(thirdPoint)) {
+						 triangles++;
+					 }
+				 }
+			 }
 		}
-		System.out.println("sum is:  " + sum);
-		return triangles/sum;
+		System.out.println("triangles:  " + triangles);
+		System.out.println("possible triangles:  " + possibleTriangles);
+		return triangles/possibleTriangles;
 	}
 	
 	public int numOfUndirectedArcs() {
@@ -748,5 +714,25 @@ public class DirectedGraph {
 			start.updateUndirectedDegree();
 			end.updateUndirectedDegree();
 		}
+	}
+	
+	public ArrayList<Vertex> getUndirectedAdjVertices(Vertex vertex){
+		ArrayList<Vertex> undirectedAdjVertices = new ArrayList<Vertex>();
+		Iterator<Vertex> inVertices = inAdjacentVertices(vertex);
+		Iterator<Vertex> outVertices = outAdjacentVertices(vertex);
+		
+		//add all the vertices coming in
+		while (inVertices.hasNext()) {
+			Vertex inVertex = inVertices.next();
+			undirectedAdjVertices.add(inVertex);
+		}
+		//add the out vertex only if it's not in there first
+		while (outVertices.hasNext()) {
+			Vertex outVertex = outVertices.next();
+			if (!undirectedAdjVertices.contains(outVertex)) {
+				undirectedAdjVertices.add(outVertex);
+			}
+		}
+		return undirectedAdjVertices;
 	}
 }
