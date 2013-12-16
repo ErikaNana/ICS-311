@@ -70,6 +70,7 @@ public class MetricsTest extends TestCase {
 	 * Test density.
 	 */
 	public void testDensity() {
+		graph = VNAParser.generateGraph("SCC-Test.vna");
 		double answer = Metrics.getDensity(graph);
 		BigDecimal bd = new BigDecimal(Double.toString(answer));
         //round to 3 decimal places
@@ -81,6 +82,7 @@ public class MetricsTest extends TestCase {
 	 * Test in degree.
 	 */
 	public void testInDegree() {
+		graph = VNAParser.generateGraph("SCC-Test.vna");
 		Object[] array = Metrics.getInDegreeStats(graph);
 		//cast the wrapper class, then cast it to primitive
 		assertEquals((long) 0, (long) (Long) array[0]);
@@ -91,6 +93,7 @@ public class MetricsTest extends TestCase {
 	 * Test out degree.
 	 */
 	public void testOutDegree() {
+		graph = VNAParser.generateGraph("SCC-Test.vna");
 		Object[] array = Metrics.getOutDegreeStats(graph);
 		assertEquals((long) 0, (long) (Long) array[0]);
 		assertEquals((long) 4, (long) (Long) array[1]);
@@ -133,6 +136,7 @@ public class MetricsTest extends TestCase {
 	 */
 	@SuppressWarnings("unchecked")
 	public void testSCC() {
+		graph = VNAParser.generateGraph("SCC-Test.vna");
 		System.out.println("SCC test");
 		Object array[] = Metrics.runSCC(graph);
 		assertEquals((long) 12, (long) (Long) array[0]);

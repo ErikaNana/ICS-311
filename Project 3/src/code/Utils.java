@@ -26,10 +26,8 @@ package code;
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Provides helper methods for output.
@@ -125,14 +123,16 @@ public class Utils<Type> {
 	 * @param graph the graph
 	 * @param name the name
 	 */
-	@SuppressWarnings("unchecked")
+
 	public static void printTable(DirectedGraph graph, String name) {
 		int vertices = graph.numVertices();
 		int arcs = graph.numArcs();
 		Object[] inDegreeStats = Metrics.getInDegreeStats(graph);
 		Object[] outDegreeStats = Metrics.getOutDegreeStats(graph);
-		Object [] sccStats = Metrics.runSCC(graph);
-		List<ArrayList<Vertex>> verticesMaxList = (List<ArrayList<Vertex>>) sccStats[2];
+		double reciprocity = Metrics.getReciprocity(graph);
+		double degCorr = Metrics.getDegreeCorrelation(graph);
+		double clustCoeff = Metrics.getClusteringCoefficient(graph);
+		double [] geoStats = Metrics.getGeoStats(graph);
 		double density = Metrics.getDensity(graph);
 		
 		System.out.println("");
@@ -160,31 +160,15 @@ public class Utils<Type> {
 		System.out.printf("%15.3f", outDegreeStats[2]);
 		System.out.printf("%10d", outDegreeStats[1]);
 		System.out.println("");
-		System.out.printf("%-20s", "Number of Strongly Connected Components:");
-		System.out.printf("%5d",sccStats[0]);
+		System.out.printf("%-15s %5.4f", "Reciprocity: ", reciprocity);
 		System.out.println("");
-		if (name.equals("celegansneural.vna") || name.equals("SCC-Test.vna")) {
-			System.out.printf("%-10s", "SCC");
-			System.out.printf("%-10s", "Size");
-			System.out.printf("%-10s", "Members");
-			System.out.println();
-			for (int i = 1; i < verticesMaxList.size()+1; i++) {
-				ArrayList<Vertex> list = (ArrayList<Vertex>) verticesMaxList.get(i-1);
-				String verticesList = "";
-				for (int j = 0; j < list.size(); j++) {
-					if (j == list.size()-1) {
-						verticesList = verticesList + list.get(j);
-					}
-					else {
-						verticesList = verticesList + list.get(j) + ",";
-					}
-				}
-				System.out.printf("%-10d %-10d %-10s",i, list.size(),verticesList);
-				System.out.println("");
-			}
-		}
-		System.out.printf("%-20s", "Percent Vertices in Largest Strongly Connected Component:");
-		System.out.printf("%8.3f",sccStats[1]);
+		System.out.printf("%-15s %5.4f", "Degree Correlation: ", degCorr);
+		System.out.println("");
+		System.out.printf("%-15s %5.4f", "Clustering Coefficient: ", clustCoeff);
+		System.out.println("");
+		System.out.printf("%-15s %5.4f", "Mean Geodesic Distance ", geoStats[0]);
+		System.out.println("");
+		System.out.printf("%-10s %5.4f", "Diameter: ", geoStats[1]);
 	}
 	
 	//method for geostats just for one run

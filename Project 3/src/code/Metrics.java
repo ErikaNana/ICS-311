@@ -257,6 +257,7 @@ public class Metrics {
 	 * @return
 	 */
 	public static double getDegreeCorrelation(DirectedGraph graph) {
+		graph.setUndirectedDegree();
 		HashMap<Vertex, HashSet<Vertex>> outVertices = graph.aList.getMap();
 		Iterator<Vertex> vertices = outVertices.keySet().iterator();
 		long s1 = 0;
