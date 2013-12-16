@@ -28,7 +28,6 @@ package code;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -616,96 +615,13 @@ public class DirectedGraph {
 	public HashMap<Vertex,BTree<Arc>> getATree(){
 		return map;
 	}
-	/**
-	 * Get undirected k for each vertex first
-	 * Scan adjacency list once
-	 * When scanning the list for vertex u, for each list
-	 * element with v as the target, increment both ku and kv
-	 * @return
-	 */
-	public double getDegreeCorrelation() {
-		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
-		Iterator<Vertex> vertices = outVertices.keySet().iterator();
-		long s1 = 0;
-		long s2 = 0;
-		long s3 = 0;
-		
-		while (vertices.hasNext()) {
-			Vertex next = vertices.next();
-			//System.out.println("vertex:  " + next + " degree:  " + next.getUndirectedDegree());
-			s1 = s1 + next.getUndirectedDegree();
-			s2 = (int) (s2 + Math.pow(next.getUndirectedDegree(), 2));
-			s3 = (int) (s3 + Math.pow(next.getUndirectedDegree(), 3));
-		}
-		long se = 0;
-		ArrayList<Arc> arcs = aList.getUndirectedEdges();
-		for (Arc arc: arcs) {
-			int product = arc.getStartVertex().getUndirectedDegree() * arc.getEndVertex().getUndirectedDegree();
-			se = se + product;
-		}
-		se = 2*se;
-		System.out.println("s1:  " + s1);
-		System.out.println("s2:  " + s2);
-		System.out.println("s3:  " + s3);
-		System.out.println("se:  " + se);
-		double s2Squared = (double) Math.pow(s2,2);
-		double numerator = (s1*se) - s2Squared;
-		double denominator = (double) ((s1 * s3) - Math.pow(s2, 2));
-		return numerator/denominator;
-	}
-	/* Used # of possible triangles / # of triangles */
-	public double getClusteringCoefficient() {
-		double triangles = 0;
-		double possibleTriangles = 0;
-		//iterate through all vertices
-		Iterator<Vertex> vertices = vertices();
-		while (vertices.hasNext()) {
-			Vertex vertex = vertices.next();
-			//get adjacency list for current vertex
-			 ArrayList<Vertex> adjVertices = getUndirectedAdjVertices(vertex);
-			 for (Vertex adj: adjVertices) {
-				 ArrayList<Vertex> adjToSecondPoint = getUndirectedAdjVertices(adj);
-				 //remove self loop
-				 adjToSecondPoint.remove(vertex);
-				 for (Vertex thirdPoint: adjToSecondPoint) {
-					 possibleTriangles++;
-					 if (adjVertices.contains(thirdPoint)) {
-						 triangles++;
-					 }
-				 }
-			 }
-		}
-		System.out.println("triangles:  " + triangles);
-		System.out.println("possible triangles:  " + possibleTriangles);
-		return triangles/possibleTriangles;
-	}
-	
+
 	public int numOfUndirectedArcs() {
 		return aList.numOfUndirectedEdges();
 	}
 /*	public void printAList() {
 		aList.printAList();
 	}*/
-	public double getReciprocity() {
-		HashMap<Vertex, HashSet<Vertex>> outVertices = aList.getMap();
-		Iterator<Vertex>vertices = outVertices.keySet().iterator();
-		double counter = 0;
-		while (vertices.hasNext()) {
-			Vertex next = vertices.next();
-			HashSet<Vertex> endpoints = outVertices.get(next);
-			//check endpoints for reciprocated edges 
-			Iterator<Vertex>endIterator = endpoints.iterator();
-			while (endIterator.hasNext()) {
-				Vertex endpoint = endIterator.next();
-				HashSet<Vertex> endpointsOfEndpoint = outVertices.get(endpoint);
-				//if they are not reciprocated, add one for both vertices
-				if (endpointsOfEndpoint.contains(next)) {
-					counter++;
-				}
-			}
-		}
-		return counter/numArcs();
-	}
 	public void setUndirectedDegree() {
 		ArrayList<Arc> arcs = aList.getUndirectedEdges();
 		for (Arc arc: arcs) {

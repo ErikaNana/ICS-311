@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -180,12 +181,13 @@ public class Metrics {
 	}
 	//get the average path of the whole graph
 	//get the maximum path for whe whole graph
+	//average path is the first element, maximum is the second element
 	public static double[] getGeoStats(DirectedGraph graph) {
 		double[] stats = new double[2];
 		double averagePath = 0;
 		double maximum = 0;
 		int numOfPaths = 0;
-		int numUnreachable = 0;
+/*		int numUnreachable = 0;*/
 		//get the maximum and average
 		Iterator<Vertex> vertices = graph.vertices();
 		while (vertices.hasNext()) {
@@ -202,7 +204,7 @@ public class Metrics {
 				//get the number of possible paths
 				if (distances.get(next) < 0) {
 					possiblePaths = possiblePaths - 1;
-					numUnreachable++;
+/*					numUnreachable++;*/
 				}
 			}
 			//update numOfPaths with possiblePaths from that run
@@ -218,13 +220,96 @@ public class Metrics {
 				maximum = outputMax;
 			}
 		}
-		System.out.println("num of paths:  " + numOfPaths);
+/*		System.out.println("num of paths:  " + numOfPaths);*/
 		averagePath = averagePath/numOfPaths;
 		stats[0] = averagePath;
 		stats[1] = maximum;
-		System.out.println("average path:  " + stats[0]);
-		System.out.println("maximum path:  " + stats[1]);
-		System.out.println("unreachable:  " + numUnreachable);
+/*		System.out.println("average path:  " + stats[0]);
+		System.out.println("maximum path:  " + stats[1]);*/
+/*		System.out.println("unreachable:  " + numUnreachable);*/
 		return stats;
+	}
+	public static double getReciprocity(DirectedGraph graph) {
+		HashMap<Vertex, HashSet<Vertex>> outVertices = graph.aList.getMap();
+		Iterator<Vertex>vertices = outVertices.keySet().iterator();
+		double counter = 0;
+		while (vertices.hasNext()) {
+			Vertex next = vertices.next();
+			HashSet<Vertex> endpoints = outVertices.get(next);
+			//check endpoints for reciprocated edges 
+			Iterator<Vertex>endIterator = endpoints.iterator();
+			while (endIterator.hasNext()) {
+				Vertex endpoint = endIterator.next();
+				HashSet<Vertex> endpointsOfEndpoint = outVertices.get(endpoint);
+				//if they are not reciprocated, add one for both vertices
+				if (endpointsOfEndpoint.contains(next)) {
+					counter++;
+				}
+			}
+		}
+		return counter/graph.numArcs();
+	}
+	/**
+	 * Get undirected k for each vertex first
+	 * Scan adjacency list once
+	 * When scanning the list for vertex u, for each list
+	 * element with v as the target, increment both ku and kv
+	 * @return
+	 */
+	public static double getDegreeCorrelation(DirectedGraph graph) {
+		HashMap<Vertex, HashSet<Vertex>> outVertices = graph.aList.getMap();
+		Iterator<Vertex> vertices = outVertices.keySet().iterator();
+		long s1 = 0;
+		long s2 = 0;
+		long s3 = 0;
+		
+		while (vertices.hasNext()) {
+			Vertex next = vertices.next();
+			//System.out.println("vertex:  " + next + " degree:  " + next.getUndirectedDegree());
+			s1 = s1 + next.getUndirectedDegree();
+			s2 = (int) (s2 + Math.pow(next.getUndirectedDegree(), 2));
+			s3 = (int) (s3 + Math.pow(next.getUndirectedDegree(), 3));
+		}
+		long se = 0;
+		ArrayList<Arc> arcs = graph.aList.getUndirectedEdges();
+		for (Arc arc: arcs) {
+			int product = arc.getStartVertex().getUndirectedDegree() * arc.getEndVertex().getUndirectedDegree();
+			se = se + product;
+		}
+		se = 2*se;
+/*		System.out.println("s1:  " + s1);
+		System.out.println("s2:  " + s2);
+		System.out.println("s3:  " + s3);
+		System.out.println("se:  " + se);*/
+		double s2Squared = (double) Math.pow(s2,2);
+		double numerator = (s1*se) - s2Squared;
+		double denominator = (double) ((s1 * s3) - Math.pow(s2, 2));
+		return numerator/denominator;
+	}
+	/* Used # of possible triangles / # of triangles */
+	public static double getClusteringCoefficient(DirectedGraph graph) {
+		double triangles = 0;
+		double possibleTriangles = 0;
+		//iterate through all vertices
+		Iterator<Vertex> vertices = graph.vertices();
+		while (vertices.hasNext()) {
+			Vertex vertex = vertices.next();
+			//get adjacency list for current vertex
+			 ArrayList<Vertex> adjVertices = graph.getUndirectedAdjVertices(vertex);
+			 for (Vertex adj: adjVertices) {
+				 ArrayList<Vertex> adjToSecondPoint = graph.getUndirectedAdjVertices(adj);
+				 //remove self loop
+				 adjToSecondPoint.remove(vertex);
+				 for (Vertex thirdPoint: adjToSecondPoint) {
+					 possibleTriangles++;
+					 if (adjVertices.contains(thirdPoint)) {
+						 triangles++;
+					 }
+				 }
+			 }
+		}
+/*		System.out.println("triangles:  " + triangles);
+		System.out.println("possible triangles:  " + possibleTriangles);*/
+		return triangles/possibleTriangles;
 	}
 }

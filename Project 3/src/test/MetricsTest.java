@@ -152,14 +152,13 @@ public class MetricsTest extends TestCase {
 		System.out.println("Metric 3 test");
 		graph = VNAParser.generateGraph("celegansneural.vna");
 		graph.setUndirectedDegree();
-		
-		System.out.println("clustering coeff:  " + graph.getClusteringCoefficient());
-		System.out.println("Degree correlation:  " + graph.getDegreeCorrelation());
-		System.out.println("Reciprocity:  " + graph.getReciprocity());
-		System.out.println("Num of Undirected Edges:  " + graph.numOfUndirectedArcs());
-		System.out.println("vertices:  " + graph.numVertices());
-		System.out.println("arcs:  " + graph.numArcs());
-		Metrics.getGeoStats(graph);
+		double stats [] = Metrics.getGeoStats(graph);
+
+		assertEquals(0.18071147126607687, Metrics.getClusteringCoefficient(graph));
+		assertEquals(-0.1631992103157044, Metrics.getDegreeCorrelation(graph));
+		assertEquals(0.16801705756929639, Metrics.getReciprocity(graph));
+		assertEquals(3.9918839808408726, stats[0]);
+		assertEquals(14.0,stats[1]);
 	}
 	
 	public void testMetrics2() {
@@ -179,18 +178,14 @@ public class MetricsTest extends TestCase {
 		graph.insertArc(four, two);
 		graph.insertArc(two, three);
 		graph.setUndirectedDegree();
-		System.out.println("Degree one:  " + one.getUndirectedDegree());
-		System.out.println("Degree two:  " + two.getUndirectedDegree());
-		System.out.println("Degree three:  " + three.getUndirectedDegree());
-		System.out.println("Degree four:  " + four.getUndirectedDegree());
-		System.out.println("correlation:  " + graph.getDegreeCorrelation());
-		System.out.println("coefficient:  " + graph.getClusteringCoefficient());
-		System.out.println("Reciprocity:  " + graph.getReciprocity());
-		ArrayList<Arc> arcs = graph.getAList().getUndirectedEdges();
-		for (Arc arc: arcs) {
-			System.out.println(arc);
-		}
-		graph.getAList().printUndirectedAList();
+
+		assertEquals(-0.6666666666666666d,Metrics.getDegreeCorrelation(graph));
+		assertEquals(0.75, Metrics.getClusteringCoefficient(graph));
+		assertEquals(0.75, Metrics.getReciprocity(graph));
+		assertEquals(2, one.getUndirectedDegree());
+		assertEquals(3, two.getUndirectedDegree());
+		assertEquals(3, three.getUndirectedDegree());
+		assertEquals(2, four.getUndirectedDegree());
 	}
 	public void testBFS() {
 		graph = new DirectedGraph();
