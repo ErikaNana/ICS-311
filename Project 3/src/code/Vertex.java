@@ -11,7 +11,7 @@ package code;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -41,11 +41,16 @@ public class Vertex {
 	/** The data list. */
 	private Data dataList;
 	
+	/** The incoming vertices. */
 	private HashSet<Vertex> incomingVertices;
+	
+	/** The neighbors. */
 	private HashSet<Vertex> neighbors;
 	
 	/** The annotations. */
 	private HashMap<Object,Object> annotations;
+	
+	/** The un directed degree. */
 	private int unDirectedDegree;
 	/**
 	 * Instantiates a new vertex.
@@ -156,12 +161,29 @@ public class Vertex {
 	public void clearAnnotations() {
 		annotations.clear();
 	}
+	
+	/**
+	 * Update undirected degree.
+	 */
 	public void updateUndirectedDegree() {
 		unDirectedDegree++;
 	}
+	
+	/**
+	 * Insert incoming.
+	 *
+	 * @param vertex the vertex
+	 */
 	public void insertIncoming(Vertex vertex) {
 		incomingVertices.add(vertex);
 	}
+	
+	/**
+	 * Checks if is reciprocated.
+	 *
+	 * @param vertex the vertex
+	 * @return true, if is reciprocated
+	 */
 	public boolean isReciprocated(Vertex vertex) {
 		if (incomingVertices.contains(vertex)) {
 			return true;
@@ -170,15 +192,40 @@ public class Vertex {
 			return false;
 		}
 	}
+	
+	/**
+	 * Gets the undirected degree.
+	 *
+	 * @return the undirected degree
+	 */
 	public int getUndirectedDegree() {
 		return unDirectedDegree;
 	}
+	
+	/**
+	 * Adds the neighbor.
+	 *
+	 * @param vertex the vertex
+	 */
 	public void addNeighbor(Vertex vertex) {
 		neighbors.add(vertex);
 	}
+	
+	/**
+	 * Gets the neighbors.
+	 *
+	 * @return the neighbors
+	 */
 	public HashSet<Vertex> getNeighbors(){
 		return neighbors;
 	}
+	
+	/**
+	 * Checks for neighbor.
+	 *
+	 * @param vertex the vertex
+	 * @return true, if successful
+	 */
 	public boolean hasNeighbor(Vertex vertex) {
 		if (neighbors.contains(vertex)) {
 			return true;

@@ -11,7 +11,7 @@ package code;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -40,13 +40,17 @@ public class AList {
 	
 	/** The out vertices. */
 	HashMap<Vertex,HashSet<Vertex>> outVertices;
+	
+	/** The undirected map. */
 	HashMap<Vertex, HashSet<Vertex>> undirectedMap;
 	
-	/**Edges for undirected graph*/
+	/** Edges for undirected graph. */
 	ArrayList<Arc> undirectedEdges; //inefficient space wise
 	
 	/** The num of edges. */
 	int numOfEdges;
+	
+	/** The num of undirected edges. */
 	int numOfUndirectedEdges;
 	/**
 	 * Instantiates a new adjacency list.
@@ -80,19 +84,13 @@ public class AList {
 	 */
 	public void addEdge(Vertex start, Vertex end) {
 		//check if an edge exists in reverse direction.  won't work if the same edges
-		//are added more than once
-		//update neighbors
 		HashSet<Vertex> endPointsOfEndpoint = outVertices.get(end);
 		if (!endPointsOfEndpoint.contains(start)) {
-/*			System.out.println("	" + end + " doesn't contain " + start);*/
 			numOfUndirectedEdges++;
 			Arc edge = new Arc(start,end);
 			HashSet<Vertex> endpoints = undirectedMap.get(start);
 			endpoints.add(end); 
-/*			System.out.println("	adding " + end + " to " + start);*/
 			undirectedEdges.add(edge);
-/*			System.out.println("aList now:  ");
-			printUndirectedAList();*/
 		}
 		//this assumes that vertices to be connected already exist in the adj. tree
 		if (outVertices.containsKey(start)) {
@@ -168,7 +166,7 @@ public class AList {
 	}
 	
 	/**
-	 * Gets the HashMap representation of the adjacency list
+	 * Gets the HashMap representation of the adjacency list.
 	 *
 	 * @return the HashMap
 	 */
@@ -207,6 +205,11 @@ public class AList {
 		updated.add(startVertex);
 	}
 	
+	/**
+	 * Gets the reciprocity.
+	 *
+	 * @return the reciprocity
+	 */
 	public double getReciprocity() {
 		Set<Vertex> vertices = outVertices.keySet();
 		Iterator<Vertex> iterator = vertices.iterator();
@@ -217,13 +220,28 @@ public class AList {
 		}
 		return (double) counter/numOfEdges;
 	}
+	
+	/**
+	 * Num of undirected edges.
+	 *
+	 * @return the int
+	 */
 	public int numOfUndirectedEdges() {
 		return numOfUndirectedEdges;
 	}
 	
+	/**
+	 * Gets the undirected edges.
+	 *
+	 * @return the undirected edges
+	 */
 	public ArrayList<Arc> getUndirectedEdges() {
 		return undirectedEdges;
 	}
+	
+	/**
+	 * Prints the undirected a list.
+	 */
 	public void printUndirectedAList() {
 		Iterator<Vertex> vertices = undirectedMap.keySet().iterator();
 		while (vertices.hasNext()) {
@@ -240,6 +258,10 @@ public class AList {
 		}
 
 	}
+	
+	/**
+	 * Prints the a list.
+	 */
 	public void printAList() {
 		Iterator<Vertex> vertices = outVertices.keySet().iterator();
 		while (vertices.hasNext()) {

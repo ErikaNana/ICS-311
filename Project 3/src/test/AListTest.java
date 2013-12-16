@@ -10,7 +10,7 @@ package test;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -47,7 +47,7 @@ public class AListTest extends TestCase {
 	/** The map. */
 	HashMap<Vertex,HashSet<Vertex>> map;
 	
-	/**One vertex */
+	/** One vertex. */
 	code.Vertex one = new code.Vertex("1");
 	
 	/** The two. */
@@ -59,10 +59,16 @@ public class AListTest extends TestCase {
 	/** The four. */
 	code.Vertex four = new code.Vertex("4");
 	
-	/**Vertices for testing project 3 methods*/
+	/** Vertices for testing project 3 methods. */
 	Vertex a;
+	
+	/** The b. */
 	Vertex b;
+	
+	/** The c. */
 	Vertex c;
+	
+	/** The d. */
 	Vertex d;
 	
 	/* (non-Javadoc)
@@ -178,6 +184,9 @@ public class AListTest extends TestCase {
 		assertEquals(2,aList.getNumOfEdges());
 	}
 	
+	/**
+	 * Creates the small graph.
+	 */
 	public void createSmallGraph() {
 		a = new Vertex("a");
 		b = new Vertex("b");
@@ -195,22 +204,4 @@ public class AListTest extends TestCase {
 		aList.addEdge(c, a);
 		aList.addEdge(b, d);
 	}
-
-/*	public void testUndirectedDegree() {
-		createSmallGraph();
-		assertEquals(1, aList.getUndirectedDegree(a));
-		assertEquals(1, aList.getUndirectedDegree(b));
-		assertEquals(1, aList.getUndirectedDegree(c));
-		assertEquals(1, aList.getUndirectedDegree(d));
-	}
-	
-	public void testUndirectedDegreeTwo() {
-		createSmallGraph();
-		aList.addEdge(a,c);
-		assertEquals(2, aList.getUndirectedDegree(a));
-		assertEquals(1, aList.getUndirectedDegree(b));
-		assertEquals(2, aList.getUndirectedDegree(c));
-		assertEquals(1, aList.getUndirectedDegree(d));
-		//assertEquals(-0.5, aList.getDegreeCorrelation());
-	}*/
 }

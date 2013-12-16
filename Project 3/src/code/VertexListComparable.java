@@ -11,7 +11,7 @@ package code;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -30,7 +30,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * Allows array lists of vertices to be compared by size
+ * Allows array lists of vertices to be compared by size.
+ *
  * @author Erika Nana
  */
 public class VertexListComparable implements Comparator <ArrayList<Vertex>>{

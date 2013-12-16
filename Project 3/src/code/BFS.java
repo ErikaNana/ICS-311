@@ -1,18 +1,48 @@
 package code;
+/*
+ * Copyright (c) 2013, Erika Nana
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of Project 3 nor the
+ *       names of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY Erika Nana ''AS IS'' AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL Erika Nana BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+/**
+ * BFS implementation
+ * @author Erika Nana
+ */
 public class BFS {
-	
-	//returns distances from the source to other all vertices, 
-	//-1 if destination vertex is unreachable
+	/**
+	 * Run BFS.
+	 *
+	 * @param graph the graph 
+	 * @param source the source vertex
+	 * @return the hash map of vertices to distances.  returns -1 if vertex is unreachable
+	 */
 	public static HashMap<Vertex,Integer> runBFS(DirectedGraph graph, Vertex source) {
-		/* When the algorithm is finisehd we are left with an array that 
-		 * contains the distances to every vertex int he component of the 
-		 * network that contains s (and every vertex in every other component
-		 * that has unknown distance*/
 		Vertex[] queue = new Vertex[graph.numVertices()];
 		HashMap<Vertex,Integer> distances = new HashMap<Vertex,Integer>();
 		int read = 0;

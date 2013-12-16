@@ -11,7 +11,7 @@ package code;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -27,12 +27,9 @@ package code;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Computes all of the output required for graphs.
@@ -123,71 +120,19 @@ public class Metrics {
 			graph.reverseDirection(next);
 		}
 	}
+
 	/**
-	 * Gets all SCC related output [number of SCC, percent 
-	 * vertices in largest SCC, list of sorted SCC].
+	 * Gets the average path and maximum path of the while graph
+	 * stats[0] = average path, stats[1] = maximum path
 	 *
 	 * @param graph the graph
-	 * @return the object[]
+	 * @return the stats to calculate geodesic metrics
 	 */
-	public static Object[] runSCC(DirectedGraph graph) {
-		Object[] sCCStats = new Object[3];
-		HashMap<Long, ArrayList<Vertex>> list = new HashMap<Long, ArrayList<Vertex>>();
-		long scc = 0;
-		long totalSCC;
-		DirectedGraph newGraph = DFS.runDFS(graph);
-		Metrics.createTranspose(newGraph);
-		DirectedGraph sccGraph = DFS.runDFSWithSCC(newGraph);
-		Iterator<Vertex> iterator = sccGraph.vertices();
-		
-		//create a hash of SCC to size
-		while(iterator.hasNext()){
-			Vertex vertex = iterator.next();
-			long currentSCC = (Long) sccGraph.getAnnotation(vertex, "scc");
-			if (currentSCC > scc) {
-				scc = currentSCC;
-			}
-			if (list.containsKey(currentSCC)){
-				ArrayList<Vertex> vertexList = list.get(currentSCC);
-				vertexList.add(vertex);
-			}
-			else {
-				ArrayList<Vertex> newList = new ArrayList<Vertex>();
-				newList.add(vertex);
-				list.put(currentSCC, newList);
-			}
-		}
-		totalSCC = scc;
-		
-		//get the max SCC size
-		Collection<ArrayList<Vertex>> listOfVertices = list.values();
-		Iterator<ArrayList<Vertex>> listIterator = listOfVertices.iterator();
-		ArrayList<Vertex> max = new ArrayList<Vertex>();
-		while (listIterator.hasNext()) {
-			 ArrayList<Vertex> nextList = listIterator.next();
-			 if (nextList.size() > max.size()) {
-				 max = nextList;
-			 }
-		}
-		
-		//create a list of sortedSCC
-		List<ArrayList<Vertex>> vertices = new ArrayList<ArrayList<Vertex>>(list.values());
-		Collections.sort(vertices, new VertexListComparable());
-		
-		sCCStats[0] = totalSCC;
-		sCCStats[1] = ((double) max.size()/graph.numVertices()) * 100;
-		sCCStats[2] = vertices;
-		return sCCStats;
-	}
-	//get the average path of the whole graph
-	//get the maximum path for whe whole graph
-	//average path is the first element, maximum is the second element
 	public static double[] getGeoStats(DirectedGraph graph) {
 		double[] stats = new double[2];
 		double averagePath = 0;
 		double maximum = 0;
 		int numOfPaths = 0;
-/*		int numUnreachable = 0;*/
 		//get the maximum and average
 		Iterator<Vertex> vertices = graph.vertices();
 		while (vertices.hasNext()) {
@@ -195,23 +140,16 @@ public class Metrics {
 			//get the stats from run on current vertex
 			HashMap<Vertex, Integer> distances = BFS.runBFS(graph, vertex);
 			Iterator<Vertex> iterator = distances.keySet().iterator();
-/*			System.out.println("iterating on:  " + vertex);*/
 			//don't need to count the path from source to itself
 			int possiblePaths = graph.numVertices()-1;
 			while (iterator.hasNext()) {
 				Vertex next = iterator.next();
-				//System.out.println("    vertex:  " + next + " distance: " + distances.get(next));
 				//get the number of possible paths
 				if (distances.get(next) < 0) {
 					possiblePaths = possiblePaths - 1;
-/*					numUnreachable++;*/
 				}
 			}
-			//update numOfPaths with possiblePaths from that run
-/*			System.out.println("vertex:  " + vertex);
-			System.out.println("possible paths:  " + possiblePaths);*/
 			numOfPaths = numOfPaths + possiblePaths;
-			//System.out.println("-----------");
 			double [] output = Utils.getAverageAndMax(distances);
 			averagePath = averagePath + output[0];
 			double outputMax = output[1];
@@ -220,15 +158,18 @@ public class Metrics {
 				maximum = outputMax;
 			}
 		}
-/*		System.out.println("num of paths:  " + numOfPaths);*/
 		averagePath = averagePath/numOfPaths;
 		stats[0] = averagePath;
 		stats[1] = maximum;
-/*		System.out.println("average path:  " + stats[0]);
-		System.out.println("maximum path:  " + stats[1]);*/
-/*		System.out.println("unreachable:  " + numUnreachable);*/
 		return stats;
 	}
+	
+	/**
+	 * Gets the reciprocity.
+	 *
+	 * @param graph the graph
+	 * @return the reciprocity
+	 */
 	public static double getReciprocity(DirectedGraph graph) {
 		HashMap<Vertex, HashSet<Vertex>> outVertices = graph.aList.getMap();
 		Iterator<Vertex>vertices = outVertices.keySet().iterator();
@@ -249,12 +190,12 @@ public class Metrics {
 		}
 		return counter/graph.numArcs();
 	}
+	
 	/**
-	 * Get undirected k for each vertex first
-	 * Scan adjacency list once
-	 * When scanning the list for vertex u, for each list
-	 * element with v as the target, increment both ku and kv
-	 * @return
+	 * Calculates the degree correlation
+	 * 
+	 * @param graph the graph
+	 * @return the degree correlation
 	 */
 	public static double getDegreeCorrelation(DirectedGraph graph) {
 		graph.setUndirectedDegree();
@@ -278,16 +219,21 @@ public class Metrics {
 			se = se + product;
 		}
 		se = 2*se;
-/*		System.out.println("s1:  " + s1);
-		System.out.println("s2:  " + s2);
-		System.out.println("s3:  " + s3);
-		System.out.println("se:  " + se);*/
+
 		double s2Squared = (double) Math.pow(s2,2);
 		double numerator = (s1*se) - s2Squared;
 		double denominator = (double) ((s1 * s3) - Math.pow(s2, 2));
 		return numerator/denominator;
 	}
-	/* Used # of possible triangles / # of triangles */
+
+	/**
+	 * Gets the clustering coefficient from 
+	 * 
+	 * # of triangles / # of possible triangles
+	 *
+	 * @param graph the graph
+	 * @return the clustering coefficient
+	 */
 	public static double getClusteringCoefficient(DirectedGraph graph) {
 		double triangles = 0;
 		double possibleTriangles = 0;
@@ -309,8 +255,6 @@ public class Metrics {
 				 }
 			 }
 		}
-/*		System.out.println("triangles:  " + triangles);
-		System.out.println("possible triangles:  " + possibleTriangles);*/
 		return triangles/possibleTriangles;
 	}
 }

@@ -11,7 +11,7 @@ package code;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -38,7 +38,7 @@ public class Driver {
 	static Scanner inputReader = new Scanner(System.in);
 	
 	/**
-	 * The main method.
+	 * Driver that outputs a table for the graphs
 	 *
 	 * @param args the arguments
 	 */
@@ -51,6 +51,11 @@ public class Driver {
 		generateTable("ti-full.vna");
 	}
 	
+	/**
+	 * Generate table of metrics to output
+	 *
+	 * @param name the name
+	 */
 	public static void generateTable(String name) {
 		DirectedGraph graph = VNAParser.generateGraph(name);
 		Utils.printTable(graph, name);

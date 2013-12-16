@@ -29,8 +29,9 @@ package code;
 import java.util.HashMap;
 
 /**
- * The Arc class
- *  @author Erika Nana
+ * The Arc class.
+ *
+ * @author Erika Nana
  */
 public class Arc {
 
@@ -40,10 +41,10 @@ public class Arc {
 	/** The end vertex. */
 	private Vertex endVertex;
 	
-	/** Arc data */
+	/** Arc data. */
 	private Data dataList;
 	
-	/** Annotations */
+	/** Annotations. */
 	private HashMap<Object,Object> annotations;
 	
 	/**
@@ -134,6 +135,9 @@ public class Arc {
 	}
 	
 	//overloaded to help with comparisons
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return getFullArc();
 	}

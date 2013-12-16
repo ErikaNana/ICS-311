@@ -11,7 +11,7 @@ package code;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -118,10 +118,10 @@ public class Utils<Type> {
 	}
 	
 	/**
-	 * Prints the table.
+	 * Prints the table for output
 	 *
 	 * @param graph the graph
-	 * @param name the name
+	 * @param name the name of the graph
 	 */
 
 	public static void printTable(DirectedGraph graph, String name) {
@@ -171,10 +171,13 @@ public class Utils<Type> {
 		System.out.printf("%-10s %5.4f", "Diameter: ", geoStats[1]);
 		System.out.println("");
 	}
-	
-	//method for geostats just for one run
-	//get paths lengths for run
-	//get maximum path length from that run
+
+	/**
+	 * Gets the average and max path length given a HashMap of distances
+	 *
+	 * @param distances the distances
+	 * @return the average and max
+	 */
 	public static double[] getAverageAndMax(HashMap<Vertex,Integer> distances) {
 		double[] stats = new double[2];
 		double sumOfPaths = 0;

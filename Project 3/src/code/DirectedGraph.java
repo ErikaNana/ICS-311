@@ -11,7 +11,7 @@ package code;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -42,10 +42,10 @@ public class DirectedGraph {
 	/** The a list. */
 	AList aList;
 
-	/** Graph of vertices with a BTree to store the arcs */
+	/** Graph of vertices with a BTree to store the arcs. */
 	HashMap<Vertex,BTree<Arc>> map ; //since keys are strings
 	
-	/** Annotations */
+	/** Annotations. */
 	HashMap<Object,ArrayList<Object>> annotation;
 	
 	/**
@@ -226,7 +226,7 @@ public class DirectedGraph {
 	}
 
 	/**
-	 * Returns the origin (start) vertex of Arc a
+	 * Returns the origin (start) vertex of Arc a.
 	 *
 	 * @param a the Arc
 	 * @return the vertex
@@ -237,7 +237,7 @@ public class DirectedGraph {
 	
 	
 	/**
-	 * Returns the destination (end) vertex of Arc a
+	 * Returns the destination (end) vertex of Arc a.
 	 *
 	 * @param a the Arc
 	 * @return the vertex
@@ -265,7 +265,7 @@ public class DirectedGraph {
 	/**
 	 * Inserts a new isolated vertex indexed under (retrievable via) the
 	 * key and optionally containing an object data (which defaults to null)
-	 * and returns the new Vertex
+	 * and returns the new Vertex.
 	 *
 	 * @param key the key
 	 * @param data the data
@@ -490,8 +490,9 @@ public class DirectedGraph {
 		a.removeAnnotation(k);
 		return annotation;
 	} 
+	
 	/**
-	 * Removes all annotations on vertices or arcs indexed by k
+	 * Removes all annotations on vertices or arcs indexed by k.
 	 *
 	 * @param k the k
 	 */
@@ -616,12 +617,18 @@ public class DirectedGraph {
 		return map;
 	}
 
+	/**
+	 * Num of undirected arcs.
+	 *
+	 * @return the int
+	 */
 	public int numOfUndirectedArcs() {
 		return aList.numOfUndirectedEdges();
 	}
-/*	public void printAList() {
-		aList.printAList();
-	}*/
+	
+	/**
+	 * Sets the undirected degree for the vertex
+	 */
 	public void setUndirectedDegree() {
 		ArrayList<Arc> arcs = aList.getUndirectedEdges();
 		for (Arc arc: arcs) {
@@ -632,6 +639,12 @@ public class DirectedGraph {
 		}
 	}
 	
+	/**
+	 * Gets the undirected adj vertices of vertex
+	 *
+	 * @param vertex the vertex
+	 * @return the undirected adj vertices
+	 */
 	public ArrayList<Vertex> getUndirectedAdjVertices(Vertex vertex){
 		ArrayList<Vertex> undirectedAdjVertices = new ArrayList<Vertex>();
 		Iterator<Vertex> inVertices = inAdjacentVertices(vertex);

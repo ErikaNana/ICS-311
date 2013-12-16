@@ -10,7 +10,7 @@ package test;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -33,7 +33,8 @@ import code.DirectedGraph;
 import code.Vertex;
 
 /**
- * Tests the DirectedGraph class
+ * Tests the DirectedGraph class.
+ *
  * @author Erika Nana
  */
 public class DirectedGraphTest extends TestCase {
@@ -59,6 +60,9 @@ public class DirectedGraphTest extends TestCase {
 	/** The graph. */
 	DirectedGraph graph;
 	
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#setUp()
+	 */
 	protected void setUp() throws Exception {
 		graph = new DirectedGraph();
 		one = graph.insertVertex("one");
@@ -70,6 +74,9 @@ public class DirectedGraphTest extends TestCase {
 		super.setUp();
 	}
 
+	/* (non-Javadoc)
+	 * @see junit.framework.TestCase#tearDown()
+	 */
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}

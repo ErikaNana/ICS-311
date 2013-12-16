@@ -10,7 +10,7 @@ package test;
  *     * Redistributions in binary form must reproduce the above copyright
  *       notice, this list of conditions and the following disclaimer in the
  *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of Project 1 nor the
+ *     * Neither the name of Project 3 nor the
  *       names of its contributors may be used to endorse or promote products
  *       derived from this software without specific prior written permission.
  *
@@ -26,11 +26,9 @@ package test;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 
 import junit.framework.TestCase;
 import code.Arc;
@@ -40,6 +38,7 @@ import code.Metrics;
 import code.VNAParser;
 import code.Vertex;
 
+// TODO: Auto-generated Javadoc
 /**
  * Tests the required output of the graphs.
  * @author Erika Nana
@@ -129,33 +128,14 @@ public class MetricsTest extends TestCase {
 		assertEquals(1, graph.outDegree(one));
 		assertEquals(1, graph.outDegree(two));
 		assertEquals(1, graph.outDegree(two));
-	}
+	}	
 	
 	/**
-	 * Test SCC.
+	 * Test metricss for celegansneural.vnas
 	 */
-	@SuppressWarnings("unchecked")
-	public void testSCC() {
-		graph = VNAParser.generateGraph("SCC-Test.vna");
-		System.out.println("SCC test");
-		Object array[] = Metrics.runSCC(graph);
-		assertEquals((long) 12, (long) (Long) array[0]);
-		System.out.println("percentage:  " + array[1]);
-		List<ArrayList<Vertex>> list = (List<ArrayList<Vertex>>) array[2];
-		long counter = 0;
-		for (ArrayList<Vertex> vertexList: list) {
-			System.out.println("scc:  " + counter + "  size:  " + vertexList.size());
-			for (Vertex vertex: vertexList) {
-				System.out.println("    vertex:  " + vertex);
-			}
-			counter++;
-		}
-	}
-	
 	public void testMetrics3() {
 		System.out.println("Metric 3 test");
 		graph = VNAParser.generateGraph("celegansneural.vna");
-		graph.setUndirectedDegree();
 		double stats [] = Metrics.getGeoStats(graph);
 
 		assertEquals(0.18071147126607687, Metrics.getClusteringCoefficient(graph));
@@ -165,6 +145,9 @@ public class MetricsTest extends TestCase {
 		assertEquals(14.0,stats[1]);
 	}
 	
+	/**
+	 * Test metrics for a simple graph
+	 */
 	public void testMetrics2() {
 		graph = new DirectedGraph();
 		Vertex one = graph.insertVertex("one");
@@ -181,7 +164,6 @@ public class MetricsTest extends TestCase {
 		graph.insertArc(four,three);
 		graph.insertArc(four, two);
 		graph.insertArc(two, three);
-		graph.setUndirectedDegree();
 
 		assertEquals(-0.6666666666666666d,Metrics.getDegreeCorrelation(graph));
 		assertEquals(0.75, Metrics.getClusteringCoefficient(graph));
@@ -191,6 +173,10 @@ public class MetricsTest extends TestCase {
 		assertEquals(3, three.getUndirectedDegree());
 		assertEquals(2, four.getUndirectedDegree());
 	}
+	
+	/**
+	 * Test BFS
+	 */
 	public void testBFS() {
 		graph = new DirectedGraph();
 		Vertex a = graph.insertVertex("a");
